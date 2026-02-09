@@ -528,7 +528,7 @@ a monopolist faces the downward-sloping market demand curve, meaning its Margina
 
 To maximize profit, the monopolist produces where $$MR = MC$$ but then uses its market power to charge the highest price consumers are willing to pay on the demand curve. This results in a Monopoly Price that is higher than Marginal Cost ($$P > MC$$), allowing for long-run economic profit but creating social inefficiency and higher costs for consumers compared to competitive markets.
 
-## Price discrimination
+### Price discrimination
 
 Price discrimination is the rational strategy where a monopolist increases profit by charging different prices to different customers for the same good, based on their individual willingness to pay.&#x20;
 
@@ -536,10 +536,23 @@ This practice requires the firm to have market power, the ability to segment cus
 
 The impact on society depends on whether the discrimination is perfect or imperfect. In **perfect price discrimination**, the monopolist knows every customer's maximum price and charges exactly that amount; this eliminates deadweight loss and makes the outcome efficient, but it also strips away all consumer surplus, turning it entirely into company profit. In contrast, **imperfect price discrimination** involves sorting customers into broad groups—like students, seniors, or business travelers. While this always boosts the firm's bottom line compared to charging a single price, its effect on overall social welfare is mixed, as it may either increase or decrease the total surplus depending on how much additional output is generated.
 
-## Public Policy Toward Monopolies
+### Public Policy Toward Monopolies
 
 To address the inefficiencies of monopoly power, governments typically choose between four policy responses: **antitrust laws** to block anti-competitive mergers and promote competition, **regulation** to set price caps (common in natural monopolies), **public ownership** where the state runs the firm, or **doing nothing** if the costs of intervention outweigh the benefits.&#x20;
 
 Each approach has significant trade-offs; for instance, while regulating a natural monopoly to set price equal to average total cost prevents the firm from losing money, it fails to achieve social efficiency and removes the firm's incentive to reduce costs.&#x20;
 
 Ultimately, the choice of policy often depends on whether one believes the "market failure" of the monopoly is more or less damaging than the "political failure" that can arise from government bureaucracy and imperfect intervention.
+
+### Monopolistic competition
+
+Monopolistic competition is a hybrid structure featuring many **sellers, free entry/exit**, and **differentiated products**. In the short run, firms act like monopolies by setting prices where $$MR = MC$$. In the long run, however, new competitors enter to chase profits, shifting demand until every firm earns **zero economic profit**.
+
+In monopolistic competition to maximize profit, they stop producing _before_ they hit that lowest cost point.
+
+* The Result: The firm has "excess capacity." It has the machines and space to produce more goods at a lower cost per unit, but it chooses not to because it would have to lower its price too much to sell them.
+
+**social welfare** of monopolistic competition is considered a "mixed bag" because the entry of a new firm creates two opposing side effects, or externalities. Consumers benefit from a **positive variety externality**, gaining more choices and a better chance of finding a product that fits their specific tastes. However, existing businesses suffer from a **negative business-stealing externality** as they lose customers and profits to the newcomer. Because these two forces pull in opposite directions, it is difficult to determine if a market has "too many" or "too few" firms. Since measuring these subtle effects across thousands of unique industries is nearly impossible, the government typically chooses not to intervene, leaving the market to balance itself.
+
+## Oligopoly
+
