@@ -556,3 +556,27 @@ In monopolistic competition to maximize profit, they stop producing _before_ the
 
 ## Oligopoly
 
+An oligopoly is a market dominated by just a few large sellers (think of big airlines, wireless carriers, or soda brands). Because there are so few players, every move one company makes—like lowering prices or increasing production—directly affects the others.
+
+* **The Dream** (Cooperation): If the few firms team up (forming a cartel), they can act like one giant monopoly, keep prices high, and split huge profits.
+* **The Reality** (Self-Interest): Every company is tempted to "cheat" by producing a little more to steal customers. When everyone cheats, the price drops.
+* **The Result** (Nash Equilibrium): They get stuck in a middle ground. They don't make as much money as a monopoly, but prices stay higher than they would in a perfectly competitive market.
+
+More competition is better for you. As more companies enter the market (like through international trade), the power of any single company to keep prices high fades away, eventually pushing the market to behave like a competitive one with lower, fairer prices.
+
+## Economics of Labor Market
+
+### Demand of Labor Market
+
+When you enter the workforce, your income is primarily dictated by the market forces of **supply and demand** for the specific services you provide. In the U.S. economy, workers earn roughly two-thirds of the national income, while the remaining third goes to owners of land and capital. To understand why a computer programmer earns more than a gas station attendant, one must look at "factor markets"—the markets for the inputs used to produce goods and services.
+
+**Labor demand** is unique because it is a derived demand. This means a firm doesn't hire workers for the sake of having employees, but because those employees allow the firm to supply a good or service to another market. For example, the demand for apple pickers is inextricably linked to the consumer demand for apples. If the demand for the final product disappears, the demand for the labor required to make it also vanishes.
+
+A competitive, **profit-maximizing** firm decides how many people to hire by analyzing the production function and the marginal product of labor. As more workers are added to a fixed amount of land or equipment, the "diminishing marginal product" sets in—meaning each additional worker contributes less to total output than the one before them. For instance, the first few pickers take the low-hanging fruit, while later hires must spend more time climbing ladders, making them less productive on the margin.
+
+To make a **final hiring decision**, a firm converts this physical output into a dollar amount called the Value of the Marginal Product of Labor (**VMPL**). By multiplying the marginal product by the market price of the good, the firm identifies exactly how much revenue an additional worker generates. A rational firm will continue hiring workers as long as the VMPL exceeds the market wage, stopping exactly at the point where the two are equal.
+
+### Supply of Labor Market
+
+While **labor demand** comes from firms, **labor supply** comes from the individuals who decide how much they are willing to work. This decision is rooted in the fundamental trade-off between work and leisure. Because time is a scarce resource, every hour spent working is an hour given up for leisure activities like hobbies or sleep. The "price" of an hour of leisure is the wage you could have earned during that time, also known as the **opportunity cost**. Generally, as wages rise, the opportunity cost of leisure increases, encouraging people to work more.
+
