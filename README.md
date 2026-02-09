@@ -528,7 +528,7 @@ a monopolist faces the downward-sloping market demand curve, meaning its Margina
 
 To maximize profit, the monopolist produces where $$MR = MC$$ but then uses its market power to charge the highest price consumers are willing to pay on the demand curve. This results in a Monopoly Price that is higher than Marginal Cost ($$P > MC$$), allowing for long-run economic profit but creating social inefficiency and higher costs for consumers compared to competitive markets.
 
-### Price discrimination
+#### Price discrimination
 
 Price discrimination is the rational strategy where a monopolist increases profit by charging different prices to different customers for the same good, based on their individual willingness to pay.&#x20;
 
@@ -536,7 +536,7 @@ This practice requires the firm to have market power, the ability to segment cus
 
 The impact on society depends on whether the discrimination is perfect or imperfect. In **perfect price discrimination**, the monopolist knows every customer's maximum price and charges exactly that amount; this eliminates deadweight loss and makes the outcome efficient, but it also strips away all consumer surplus, turning it entirely into company profit. In contrast, **imperfect price discrimination** involves sorting customers into broad groups—like students, seniors, or business travelers. While this always boosts the firm's bottom line compared to charging a single price, its effect on overall social welfare is mixed, as it may either increase or decrease the total surplus depending on how much additional output is generated.
 
-### Public Policy Toward Monopolies
+#### Public Policy Toward Monopolies
 
 To address the inefficiencies of monopoly power, governments typically choose between four policy responses: **antitrust laws** to block anti-competitive mergers and promote competition, **regulation** to set price caps (common in natural monopolies), **public ownership** where the state runs the firm, or **doing nothing** if the costs of intervention outweigh the benefits.&#x20;
 
@@ -544,7 +544,7 @@ Each approach has significant trade-offs; for instance, while regulating a natur
 
 Ultimately, the choice of policy often depends on whether one believes the "market failure" of the monopoly is more or less damaging than the "political failure" that can arise from government bureaucracy and imperfect intervention.
 
-### Monopolistic competition
+## Monopolistic competition
 
 Monopolistic competition is a hybrid structure featuring many **sellers, free entry/exit**, and **differentiated products**. In the short run, firms act like monopolies by setting prices where $$MR = MC$$. In the long run, however, new competitors enter to chase profits, shifting demand until every firm earns **zero economic profit**.
 
@@ -579,4 +579,8 @@ To make a **final hiring decision**, a firm converts this physical output into a
 ### Supply of Labor Market
 
 While **labor demand** comes from firms, **labor supply** comes from the individuals who decide how much they are willing to work. This decision is rooted in the fundamental trade-off between work and leisure. Because time is a scarce resource, every hour spent working is an hour given up for leisure activities like hobbies or sleep. The "price" of an hour of leisure is the wage you could have earned during that time, also known as the **opportunity cost**. Generally, as wages rise, the opportunity cost of leisure increases, encouraging people to work more.
+
+### The Other Factors of Production: Land and Capital
+
+In a competitive economy, **labor, land, and capital** are each paid according to their **Value of the Marginal Product**, meaning income is determined by an input's specific contribution to production. Because these factors are interdependent, a shift in one ripples through the others; for example, the **Black Death** proved that when labor becomes scarce, wages rise due to increased individual productivity, while land rents fall because there are fewer workers to make the land useful. Ultimately, an input's earnings depend on both its own supply and the availability of the complementary factors used alongside it.
 
