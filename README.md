@@ -2,8 +2,8 @@
 
 ## Core Economic Principles
 
-* **Market Efficiency:** The property of society getting the maximum benefits from its scarce resources.
-* **Market Equality:** The property of distributing economic prosperity uniformly among the members of society.
+* **Market Efficiency:** getting the maximum benefits from its scarce resources.
+* **Market Equality:** distributing economic prosperity uniformly among the members of society.
 * **Opportunity Cost:** The opportunity cost of an item is what you give up to get that item.
 * **Marginal Change:** Small incremental adjustments to a plan of action.
   * **Marginal Benefits:** The additional benefit arising from a unit increase in a particular activity.
@@ -14,7 +14,7 @@
 
 ## The Invisible Hand and the Role of Government
 
-**Smith’s insight has an important corollary:** When a government prevents prices from adjusting naturally to supply and demand, it impedes the invisible hand’s ability to coordinate the decisions of the households and firms that make up an economy.
+When a government prevents prices from adjusting naturally to supply and demand, it impedes the invisible hand’s ability to coordinate the decisions of the households and firms that make up an economy.
 
 The **invisible hand** (market forces) can only function effectively when the government provides a stable foundation. We need the government to support the invisible hand in the following ways:
 
@@ -66,10 +66,6 @@ Economists make assumptions for the same reason:
 
 ## Economic Models
 
-### Circular Flow Diagram
-
-The Circular-Flow Diagram is a visual model of the economy that shows how dollars flow through markets among households and firms. It simplifies the complex economy into two main players and two main markets.
-
 **The Two Key Players**
 
 * **Households:** These are the people who own all the factors of production (like their labor) and consume all the goods and services.
@@ -97,7 +93,7 @@ There are two different types of "currents" flowing in opposite directions:
   3. Firms use that revenue to pay for labor and rent (Costs).
   4. That money returns to Households as Income (wages/profit).
 
-### Production Possibilities Frontier (PPF)
+#### Production Possibilities Frontier (PPF)
 
 PPF is a fundamental economic graph that shows the maximum possible output combinations of two goods an economy can produce using its available resources and technology. It is a visual representation of scarcity, trade-offs, and efficiency.
 
@@ -105,12 +101,13 @@ PPF is a fundamental economic graph that shows the maximum possible output combi
 
 ## Fields of Study and the Role of the Economist
 
-#### Microeconomics vs. Macroeconomics
+**Microeconomics:** The study of how households and firms make decisions and how they interact in specific markets.
 
-* **Microeconomics:** The study of how households and firms make decisions and how they interact in specific markets.
-  * _Examples:_ The effects of rent control on housing in New York City; the impact of foreign competition on the U.S. auto industry; the effects of compulsory school attendance on workers’ earnings.
-* **Macroeconomics:** The study of economy-wide phenomena.
-  * _Examples:_ The effects of borrowing by the federal government; the changes over time in the economy’s rate of unemployment; alternative policies to promote growth in national living standards.
+* _Examples:_ The effects of rent control on housing in New York City; the impact of foreign competition on the U.S. auto industry; the effects of compulsory school attendance on workers’ earnings.
+
+**Macroeconomics:** The study of economy-wide phenomena.
+
+* _Examples:_ The effects of borrowing by the federal government; the changes over time in the economy’s rate of unemployment; alternative policies to promote growth in national living standards.
 
 #### The Two Roles of Economists
 
@@ -132,20 +129,16 @@ Conflict in economic advice usually stems from two main sources:
 
 **Absolute Advantage** looks at who is faster or more productive. The producer that requires a smaller quantity of inputs to produce a good is said to have an absolute advantage in producing that good.
 
-Import and Export
-
 ***
 
 ## Supply and Demand
 
-#### Fundamentals of a Market
-
-Market: A group of buyers and sellers of a particular good or service.
+**Market**: A group of buyers and sellers of a particular good or service.
 
 * The Buyers: As a group, they determine the demand for the product.
 * The Sellers: As a group, they determine the supply of the product.
 
-Competitive Market: A market in which there are so many buyers and so many sellers that each has a negligible impact on the market price.
+**Competitive Market**: A market in which there are so many buyers and so many sellers that each has a negligible impact on the market price.
 
 #### Demand
 
@@ -200,6 +193,8 @@ Drug interdiction focuses on reducing the supply of drugs by catching smugglers 
 
 When interdiction makes drugs scarcer and more expensive, the price jump is much larger than the drop in usage. As a result, the total revenue paid to drug dealers actually increases. To cover these significantly higher costs, addicts may turn to more frequent or more violent crime, meaning that while drug use goes down, drug-related crime often goes up.
 
+***
+
 ## Price Ceiling
 
 A price ceiling is a legal maximum on the price at which a good can be sold. When the government imposes such a limit, the outcome depends entirely on whether the ceiling is set above or below the natural **market equilibrium**. If the **ceiling is set higher** than the price that naturally balances supply and demand, it is considered non-binding and has no effect on the market. However, when a **ceiling is set below the equilibrium price**, it becomes a binding constraint. Because the price is legally prevented from rising to its natural level, the quantity that consumers want to buy exceeds the quantity that producers are willing to sell, resulting in a persistent shortage of the good.
@@ -222,19 +217,25 @@ Over several years, however, both landlords and renters become much more elastic
 
 In the end, while the price on paper is low, the "real" cost is high. You might pay low rent, but you live in a dilapidated (run-down) building with a landlord who ignores your calls. Because the shortage is so bad, people start using under-the-table bribes or "key fees" just to get a landlord to pick them from the waiting list. The policy intended to help the poor often ends up making quality housing impossible to find.
 
+***
+
 ## Price Floor
 
 A price floor is a government-imposed legal minimum on the price at which a good or service can be sold. Unlike a price ceiling, which seeks to keep prices low, a price floor is typically enacted when producers feel the market equilibrium price is too lo&#x77;**.** The impact of a price floor depends on whether it is "binding." If the floor is set **below the equilibrium price**, it is not binding and has no effect on the market. However, if the floor is set **above the equilibrium price**, it prevents the market from reaching a natural balance, leading to a permanent surplus where the quantity supplied exceeds the quantity demanded.
+
+***
 
 ## Tax Incidence
 
 #### How Taxes on Sellers Affect the Market
 
-When the government mandates that sellers pay a tax (e.g., $0.50 per ice-cream cone), it increases the cost of doing business. This causes the supply curve to shift upward (or to the left) by the exact amount of the tax. Because it is now more expensive to provide the product, the new market equilibrium results in a higher price for buyers and a lower quantity sold. Even though the seller physically hands the money to the government, they "pass on" part of the cost to the buyer through that higher price.
+When the government mandates that **sellers pay a tax** (e.g., $0.50 per ice-cream cone), it increases the cost of doing business. Because it is now more expensive to provide the product, the new market equilibrium results in a higher price for buyers and a lower quantity sold. Even though the seller physically hands the money to the government, they "pass on" part of the cost to the buyer through that higher price.
 
 #### How Taxes on Buyers Affect the Market
 
-Conversely, if the government taxes the buyers, the demand curve shifts downward (or to the left) by the amount of the tax. Because the total cost of the good (price + tax) has risen, consumers demand less at every price point. This shift causes the market price to drop. However, while the seller receives a lower price, the buyer’s total cost (the lower price plus the tax they must pay) is still higher than it was originally.
+Conversely, if the government **taxes the buyers**, the demand curve shifts downward (or to the left) by the amount of the tax. Because the total cost of the good (price + tax) has risen, consumers demand less at every price point. This shift causes the market price to drop. However, while the seller receives a lower price, the buyer’s total cost (the lower price plus the tax they must pay) is still higher than it was originally.
+
+***
 
 ## Markets and Welfare
 
@@ -258,6 +259,8 @@ When a market is efficient, the "economic pie" is as large as it can possibly be
 * **Optimal Allocation for Sellers**: Free markets ensure that demand is met by the producers who can provide the goods at the lowest cost.
 * **Optimal Quantity**: The market produces exactly the quantity that maximizes total surplus. At any amount below equilibrium, the value to buyers exceeds the cost to sellers, meaning more should be produced. At any amount above equilibrium, the cost to sellers exceeds the value to buyers, meaning less should be produced.
 
+***
+
 ## **Costs Of Taxation**
 
 **Market taxation** fundamentally alters the behavior of buyers and sellers by creating a price wedge. When a tax is introduced, the price buyers pay increases while the price sellers receive decreases, regardless of which party is legally responsible for paying the tax. This gap reduces the incentive for market participation, leading to a decrease in the quantity of goods traded. Consequently, taxes cause the market size to shrink below its natural equilibrium, resulting in a **deadweight loss**—a loss of total economic welfare that is not offset by the government's tax revenue.
@@ -266,13 +269,15 @@ The severity of this deadweight loss is primarily determined by the price elasti
 
 As the size of a tax increases, its impact on the economy evolves disproportionately. Deadweight loss grows exponentially; for instance, doubling a tax rate actually quadruples the deadweight loss. Tax revenue, however, follows the Laffer Curve: it initially increases with the tax rate but eventually peaks and starts to decline. This happens because a very high tax rate discourages trade so severely that there is little left to tax. Therefore, **higher tax rates** do not always guarantee higher revenue, as the shrinkage of the "economic pie" can eventually outweigh the government's larger slice of it.
 
+***
+
 ## International Trade
 
 The relationship between domestic price to the world prices reveals a nation's comparative advantage. The domestic price serves as a measure of the opportunity cost of producing a good within that country. If the **world price is higher than the domestic price**, the country has a comparative advantage, meaning it can produce the good more cheaply than the rest of the world. Once trade is permitted, this country will become an exporter, as local producers seek the higher profits available in foreign markets.
 
 Conversely, if the **world price is lower than the domestic price**, the rest of the world has a comparative advantage in that industry. In this scenario, the country will become an importer, as local consumers shift their spending to cheaper foreign goods. This comparison allows a nation to determine its strengths and decide how to specialize. International trade is beneficial because it enables countries to focus on the industries where they have the lowest opportunity cost, exchanging their specialized surplus for goods that are produced more efficiently elsewhere.
 
-**The Exporting Country (World Price is Higher)**
+#### **The Exporting Country (World Price is Higher)**
 
 If the world price is higher than the domestic price, the country will export.
 
@@ -280,7 +285,7 @@ If the world price is higher than the domestic price, the country will export.
 * The Losers: Domestic consumers. They now have to pay the higher world price for goods that used to be cheaper at home.
 * Net Result: Even though consumers lose, the gains for producers are much larger. The total surplus of the country increases, represented by the "gains from trade" triangle.
 
-**The Importing Country (World Price is Lower)**
+#### **The Importing Country (World Price is Lower)**
 
 If the world price is lower than the domestic price, the country will import.
 
@@ -294,7 +299,7 @@ free trade destroys domestic employment. While it is true that importing cheaper
 
 To achieve free trade, nations generally choose between two paths: A **unilateral approach** occurs when a country removes its own trade barriers independently, as seen in the historical examples of Great Britain or more recently in Chile and South Korea. In contrast, the **multilateral approach** involves coordinated negotiations where multiple countries agree to reduce trade restrictions simultaneously, effectively "trading" market access with one another.
 
-**Major Agreements and Institutions**
+#### **Major Agreements and Institutions**
 
 The multilateral approach is responsible for the modern landscape of global commerce. Key examples include:
 
@@ -302,9 +307,11 @@ The multilateral approach is responsible for the modern landscape of global comm
 * GATT: Established after World War II to prevent a return to the high-tariff era of the Great Depression; it successfully lowered average global tariffs from 40% to roughly 5%.
 * The World Trade Organization (WTO): Founded in 1995 to enforce GATT rules, the WTO acts as a global referee, mediating trade disputes and providing a permanent forum for ongoing negotiations among its 162+ member nations.
 
+***
+
 ## Externalities
 
-**Externality** is a side effect of an economic activity that affects someone who isn't directly involved in it.
+Externality is a side effect of an economic activity that affects someone who isn't directly involved in it.
 
 **Negative Externalities**: Adverse impacts on bystanders (e.g., pollution, loud dogs). Because the parties involved don't pay for these "costs," the market produces too much of the activity.
 
@@ -316,7 +323,9 @@ To address the inefficiencies caused by externalities, governments generally emp
 
 Think of **market-based policies** as the government changing the price tags on certain behaviors rather than just making them illegal. Instead of telling a company "You are not allowed to do this," the government says, "You can do this, but it’s going to cost you."
 
-While externalities often lead to market inefficiencies, they can be resolved privately through **moral codes, charities, or contracts between interested parties**. The Coase theorem suggests that if private parties can bargain without cost, they will reach an efficient outcome regardless of how legal rights are initially distributed, as parties will naturally negotiate to "internalize" the costs or benefits. However, this often fails in the real world due to transaction costs, such as legal fees or the difficulty of coordinating large groups, which prevents a mutually beneficial agreement from being reached.\\
+While externalities often lead to market inefficiencies, they can be resolved privately through **moral codes, charities, or contracts between interested parties**. The Coase theorem suggests that if private parties can bargain without cost, they will reach an efficient outcome regardless of how legal rights are initially distributed, as parties will naturally negotiate to "internalize" the costs or benefits. However, this often fails in the real world due to transaction costs, such as legal fees or the difficulty of coordinating large groups, which prevents a mutually beneficial agreement from being reached.
+
+***
 
 ## Public Good and Common Resources
 
@@ -376,6 +385,8 @@ To prevent a resource from being destroyed, governments usually step in with one
 2. Taxes/Tolls: Charging a fee to use the resource (e.g., congestion pricing on bridges or gasoline taxes) to force people to feel the "cost" of their usage.
 3. Privatization: Turning the resource into a Private Good. This is why cows aren't extinct but elephants are struggling; cows live on private ranches where owners have a profit motive to keep them alive and healthy.
 
+***
+
 ## Tax
 
 **Average Tax Rate**: This is your total tax bill divided by your total income. It tells you the sacrifice you are making
@@ -419,8 +430,6 @@ This principle suggests that taxes should be based on how well a person can hand
 * Vertical Equity: Richer citizens should pay more than poorer ones because $1,000 "hurts" a poor person much more than a rich person.
 * Horizontal Equity: People with similar incomes/circumstances should pay the same amount.
 
-***
-
 Economists mock the **Flypaper Theory**—the idea that the burden of a tax "sticks" to whoever the government sends the bill to. In reality, taxes shift:
 
 * Luxury Taxes: A tax on fur coats might seem like it taxes the rich. But if the rich just buy jewelry instead, the fur coat business dies. The people who actually "pay" the tax are the factory workers who lose their jobs.
@@ -443,8 +452,6 @@ Economists and Accountants view costs differently.
 
 **Accounting Profit** = Total Revenue – Explicit Costs\
 **Economic Profit** = Total Revenue – (Explicit + Implicit Costs)
-
-***
 
 #### Diminishing Marginal Product
 
@@ -544,6 +551,8 @@ Each approach has significant trade-offs; for instance, while regulating a natur
 
 Ultimately, the choice of policy often depends on whether one believes the "market failure" of the monopoly is more or less damaging than the "political failure" that can arise from government bureaucracy and imperfect intervention.
 
+***
+
 ## Monopolistic competition
 
 Monopolistic competition is a hybrid structure featuring many **sellers, free entry/exit**, and **differentiated products**. In the short run, firms act like monopolies by setting prices where $$MR = MC$$. In the long run, however, new competitors enter to chase profits, shifting demand until every firm earns **zero economic profit**.
@@ -563,6 +572,8 @@ An oligopoly is a market dominated by just a few large sellers (think of big air
 * **The Result** (Nash Equilibrium): They get stuck in a middle ground. They don't make as much money as a monopoly, but prices stay higher than they would in a perfectly competitive market.
 
 More competition is better for you. As more companies enter the market (like through international trade), the power of any single company to keep prices high fades away, eventually pushing the market to behave like a competitive one with lower, fairer prices.
+
+***
 
 ## Economics of Labor Market
 
