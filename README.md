@@ -663,7 +663,7 @@ To judge the economic status of a nation, we look at the total income earned by 
 
 **Gross Domestic Product (GDP)** is the market value of all final goods and services produced within a country in a given period of time.
 
-#### The Components of Expenditure
+#### Components of Expenditure
 
 GDP (denoted as **Y**) is the sum of four categories of spending: $$Y = C + I + G + NX$$
 
