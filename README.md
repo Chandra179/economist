@@ -685,3 +685,62 @@ While GDP is the primary measure, the government also tracks:
 * **NNP (Net National Product):** GNP minus depreciation.
 * **National/Personal Income:** Income earned by residents or received by households.
 * **Disposable Personal Income:** Income left after satisfying government obligations (taxes).
+
+***
+
+## Saving, Investment, and Financial System
+
+The **financial system** is a group of institutions that helps match one person’s saving with another person’s investment. It moves scarce resources from **savers** (those who earn more than they spend) to **borrowers** (those who spend more than they earn).
+
+Financial institutions are categorized into two main groups:
+
+### Financial Markets
+
+Institutions through which savers can **directly** provide funds to borrowers.
+
+**The Bond Market:** A bond is a certificate of indebtedness (an IOU).
+
+* **Term:** The length of time until maturity. Long-term bonds are riskier and usually pay higher interest.
+* **Credit Risk:** The probability of default. Higher risk leads to higher interest rates (e.g., junk bonds).
+* **Tax Treatment:** Municipal bonds (issued by local gov) are often federal tax-exempt and pay lower interest.
+
+**The Stock Market:** Stock represents partial ownership in a firm.
+
+* **Equity Finance:** Raising money by selling stock.
+* **Debt Finance:** Raising money by selling bonds.
+* **Risk/Return:** Stockholders take more risk than bondholders but enjoy higher potential returns if the firm is profitable.
+
+### Financial Intermediaries
+
+Institutions through which savers can **indirectly** provide funds to borrowers.
+
+**Banks:** Take deposits from savers and make loans to borrowers. They also facilitate transactions by providing a **medium of exchange** (checks/debit cards).
+
+**Mutual Funds:** Institutions that sell shares to the public and use the proceeds to buy a **portfolio** (selection) of stocks and bonds.
+
+* **Advantage:** Allows small investors to **diversify** their holdings, reducing risk.
+* **Index Funds:** Mutual funds that buy all stocks in a specific index; they often outperform managed funds due to lower costs.
+
+### National Income Accounting
+
+Accounting identities help clarify the relationship between macroeconomic variables in a **closed economy** (one that does not trade internationally).
+
+* **GDP Identity:** $$Y = C + I + G$$
+* **National Saving:** The total income remaining after paying for consumption and government purchases: $$S = Y - C - G$$
+* **The Saving-Investment Identity:** In a closed economy, **Saving = Investment** ($$S = I$$).
+* **Private Saving:** $$Y - T - C$$ (Income left after taxes and consumption).
+* **Public Saving:** $$T - G$$ (Tax revenue left after government spending).
+  * **Budget Surplus:** If $$T > G$$, public saving is positive.
+  * **Budget Deficit:** If $$G > T$$, public saving is negative.
+
+### The Market for Loanable Funds
+
+Think of the Market for Loanable Funds as the way the economy connects people who have **extra money** with people who **need money** to build things.
+
+The **Supply** comes from **savers**. When you earn more than you spend and put that money in a bank or a bond, you are supplying funds. Your main motivation is the interest rate.
+
+The **Demand** comes from **borrowers**. These are usually businesses that want to build a new factory or buy new computers, or families buying a new house. For them, the interest rate is a cost—it’s the "rent" they pay to use someone else's money.
+
+The **Equilibrium** is just the "sweet spot" where the amount of money people want to save perfectly matches the amount of money others want to borrow.
+
+A major thing that can mess this up is a government **Budget Deficit**. When the government spends more than it earns, it has to borrow from this same pool of money. This eats up the supply that was meant for businesses. Because there is now less money available for everyone else, the **interest rate goes up**. This makes it too expensive for private companies to borrow and grow, a problem called **Crowding Out**.
