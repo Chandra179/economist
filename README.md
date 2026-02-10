@@ -595,3 +595,93 @@ While **labor demand** comes from firms, **labor supply** comes from the individ
 
 In a competitive economy, **labor, land, and capital** are each paid according to their **Value of the Marginal Product**, meaning income is determined by an input's specific contribution to production. Because these factors are interdependent, a shift in one ripples through the others; for example, the **Black Death** proved that when labor becomes scarce, wages rise due to increased individual productivity, while land rents fall because there are fewer workers to make the land useful. Ultimately, an input's earnings depend on both its own supply and the availability of the complementary factors used alongside it.
 
+***
+
+## Theory of Consumer Choice
+
+The theory of consumer choice examines how individuals make decisions based on what they can afford and what they want. The starting point is the **budget constraint**, which represents the limit on the consumption bundles a consumer can purchase given their income and the prices of goods.
+
+The consumer reaches an **optimum** by choosing the point on the budget constraint that touches the highest possible indifference curve. Alternatively, this can be viewed as the point where the **marginal utility per dollar spent** is equal for all goods consumed.
+
+When a consumer’s **income changes**, the budget constraint shifts:
+
+* **Increase in income:** Shifts the line outward, allowing the consumer to reach a higher indifference curve.
+* **Normal good:** A good the consumer buys more of when income rises.
+* **Inferior good:** A good the consumer buys less of when income rises (such as bus rides versus private cars).
+
+These shifts demonstrate how purchasing power directly influences the "bundle" of goods a person chooses to maximize their happiness.
+
+A **change in price** has a more complex effect, shifting the budget constraint. This impact is broken down into two components:
+
+* **Income effect:** The change in consumption resulting from the feeling of being richer or poorer due to the price change.
+* **Substitution effect:** The incentive to buy more of the good that has become relatively cheaper.
+
+While the substitution effect always pushes the consumer toward the cheaper good, the income effect’s impact depends on whether the goods are normal or inferior, ultimately determining the final new optimum.
+
+***
+
+## Microeconomics
+
+#### Asymmetric Information
+
+Asymmetric information occurs when one party in a transaction possesses more relevant knowledge than the other. This imbalance can lead to market inefficiencies and is categorized into two main problems:
+
+* **Moral Hazard (Hidden Actions):** This arises when an **agent** performs a task for a **principal**. If the principal cannot perfectly monitor the agent, the agent may exert less effort (shirking). For example, employees may work less hard when unsupervised, or insured homeowners may be less cautious about fire safety.
+* **Adverse Selection (Hidden Characteristics):** This occurs when the mix of goods offered is undesirable to the uninformed party. In the "Lemons Problem," used car buyers fear hidden defects, driving down prices and causing owners of high-quality cars to leave the market. Similarly, insurance often attracts high-risk individuals, raising premiums for everyone.
+
+To combat these imbalances, private parties engage in specific behaviors:
+
+* **Signaling:** The informed party takes costly actions to reveal information (e.g., a firm spending heavily on advertising or a student earning a degree to prove high ability).
+* **Screening:** The uninformed party takes actions to induce the informed party to reveal information (e.g., a car insurance company offering a high-deductible plan to identify safe drivers).
+
+#### Political Economy
+
+While markets can fail, government intervention is not always a perfect solution. **Political Economy** applies economic tools to understand how government institutions function. It recognizes that policymakers and voters are also driven by incentives, and political outcomes depend on the design of institutions rather than just "ideal" public interest.
+
+#### Behavioral Economics
+
+**Behavioral Economics** integrates insights from psychology to create a more realistic model of human behavior. It moves beyond the "rational actor" assumption, acknowledging that people make systematic errors, are influenced by framing, and possess limited willpower or complex motivations that standard theory might overlook.
+
+#### Public Policy Implications
+
+Asymmetric information provides a new argument for market failure, suggesting that the "invisible hand" may fail to allocate resources efficiently when information is hidden. However, government intervention is complicated by the fact that private markets often develop their own fixes (signaling/screening), and the government itself often lacks better information than private participants.
+
+***
+
+## Macroeconomics
+
+Economics is divided into two main branches:
+
+* **Microeconomics:** The study of how individual households and firms make decisions and interact in markets.
+* **Macroeconomics:** The study of economy-wide phenomena, including inflation, unemployment, and economic growth. The health of the overall economy profoundly affects individuals, particularly regarding employment opportunities and the standard of living.
+
+To judge the economic status of a nation, we look at the total income earned by everyone in the economy. This is measured by **Gross Domestic Product (GDP)**.
+
+* **Dual Nature of GDP:** GDP measures two things simultaneously: total income and total expenditure.
+* **The Identity:** For an economy as a whole, **Income = Expenditure**.
+* **Reasoning:** Every transaction has a buyer (expenditure) and a seller (income). A dollar spent by one person is exactly one dollar of income for another.
+
+**Gross Domestic Product (GDP)** is the market value of all final goods and services produced within a country in a given period of time.
+
+#### The Components of Expenditure
+
+GDP (denoted as **Y**) is the sum of four categories of spending: $$Y = C + I + G + NX$$
+
+1. **Consumption (C):** Spending by households on goods and services (except new housing).
+2. **Investment (I):** Spending on capital equipment, structures, and inventories (includes the purchase of new housing).
+3. **Government Purchases (G):** Spending on goods and services by local, state, and federal governments (excludes "transfer payments" like Social Security).
+4. **Net Exports (NX):** Exports minus Imports.
+
+#### Real vs. Nominal GDP
+
+* **Nominal GDP:** Production of goods and services valued at **current prices**. It can rise due to either an increase in production or an increase in prices.
+* **Real GDP:** Production of goods and services valued at **constant prices** (using a base year). This provides a measure of production that is not affected by changes in prices.
+
+#### Other Income Measures
+
+While GDP is the primary measure, the government also tracks:
+
+* **GNP (Gross National Product):** Income earned by permanent residents of a nation.
+* **NNP (Net National Product):** GNP minus depreciation.
+* **National/Personal Income:** Income earned by residents or received by households.
+* **Disposable Personal Income:** Income left after satisfying government obligations (taxes).
