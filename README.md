@@ -744,3 +744,109 @@ The **Demand** comes from **borrowers**. These are usually businesses that want 
 The **Equilibrium** is just the "sweet spot" where the amount of money people want to save perfectly matches the amount of money others want to borrow.
 
 A major thing that can mess this up is a government **Budget Deficit**. When the government spends more than it earns, it has to borrow from this same pool of money. This eats up the supply that was meant for businesses. Because there is now less money available for everyone else, the **interest rate goes up**. This makes it too expensive for private companies to borrow and grow, a problem called **Crowding Out**.
+
+***
+
+## Tools Of Finance
+
+#### The Time Value of Money
+
+**Fundamental Rule**: Money today is more valuable than the same amount of money in the future because of its ability to earn interest.
+
+* **Present Value (PV)**: This is the amount of money needed today to produce a specific future sum, given current interest rates. To find the present value of a sum ($$X$$) to be received in $$N$$ years at interest rate $$r$$: $$PV = \frac{X}{(1 + r)^N}$$.
+* **Future Value (FV)**: The amount of money a current deposit will yield in the future at a given interest rate.
+* **Compounding**: This is the accumulation of money where interest earned remains in the account to earn even more interest in subsequent periods.
+* **The Rule of 70**: A mathematical rule of thumb stating that if a variable grows at a rate of $$x$$ percent per year, that variable will double in approximately $$70/x$$ years.
+
+#### Managing Risk
+
+* **Risk Aversion**: Most people are risk-averse, meaning they dislike uncertainty and feel the "pain" of a loss more intensely than the "pleasure" of an equal gain.
+* **Insurance**: A tool used to spread risk. It doesn't eliminate the risk of an event, but it ensures the financial burden is shared among thousands of shareholders rather than one individual.
+  * Adverse Selection: High-risk people are more likely to buy insurance.
+  * Moral Hazard: People may act less carefully once they are insured.
+* **Diversification**: The practice of reducing risk by replacing a single risk with a large number of smaller, unrelated risks ("Don't put all your eggs in one basket").
+  * Firm-Specific Risk: Uncertainty that affects only a single company; this can be eliminated through diversification.
+  * Market Risk: Uncertainty that affects the entire economy and all stocks; this cannot be eliminated.
+* **Risk-Return Trade-off**: To earn higher average returns, investors must be willing to accept higher levels of risk and volatility.
+
+#### Asset Valuation
+
+* **Fundamental Analysis**: The process of researching a company’s financial statements, products, and future prospects to determine the "true" value of its stock.
+* **Efficient Markets Hypothesis (EMH)**: The theory that asset prices already reflect all publicly available information.
+  * Informational Efficiency: The market price is the best unbiased estimate of a value because it is set by the equilibrium of supply and demand.
+  * Random Walk: Because stock prices reflect all current information, they only move based on unpredictable news, making price changes impossible to forecast.
+* **Index Funds**: Because it is difficult to "beat the market" consistently, many economists recommend index funds (mutual funds that buy all stocks in an index) over actively managed funds.
+
+***
+
+## Unemployment
+
+* Labor Force = Employed + Unemployed
+* Unemployment Rate = $$\frac{\text{Unemployed}}{\text{Labor Force}} \times 100$$
+* Labor-Force Participation Rate = $$\frac{\text{Labor Force}}{\text{Adult Population}} \times 100$$
+
+#### Why Unemployment Exists
+
+Even in a healthy economy, the unemployment rate never hits zero. It fluctuates around a Natural Rate of Unemployment.
+
+1. Frictional Unemployment: Occurs when it takes time for workers to find jobs that best suit their skills (e.g., sectoral shifts where demand rises in one industry but falls in another).
+2. Structural Unemployment: Occurs when the number of jobs available is insufficient for the number of seekers. This often happens when wages are kept above the equilibrium level by:
+   * Minimum-wage laws
+   * Unions
+   * Efficiency wages
+
+#### Policy and Incentives
+
+Government policies like Unemployment Insurance provide protection but can unintentionally increase frictional unemployment by reducing the urgency of the job search. Conversely, public training programs and employment agencies aim to speed up the matching process.
+
+***
+
+## Money and Prices in the Long Run
+
+#### The Nature and Function of Money
+
+While people often use "money" to mean wealth, economists define it specifically as the set of assets regularly used to purchase goods and services. Money is essential because it eliminates the need for barter, which requires a "double coincidence of wants" (two people having exactly what the other needs).
+
+Money serves three primary purposes:
+
+* Medium of Exchange: An item buyers give to sellers (e.g., cash for a shirt).
+* Unit of Account: The "yardstick" used to post prices and record debt (e.g., measuring value in dollars rather than in quantities of other goods).
+* Store of Value: A way to transfer purchasing power from the present to the future.
+
+**Liquidity** refers to how easily an asset can be converted into the economy's medium of exchange. Money is the most liquid asset, whereas items like real estate or fine art are highly illiquid.
+
+***
+
+#### Forms of Money
+
+Money doesn't need "intrinsic value" (value in and of itself) to work; it relies on social trust and government backing.
+
+* Commodity Money: Has intrinsic value (e.g., gold or cigarettes in POW camps).
+* Fiat Money: Has no intrinsic value but is established as money by government decree (e.g., the U.S. Dollar).
+
+***
+
+#### The U.S. Monetary System
+
+In the United States, the money stock—the total quantity of money circulating—is measured in two main ways:
+
+* M1: Highly liquid assets like currency (bills/coins) and demand deposits (checking accounts).
+* M2: Includes everything in M1 plus less liquid "near moneys" like savings accounts and money market mutual funds.
+
+> Note: Credit cards are not money. They are tools for _deferring_ payment, whereas debit cards allow immediate access to deposits that _are_ considered money.
+
+***
+
+#### The Federal Reserve (The Fed)
+
+The Fed is the U.S. central bank, tasked with overseeing the banking system and regulating the money supply through monetary policy.
+
+* Structure: Run by a Board of Governors (led by a Chair) and 12 regional banks.
+* The FOMC: The Federal Open Market Committee meets every six weeks to decide on policy.
+* Main Tool: Open-market operations. To increase the money supply, the Fed buys government bonds from the public; to decrease it, the Fed sells bonds.
+
+***
+
+#### Banks and the Money Supply
+
+Banks play a critical role in determining how much money exists. In a 100-percent-reserve banking system, banks only hold deposits and do not lend; in this case, they do not affect the money supply. However, in our actual system, banks lend out a portion of their deposits, which effectively creates money through the banking multiplier
