@@ -485,18 +485,31 @@ Economists and Accountants view costs differently.
 
 A perfectly competitive market consists of many buyers and sellers trading identical products.
 
-* **Price Takers:** No single firm can influence the market price ($$P$$).
-* **The Competitive Identity:** Because the price is constant for every unit sold: $$P = MR = AR$$ _(Price = Marginal Revenue = Average Revenue)_
+* **Many Buyers and Sellers**: No single participant can influence the market price.
+* **Identical Products**: The goods offered by different sellers are largely the same (e.g., milk or wheat).
+* **Free Entry and Exit**: Firms can enter or leave the market without restriction in the long run.
 
-Firms use Marginal Cost ($$MC$$) and Market Price ($$P$$) to make three critical decisions:
+For a competitive firm, total revenue ($$TR$$) is proportional to the amount of output ($$Q$$). Because the price ($$P$$) is constant:
 
-| Decision       | Timeline   | The Rule                 | Reasoning                                                               |
-| -------------- | ---------- | ------------------------ | ----------------------------------------------------------------------- |
-| Optimal Output | Short/Long | Produce where $$P = MC$$ | If $$P > MC$$, profit grows. If $$P < MC$$, profit shrinks.             |
-| Shutdown       | Short Run  | Shut down if $$P < AVC$$ | If you can't cover variable costs (wages/food), close for the day.      |
-| Exit Market    | Long Run   | Exit if $$P < ATC$$      | If price doesn't cover _all_ costs in the long run, leave the industry. |
+* Average Revenue (AR): Total revenue divided by quantity ($$TR/Q$$). This is always equal to the price.
+* Marginal Revenue (MR): The change in total revenue from selling one additional unit. For competitive firms only, $$MR=P$$.
 
-**Real-World Example (Shutdown):** A near-empty restaurant stays open for lunch if the few customers pay enough to cover the food and waiter’s wages ($$AVC$$), even if they don't help with the rent ($$FC$$).
+Firms maximize profit by comparing Marginal Revenue (MR) and Marginal Cost (MC).
+
+* If $$MR > MC$$: The firm should increase production to raise profit.
+* If $$MR < MC$$: The firm should decrease production.
+* Profit-Maximizing Rule: The firm produces exactly where $$MR = MC$$.
+
+Since $$P = MR$$ for a competitive firm, the firm produces where the horizontal price line intersects the upward-sloping marginal-cost curve.
+
+#### The Short-Run Shutdown: A Seasonal Ski Resort
+
+Imagine a ski resort in the middle of a very warm, rainy March.
+
+* **Fixed Costs (Sunk)**: The resort still has to pay property taxes, insurance, and the interest on the loans used to buy the chairlifts. These costs are paid even if zero skiers show up.
+* **Variable Costs (VC)**: These include the electricity to run the lifts, the wages for lift operators, and the cost of making artificial snow.
+* **The Scenario**: If the weather is so bad that only 10 people want to ski, the Price (P) of their tickets won't even cover the electricity and wages (AVC).
+* **The Decision**: The resort shuts down for the rest of the season. They still lose money (because of the fixed costs), but by shutting down, they stop "bleeding" money on electricity and wages.
 
 #### Measuring Profit and Loss
 
@@ -509,6 +522,8 @@ $$\text{Profit} = (P - ATC) \times Q$$
 ***
 
 ## Monopoly
+
+#### Monopoly Resources
 
 A monopoly can form if a single firm owns a key resource that has no close substitutes.
 
@@ -801,7 +816,7 @@ Government policies like Unemployment Insurance provide protection but can unint
 
 ***
 
-## Money and Prices in the Long Run
+## Monetary System
 
 #### The Nature and Function of Money
 
@@ -849,4 +864,50 @@ The Fed is the U.S. central bank, tasked with overseeing the banking system and 
 
 #### Banks and the Money Supply
 
-Banks play a critical role in determining how much money exists. In a 100-percent-reserve banking system, banks only hold deposits and do not lend; in this case, they do not affect the money supply. However, in our actual system, banks lend out a portion of their deposits, which effectively creates money through the banking multiplier
+the money supply is not determined solely by the central bank but through a dynamic interaction between the Federal Reserve and commercial banks. While the Fed provides the initial currency and reserves, banks "create" the majority of the money in circulation through the process of lending. This system, known as **fractional-reserve banking**, allows the economy to be more liquid but also introduces risks related to leverage and bank stability, requiring constant oversight by the Fed to manage the total quantity of money available.
+
+* **Fractional-Reserve Banking**: A system where banks hold only a small percentage of their deposits as reserves and use the remainder to issue interest-bearing loans.
+* **Reserves**: The portion of deposits that a bank keeps in its vault or at the Federal Reserve rather than lending out.
+* **Money Multiplier**: The amount of money the banking system generates with each dollar of reserves
+* **Bank Capital**: The resources a bank's owners put into the institution; it serves as a cushion to protect depositors against losses on the bank's assets.
+* **Leverage and the Leverage Ratio**: The use of borrowed money to supplement existing funds for investment; the leverage ratio (total assets divided by bank capital) shows how much debt is being used to amplify potential returns—and potential losses.
+* **Open-Market Operations**: The Fed’s primary tool for controlling the money supply, involving the purchase (to increase money) or sale (to decrease money) of government bonds.
+* **Discount Rate**: The interest rate the Fed charges banks for short-term loans, used to influence the total quantity of reserves in the system.
+* **Reserve Requirements**: Regulations setting the minimum amount of reserves a bank must hold, which directly impacts the money multiplier's effectiveness.
+
+## Money Growth and Inflation
+
+The classical theory of inflation, primarily defined by the **Quantity Theory of Money**, posits that inflation is an economy-wide phenomenon related to the value of money rather than the value of specific goods. In this view, the overall price level ($$P$$) is also a measure of the value of money; specifically, the value of $$1$$ is expressed as $$1/P$$. When the price level rises, the value of money falls because each unit of currency buys fewer goods and services.
+
+The **value of money** is determined by the supply and demand for it. While the **Federal Reserve** controls the money supply, money demand is driven by how much liquidity the public wishes to hold, which is heavily influenced by the average price level. In the **long run**, the overall price level adjusts to bring the quantity of money supplied and demanded into balance. If the Fed increases the money supply (a "**monetary injection**"), the excess supply of money leads to increased demand for goods. Since the economy’s ability to produce goods is limited by real factors like labor and technology, this increased demand simply **bids up** prices, eventually lowering the value of money until a new equilibrium is reached.
+
+The classical theory also relies on the **classical dichotomy**, which separates variables into nominal (measured in money) and real (measured in physical units). This leads to the principle of **monetary neutrality**, suggesting that changes in the money supply do not affect real variables like GDP or unemployment in the long run.&#x20;
+
+Finally, the **Quantity Equation** ($$M \times V = P \times Y$$) illustrates that if the velocity of money ($$V$$) is stable and output ($$Y$$) is determined by real factors, any increase in the money supply ($$M$$) must result in a proportional increase in the price level ($$P$$).
+
+**Hyperinflation**, typically defined as inflation exceeding 50% per month, provides a "natural experiment" for economists to study the relationship between money supply and price levels. Historical data from 1920s Austria, Hungary, Germany, and Poland demonstrate that the money supply and the price level move almost in lockstep. This confirms the **Quantity Theory of Money**: prices rise dramatically when governments print excessive amounts of currency, and stabilize only when the money supply is reined in.
+
+#### The Inflation Tax
+
+Governments often trigger hyperinflation to finance spending when they cannot raise enough revenue through traditional taxes or borrowing. By printing money to pay for roads, salaries, or wars, the government effectively levies an **inflation tax**. Unlike standard taxes, no one receives a bill; instead, the value of the money in everyone’s pockets decreases. This tax acts as a penalty on everyone who holds currency, transferring purchasing power from the public to the government.
+
+#### The Fisher Effect
+
+According to the principle of **monetary neutrality**, money growth does not affect real variables like the real interest rate in the long run. Consequently, when inflation rises, the nominal interest rate must rise by the same amount to keep the real interest rate stable. This one-for-one adjustment is known as the **Fisher Effect**. While this holds true in the long run, short-run discrepancies can occur when inflation is unanticipated by borrowers and lenders.
+
+***
+
+## Macroeconomics of Open Economy
+
+Open economies interact with the global market through the exchange of products and financial assets. The flow of goods is measured by **net exports (NX)**, also known as the **trade balance**, which is the value of a nation’s exports minus its imports.&#x20;
+
+A **trade surplus** occurs when exports exceed imports, while a **trade deficit** occurs when imports exceed exports. Over the last several decades, the U.S. economy has become increasingly open due to improvements in transportation (such as wide-body jets and massive merchant ships), advances in telecommunications, and government policies that have lowered trade barriers.
+
+Simultaneously, economies engage in the flow of financial resources through **net capital outflow (NCO)**, which is the purchase of foreign assets by domestic residents minus the purchase of domestic assets by foreigners. This capital flow takes the form of either **foreign direct investment** (actively managing a business abroad) or **foreign portfolio investment** (passively holding foreign stocks or bonds). Key factors influencing these flows include the real interest rates offered on domestic versus foreign assets, as well as the perceived economic and political risks of holding assets in different countries.
+
+A fundamental accounting identity in macroeconomics is that **net exports must always equal net capital outflow (**$$NX = NCO$$**)**. Every international transaction involves an exchange of a good or service for an asset of equal value;&#x20;
+
+for example, if a domestic seller exports a good, they receive foreign currency (an asset), which increases both NX and NCO. This relationship extends to national saving ($$S$$) and investment ($$I$$). In an open economy, a nation's saving can be used to **finance domestic investment** or the **purchase of foreign assets**, expressed by the identity $$S = I + NCO$$. Consequently, a country with a trade deficit ($$NX < 0$$) is investing more than it is saving and must be financing that investment by selling assets to foreigners ($$NCO < 0$$), while a country with a trade surplus is a net lender to the rest of the world.
+
+
+
