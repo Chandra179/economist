@@ -922,7 +922,17 @@ two reasons why your dollar doesn't actually buy the same amount everywhere:
 * You can't "export" a haircut: Some things are non-tradable. If a haircut is $10 in New Orleans but $80 in Paris, you can’t exactly fly to Louisiana every time you need a trim. Because you can't easily move the service, the price difference stays stuck.
 * A Toyota isn't a Ford: Even things we _can_ ship aren't always the same. If people suddenly decide German cars are much cooler than American cars, they will pay a premium for them. They aren't "perfect substitutes," so the prices won't stay equal.
 
+***
 
+## A Macroeconomic Theory of the Open Economy
+
+In an open economy, macroeconomic equilibrium is determined by the interaction between two primary markets: the **market for loanable funds** and the **market for foreign-currency exchange**. In the loanable funds market, the real interest rate adjusts to balance the supply of funds from national saving with the demand arising from both domestic investment and net **capital outflow (NCO)**. A higher interest rate encourages saving while making domestic assets more attractive, thereby reducing NCO.
+
+Simultaneously, the market for foreign-currency exchange determines the **real exchange rate**. Here, the supply of currency is dictated by NCO (which is vertical because it depends on interest rates, not exchange rates), while the demand is driven by **net exports (NX)**. The exchange rate adjusts until the quantity of currency supplied for foreign investment exactly matches the quantity demanded for purchasing net exports. Together, these markets coordinate the flow of resources and capital between a nation and the rest of the world.
+
+***
+
+ch -32.2 next
 
 
 
