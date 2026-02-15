@@ -909,5 +909,20 @@ A fundamental accounting identity in macroeconomics is that **net exports must a
 
 for example, if a domestic seller exports a good, they receive foreign currency (an asset), which increases both NX and NCO. This relationship extends to national saving ($$S$$) and investment ($$I$$). In an open economy, a nation's saving can be used to **finance domestic investment** or the **purchase of foreign assets**, expressed by the identity $$S = I + NCO$$. Consequently, a country with a trade deficit ($$NX < 0$$) is investing more than it is saving and must be financing that investment by selling assets to foreigners ($$NCO < 0$$), while a country with a trade surplus is a net lender to the rest of the world.
 
+### **purchasing-power parity (PPP)**&#x20;
+
+**PPP** suggests that exchange rates should adjust so that a unit of currency has the same real value across different countries, but in practice, several factors limit its precision.
+
+#### The Core Idea
+
+If a cup of coffee costs $1 in the US and 100 Yen in Japan, the exchange rate _should_ be 1 dollar = 100 yen. If the exchange rate was different—say, $1 got you 200 Yen—everyone would buy coffee in Japan for cheap and sell it in the US for a huge profit. This "buying low and selling high" is called arbitrage, and it’s supposed to force prices and exchange rates to balance out.
+
+two reasons why your dollar doesn't actually buy the same amount everywhere:
+
+* You can't "export" a haircut: Some things are non-tradable. If a haircut is $10 in New Orleans but $80 in Paris, you can’t exactly fly to Louisiana every time you need a trim. Because you can't easily move the service, the price difference stays stuck.
+* A Toyota isn't a Ford: Even things we _can_ ship aren't always the same. If people suddenly decide German cars are much cooler than American cars, they will pay a premium for them. They aren't "perfect substitutes," so the prices won't stay equal.
+
+
+
 
 
