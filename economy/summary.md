@@ -67,8 +67,6 @@ When the government imposes a tax, it places a "wedge" between the price buyers 
 
 The **size** of the deadweight loss is determined by the **price elasticities** of supply and demand.
 
-
-
 ## Curve
 
-Supply and demand curve affected by Tax, Consumer and Producer surplus, Resource allocation
+Supply and demand curve affected by Tax, Consumer and Producer surplus, Resource allocation, Elasticity and Inelasticity of Price
