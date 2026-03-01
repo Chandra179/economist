@@ -4,15 +4,9 @@ Absolute Advantage
 
 Comparative Advantage
 
-Competitive market -> there are so many buyers and sellers
-
-Monopoly
-
-Oligopoly
-
 ## Curve
 
-Supply and demand curve affected by Tax, Consumer and Producer surplus, Resource allocation, Elasticity and Inelasticity of Price, Tarrifs
+Supply and demand curve affected by Tax, Consumer and Producer surplus, Resource allocation, Elasticity and Inelasticity of Price, Tarrifs, Cost of production
 
 ## Supply & Demand
 
@@ -177,75 +171,227 @@ Spending:
 
 **Budget Surplus**: An excess of government receipts over government spending (The government uses the extra to pay down debt).
 
+## The Costs of Production
 
+* Total Revenue (TR): The amount a firm receives for the sale of its output $$TR = \text{Price} \times \text{Quantity}$$.
+* Total Cost (TC): The market value of the inputs a firm uses in production.
+* Profit: Total revenue minus total cost ($$Profit = TR - TC$$).
 
-* 12-1 A Financial Overview of the U.S. Government
-* 12-2 Taxes and Efficiency
-* 12-3 Taxes and Equity
+**Explicit Costs**: Input costs that require an outlay of money by the firm (e.g., paying wages, buying raw materials, paying rent).
 
-#### Part V: Firm Behavior and the Organization of Industry
+**Implicit Costs**: Input costs that do not require an outlay of money (e.g., the value of the owner's time, the interest income foregone by using personal savings to start the business).
 
-* Chapter 13: The Costs of Production
-  * 13-1 What Are Costs?
-  * 13-2 Production and Costs
-  * 13-3 The Various Measures of Cost
-  * 13-4 Costs in the Short Run and in the Long Run
-* Chapter 14: Firms in Competitive Markets
-  * 14-1 What Is a Competitive Market?
-  * 14-2 Profit Maximization and the Competitive Firm’s Supply Curve
-  * 14-3 The Supply Curve in a Competitive Market
-* Chapter 15: Monopoly
-  * 15-1 Why Monopolies Arise
-  * 15-2 How Monopolies Make Production and Pricing Decisions
-  * 15-3 The Welfare Cost of Monopolies
-  * 15-4 Price Discrimination
-  * 15-5 Public Policy Toward Monopolies
-* Chapter 16: Monopolistic Competition
-  * 16-1 Between Perfect Competition and Monopoly
-  * 16-2 Competition with Differentiated Products
-  * 16-3 Advertising
-* Chapter 17: Oligopoly
-  * 17-1 Markets with Only a Few Sellers
-  * 17-2 The Economics of Cooperation
-  * 17-3 Public Policy Toward Oligopolies
+**Accounting Profit**: Total Revenue minus only Explicit Costs. This is usually a higher number because it ignores "hidden" opportunity costs.
 
-#### Part VI: The Economics of Labor Markets
+**Economic Profit**: Total Revenue minus all opportunity costs (Explicit + Implicit).
 
-* Chapter 18: The Markets for the Factors of Production
-  * 18-1 The Demand for Labor
-  * 18-2 The Supply of Labor
-  * 18-3 Equilibrium in the Labor Market
-  * 18-4 Other Factors of Production: Land and Capital
-* Chapter 19: Earnings and Discrimination
-  * 19-1 Some Determinants of Equilibrium Wages
-  * 19-2 The Economics of Discrimination
-* Chapter 20: Income Inequality and Poverty
-  * 20-1 The Measurement of Inequality
-  * 20-2 The Political Philosophy of Redistributing Income
-  * 20-3 Policies to Reduce Poverty
+**Marginal Product**: This is the increase in output that arises from an additional unit of input.
 
-#### Part VII: Topics for Further Study
+* $$Marginal\ Product = \frac{\Delta\ Output}{\Delta\ Input}$$
 
-* Chapter 21: The Theory of Consumer Choice
-  * 21-1 The Budget Constraint: What the Consumer Can Afford
-  * 21-2 Preferences: What the Consumer Wants
-  * 21-3 Optimization: What the Consumer Chooses
-  * 21-4 Three Applications
-* Chapter 22: Frontiers of Microeconomics
-  * 22-1 Asymmetric Information
-  * 22-2 Political Economy
-  * 22-3 Behavioral Economics
+**Diminishing Marginal Product**: This is the property whereby the marginal product of an input declines as the quantity of the input increases.
 
-#### Part VIII: The Data of Macroeconomics
+* _Example:_ In a small kitchen, the first few workers are very productive. As you add more workers, they start getting in each other's way or waiting for the oven, so each additional worker adds less to total output than the one before.
 
-* Chapter 23: Measuring a Nation’s Income
-  * 23-1 The Economy’s Income and Expenditure
-  * 23-2 The Measurement of Gross Domestic Product (GDP)
-  * 23-3 The Components of GDP
-  * 23-4 Real versus Nominal GDP
-* Chapter 24: Measuring the Cost of Living
-  * 24-1 The Consumer Price Index (CPI)
-  * 24-2 Correcting Economic Variables for the Effects of Inflation
+The production function and the total-cost curve are two sides of the same coin. As the production function gets flatter (due to diminishing marginal product), the total-cost curve gets steeper.
+
+* **Total-Cost Curve**: A graph showing the relationship between the quantity of output produced and the total cost of production.
+* **The Logic**: If each additional worker produces less output (diminishing marginal product), then producing additional units of output requires more and more labor. Therefore, the cost of producing those extra units rises.
+
+Measure of Costs
+
+* **Fixed Costs (FC)**: Costs that do not vary with the quantity of output produced (e.g., rent, insurance, cost of machinery). Even if the firm produces zero, these costs remain.
+* **Variable Costs (VC)**: Costs that change as the firm alters the quantity of output produced (e.g., raw materials, wages for production workers).
+*   **Total Cost (TC)**: The sum of fixed and variable costs.
+
+    $$TC = FC + VC$$
+
+Average costs tell us the cost of a typical unit of product.
+
+*   **Average Fixed Cost (AFC)**: Fixed cost divided by the quantity of output. As production increases, AFC always declines (this is called "spreading the overhead").
+
+    $$AFC = FC / Q$$
+*   **Average Variable Cost (AVC)**: Variable cost divided by the quantity of output.
+
+    $$AVC = VC / Q$$
+*   **Average Total Cost (ATC)**: Total cost divided by the quantity of output. It is also the sum of AFC and AVC.
+
+    $$ATC = TC / Q$$
+
+This is the most important measure for decision-making. It tells us the increase in total cost that arises from an extra unit of production.
+
+$$MC = \Delta TC / \Delta Q$$
+
+## Firms in Competitive Markets
+
+A perfectly competitive market has three specific characteristics that distinguish it from other market structures:
+
+1. Many Buyers and Many Sellers: There are so many participants that no single buyer or seller has any influence over the market price.
+2. Identical Goods: The goods offered by the various sellers are largely the same (homogeneous). For example, a bushel of wheat from Farmer A is virtually indistinguishable from a bushel from Farmer B.
+3. Free Entry and Exit: Firms can freely enter or exit the market in the long run without significant legal or financial barriers.
+
+#### The Firm as a "Price Taker"
+
+Because of these characteristics, a firm in a competitive market is a Price Taker. It takes the price as given by market conditions. If the firm tries to charge even slightly more than the market price, buyers will simply go to a competitor.
+
+***
+
+### The Revenue of a Competitive Firm
+
+This is the amount of money the firm receives for its output.
+
+$$TR = P \times Q$$
+
+This tells us how much revenue a firm receives for the typical unit sold. For all firms, average revenue equals the price of the good.
+
+$$AR = \frac{TR}{Q} = \frac{(P \times Q)}{Q} = P$$
+
+This is the change in total revenue from the sale of each additional unit. For firms in competitive markets, Marginal Revenue equals the Price ($$P$$) of the good. Because the firm can sell as much as it wants at the market price, every extra unit sold brings in exactly $$P$$ dollars.
+
+$$MR = \Delta TR / \Delta Q = P$$
+
+A firm's primary goal is to maximize Profit, which is defined as:
+
+$$\text{Profit} = \text{Total Revenue (TR)} - \text{Total Cost (TC)}$$
+
+To find the point of maximum profit, the firm compares Marginal Revenue (MR) and Marginal Cost (MC):
+
+* Marginal Revenue (MR): The change in total revenue from selling one additional unit. In a competitive market, $$MR = P$$.
+* Marginal Cost (MC): The change in total cost from producing one additional unit.
+
+The Golden Rule of Profit Maximization:
+
+* If $$MR > MC$$: The firm should increase production (it adds more to revenue than to cost).
+* If $$MR < MC$$: The firm should decrease production (the last unit cost more to make than it earned).
+  * Profit is maximized where $$MR = MC$$.
+
+Sometimes, a firm is better off not producing anything at all. A Shutdown refers to a short-run decision not to produce anything during a specific period because of current market conditions.
+
+* The firm shuts down if the revenue it would get from producing is less than its variable costs.
+* Mathematical Condition: Shut down if $$P < AVC$$ (Average Variable Cost).
+* Logic: The firm still has to pay its fixed costs (like rent) whether it produces or not. If it can’t even cover its labor and materials ($$AVC$$), it’s better to stop production to minimize losses.
+
+In the long run, all costs are variable. A firm will Exit the market if it cannot make a profit.
+
+* Exit Rule: Exit if $$P < ATC$$ (Average Total Cost).
+* Entry Rule: A new firm will enter the market if $$P > ATC$$ (because there is profit to be made)
+
+## Monopoly
+
+A firm is a monopoly if it is the sole seller of its product and if its product does not have close substitutes.
+
+$$\text{Marginal Revenue} = \text{Marginal Cost} \quad (MR = MC)$$
+
+**Deadweight Loss**: Unlike a competitive firm, a monopoly charges a price ($$P$$) that is above its marginal cost ($$MC$$).
+
+**The Logic of Price Discrimination**: For a firm to price discriminate, it must have market power and be able to separate customers based on their willingness to pay. It also must be able to prevent arbitrage (buying low in one market and reselling high in another).
+
+Examples of Price Discrimination:
+
+* Movie Tickets: Lower prices for children and seniors.
+* Airline Prices: Lower prices for round-trip tickets that include a Saturday night stay (distinguishing leisure travelers from business travelers).
+* Discount Coupons: Only people with a lower "opportunity cost of time" will take the time to clip coupons.
+* Financial Aid: High tuition for wealthy families and lower net tuition (via aid) for low-income families.
+
+**Natural Monopolies** (like water or electric companies) where it is more efficient to have only one firm, but the firm cannot be allowed to charge any price it wants
+
+## Monopolistic Competition
+
+A market is Monopolistically Competitive if it has three key attributes:
+
+1. **Many Sellers**: Many firms compete for the same group of customers.
+2. **Product Differentiation**: Each firm produces a product that is at least slightly different from those of its competitors. Rather than being a price taker, each firm faces a downward-sloping demand curve.
+3. **Free Entry and Exit**: Firms can enter or exit the market without restriction. The number of firms adjusts until economic profits are driven to zero.
+
+In the short run, a monopolistically competitive firm follows the same rule as a monopolist:
+
+* It chooses the quantity where Marginal Revenue = Marginal Cost ($$MR = MC$$).
+* It uses the demand curve to find the price.
+* If Price > Average Total Cost ($$P > ATC$$), the firm makes a profit. If $$P < ATC$$, it makes a loss.
+
+If firms are making profits, new firms enter the market. This increases the number of products customers can choose from
+
+* Zero Economic Profit: Entry and exit continue until the firms in the market are making exactly zero economic profit
+
+Two spatial differences exist in the long run:
+
+1. Excess Capacity: Unlike perfectly competitive firms, monopolistically competitive firms produce below the "efficient scale" (the minimum of $$ATC$$). They could lower costs by producing more, but they don't because they'd have to cut prices.
+2. The Markup: For these firms, Price > Marginal Cost. Because the firm has some market power, an extra unit sold at the posted price means more profit.
+
+Because products are differentiated, firms have a natural incentive to advertise to attract more customers.
+
+Mankiw highlights a clever theory: the _content_ of an advertisement may be less important than its _cost_. By spending millions on an ad (even a silly one), a firm "signals" to consumers that its product is high quality, because only a firm with a great product would repeat-sales enough to recoup such a high expense.
+
+## Oligopoly
+
+Because an oligopoly has only a small number of firms, the key feature is **interdependence**: the actions of one seller significantly affect the profits of all other sellers
+
+**Collusion and Cartels**: Firms would ideally like to collude—agreeing on quantities to produce or prices to charge. A group of firms acting in unison is called a cartel.
+
+* If they form a cartel, they effectively act as a monopoly, maximizing total profit by producing a low quantity and charging a high price.
+
+**The Equilibrium for an Oligopoly**: Cartels are often unstable because each member has an incentive to "cheat" by producing slightly more to grab more profit.
+
+**The Prisoners’ Dilemma**: A "game" between two captured prisoners that illustrates why cooperation is difficult to maintain even when it is mutually beneficial.
+
+**Restraint of Trade and Antitrust Laws**: Governments use laws (like the Sherman Act and Clayton Act in the U.S.) to prevent firms from forming cartels or engaging in anti-competitive behavior.
+
+## The Economics of Labor Markets
+
+In a normal market (like for coffee), you are the buyer and the shop is the seller. In a labor market, the firm is the buyer (buying your time/skills) and you are the seller.
+
+Think of it this way: a business only hires you if you make them more money than they have to pay you.
+
+## Earnings and Discrimination
+
+wage differences exist because of human capital (the education and skills a worker gains), **compensating differentials** (extra pay for dangerous or unpleasant jobs), and the **superstar phenomenon** (where top performers in certain fields earn massive salaries due to technology and mass appeal). It also notes that while **discrimination** by employers, customers, or governments can create unfair pay gaps, a competitive market naturally rewards productivity, as profit-seeking firms generally prefer to hire the most capable workers at the lowest possible cost regardless of their background
+
+## Income Inequality and Poverty
+
+comparing **Utilitarianism** (maximizing total happiness), **Liberalism** (maximizing the well-being of the worst-off person via the "maximin" criterion), and **Libertarianism** (focusing on the fairness of the process rather than the outcome). Finally, it discusses practical policies to reduce poverty, such as minimum-wage laws, welfare, negative income taxes, and in-kind transfers, while cautioning that these programs can create "work disincentives" by effectively taxing the poor when they start earning more and lose their benefits.
+
+## The Theory of Consumer Choice
+
+explores the **Theory of Consumer Choice**, which uses the concept of **indifference curves** and **budget constraints** to explain how individuals make decisions. A budget constraint represents the combinations of goods a consumer can afford based on their income, while indifference curves show combinations of goods that provide the same level of satisfaction.&#x20;
+
+The consumer reaches an **optimum** point where the budget constraint is tangent to the highest possible indifference curve—this is where the marginal rate of substitution (the rate at which a consumer is willing to trade one good for another) equals the relative price of the goods.&#x20;
+
+When the price of a good changes, it affects the consumer through two channels: the **income effect**, where the consumer feels richer or poorer, and the **substitution effect**, where the consumer moves toward the good that has become relatively cheaper. This framework ultimately explains why demand curves usually slope downward and provides insight into complex behaviors, such as why a higher wage could potentially lead someone to work fewer hours if the income effect outweighs the substitution effect.
+
+## Frontiers of Microeconomics
+
+#### Asymmetric Information
+
+This occurs when one person in a transaction knows more than the other. This leads to two big problems:
+
+* **Moral Hazard**: When a person who is being watched (the "agent") performs a task for someone else (the "principal"). Because the principal can't perfectly monitor the agent, the agent might not work as hard as they should (shirking). For example, an employee might play on their phone when the boss isn't looking.
+* **Adverse Selection**: This happens when the "mix" of unobserved traits in a market is lopsided. A classic example is The Market for Lemons: if a buyer can't tell the difference between a good used car and a bad one (a "lemon"), they will only offer a medium price. Owners of good cars won't sell for that low price, leaving only the "lemons" in the market.
+
+#### Political Economy
+
+This field applies the tools of economics to study how government works. It suggests that politicians and voters don't always act for the "common good"—they often act in their own self-interest.
+
+* **Condorcet Paradox**: It shows that democratic voting can sometimes fail to produce a clear winner if people's preferences are "circular" (A beats B, B beats C, but C beats A).
+* **Arrow’s Impossibility Theorem**: A mathematical proof showing that no perfect voting system exists that can satisfy all fair criteria.
+* **Median Voter Theorem**: The idea that political parties will often move toward the center (the "middle" voter) to win the most votes.
+
+#### Behavioral Economics
+
+This is the intersection of psychology and economics. Traditional economics assumes people are "rational," but behavioral economics shows we are often "predictably irrational."
+
+* **People aren't always rational**: We care too much about small losses (loss aversion), we are overconfident, and we give too much weight to vivid observations.
+* **People care about fairness**: We might turn down a deal that benefits us if we feel the other person is being "unfair" (the Ultimatum Game).
+* **People are inconsistent over time**: We want to eat healthy tomorrow, but we want a donut right now. This is called "present bias."
+
+## Measuring a Nation’s Income
+
+**Gross Domestic Product (GDP)**, which measures a nation's total income and its total expenditure on goods and services simultaneously. GDP is defined as the market value of all final goods and services produced within a country in a given period, and it is calculated using four main components: **Consumption (C)**, **Investment (I)**, **Government Purchases (G)**, and **Net Exports (NX)**.&#x20;
+
+To distinguish between actual growth in production and simple price increases. **Nominal GDP** (valued at current prices) and **Real GDP** (valued at constant prices), with the **GDP Deflator** serving as a measure of the overall price level. While GDP is a primary indicator of economic well-being because it correlates with better nutrition, healthcare, and education, it is not a perfect measure as it excludes non-market activities like volunteer work, the quality of the environment, and the distribution of income.
+
+## Measuring the Cost of Living
+
+measuring the cost of living using the **Consumer Price Index (CPI)**, which tracks the total cost of a "basket" of goods and services bought by a typical consumer. By comparing the cost of this basket over different years relative to a base year, economists calculate the inflation rate—**the percentage change in the price level**. While the CPI is a vital tool for adjusting dollar values for inflation (indexation) and calculating real interest rates, it is not a perfect measure; it often overstates increases in the cost of living due to substitution bias (consumers switching to cheaper goods), the introduction of new goods, and unmeasured quality changes in products.
 
 #### Part IX: The Real Economy in the Long Run
 
