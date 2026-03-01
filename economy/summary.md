@@ -399,21 +399,23 @@ Chapter 25 focuses on the long-run determinants of a nation's standard of living
 
 ## Saving, Investment, and the Financial System
 
-* 26-1 Financial Institutions in the U.S. Economy
-* 26-2 Saving and Investment in the National Income Accounts
-* 26-3 The Market for Loanable Funds
+Chapter 26 explores how the financial system coordinates saving and investment, which are the key drivers of long-run economic growth. It begins by defining financial institutions like banks, bond markets, and stock markets that move resources from "savers" (people with extra money) to "borrowers" (firms needing funds for equipment).&#x20;
 
-The Basic Tools of Finance
+Using the national income accounting identity ($$S = I$$), Mankiw demonstrates that in a closed economy, total saving must equal total investment. This process is visualized through the **Market for Loanable Funds**, where the interest rate acts as the price; a higher interest rate encourages saving but discourages borrowing for investment. Government policies—such as tax incentives for saving, investment tax credits, or budget deficits (which cause "crowding out" by reducing the supply of funds)—directly shift these curves, ultimately determining how much a nation invests in its future.
+
+## The Basic Tools of Finance
 
 * 27-1 Present Value: Measuring the Time Value of Money
 * 27-2 Managing Risk
 * 27-3 Asset Valuation
-* Chapter 28: Unemployment
-  * 28-1 Identifying Unemployment
-  * 28-2 Job Search
-  * 28-3 Minimum-Wage Laws
-  * 28-4 Unions and Collective Bargaining
-  * 28-5 The Theory of Efficiency Wages
+
+Chapter 28: Unemployment
+
+* 28-1 Identifying Unemployment
+* 28-2 Job Search
+* 28-3 Minimum-Wage Laws
+* 28-4 Unions and Collective Bargaining
+* 28-5 The Theory of Efficiency Wages
 
 #### Part X: Money and Prices in the Long Run
 
