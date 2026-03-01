@@ -393,20 +393,21 @@ To distinguish between actual growth in production and simple price increases. *
 
 measuring the cost of living using the **Consumer Price Index (CPI)**, which tracks the total cost of a "basket" of goods and services bought by a typical consumer. By comparing the cost of this basket over different years relative to a base year, economists calculate the inflation rate—**the percentage change in the price level**. While the CPI is a vital tool for adjusting dollar values for inflation (indexation) and calculating real interest rates, it is not a perfect measure; it often overstates increases in the cost of living due to substitution bias (consumers switching to cheaper goods), the introduction of new goods, and unmeasured quality changes in products.
 
-#### Part IX: The Real Economy in the Long Run
+## Production and Growth
 
-* Chapter 25: Production and Growth
-  * 25-1 Economic Growth around the World
-  * 25-2 Productivity: Its Role and Determinants
-  * 25-3 Economic Growth and Public Policy
-* Chapter 26: Saving, Investment, and the Financial System
-  * 26-1 Financial Institutions in the U.S. Economy
-  * 26-2 Saving and Investment in the National Income Accounts
-  * 26-3 The Market for Loanable Funds
-* Chapter 27: The Basic Tools of Finance
-  * 27-1 Present Value: Measuring the Time Value of Money
-  * 27-2 Managing Risk
-  * 27-3 Asset Valuation
+Chapter 25 focuses on the long-run determinants of a nation's standard of living, centered on the concept of **productivity**—the amount of goods and services produced by each unit of labor input. Mankiw explains that a country's income is tied directly to its productivity, which is driven by four key factors: **physical capital** (tools and machinery), **human capital** (worker knowledge and skills), **natural resources** (land and minerals), and **technological knowledge** (the best ways to produce goods). The chapter also discusses the **catch-up effect**, where poorer countries tend to grow faster than rich ones because small increases in capital lead to larger gains in productivity when you're starting from a lower baseline. Ultimately, government policies that encourage saving, investment, education, and research are shown to be the primary engines for long-term economic growth.
+
+## Saving, Investment, and the Financial System
+
+* 26-1 Financial Institutions in the U.S. Economy
+* 26-2 Saving and Investment in the National Income Accounts
+* 26-3 The Market for Loanable Funds
+
+The Basic Tools of Finance
+
+* 27-1 Present Value: Measuring the Time Value of Money
+* 27-2 Managing Risk
+* 27-3 Asset Valuation
 * Chapter 28: Unemployment
   * 28-1 Identifying Unemployment
   * 28-2 Job Search
