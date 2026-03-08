@@ -405,28 +405,22 @@ Using the national income accounting identity ($$S = I$$), Mankiw demonstrates t
 
 ## The Basic Tools of Finance
 
-* 27-1 Present Value: Measuring the Time Value of Money
-* 27-2 Managing Risk
-* 27-3 Asset Valuation
+"The Basic Tools of Finance," introduces the core concepts of time, risk, and asset valuation that govern financial decision-making. It begins with the time value of money, utilizing the concept of **Present Value** to show that a dollar today is worth more than a dollar in the future because of its potential earning capacity via interest. The chapter then shifts to **Risk Management**, explaining how individuals use insurance and **diversification** (the practice of spreading investments across many assets) to reduce the specific risk associated with a single company. Finally, it explores **Asset Valuation**, contrasting the **Efficient Markets Hypothesis**—which suggests that stock prices always reflect all available information and are "random walks"—with the idea that fundamental analysis can reveal undervalued stocks.
 
-Chapter 28: Unemployment
+## Unemployment
 
-* 28-1 Identifying Unemployment
-* 28-2 Job Search
-* 28-3 Minimum-Wage Laws
-* 28-4 Unions and Collective Bargaining
-* 28-5 The Theory of Efficiency Wages
+Chapter 28 explores the "natural rate of unemployment" by examining why there are always some people without jobs even when the economy is doing well. It distinguishes between **frictional unemployment**, which occurs as workers spend time searching for the best-fitting jobs for their specific skills, and **structural unemployment**, which happens when the number of jobs available in some labor markets is insufficient to provide a job for everyone who wants one. Mankiw identifies three primary reasons for structural unemployment: **minimum-wage laws**, which can prevent wages from adjusting to the equilibrium level for low-skilled workers; **unions and collective bargaining**, which can push wages above the equilibrium through market power; and **efficiency wages**, where firms voluntarily pay above-market wages to increase worker productivity, health, or loyalty. By analyzing these factors, the chapter explains that while job search is a natural part of a dynamic economy, government policies and labor market institutions significantly influence the long-term level of unemployment.
 
-#### Part X: Money and Prices in the Long Run
+## The Monetary System
 
-* Chapter 29: The Monetary System
-  * 29-1 The Meaning of Money
-  * 29-2 The Federal Reserve System
-  * 29-3 Banks and the Money Supply
-  * 29-4 The Fed’s Tools of Monetary Control
-* Chapter 30: Money Growth and Inflation
-  * 30-1 The Classical Theory of Inflation
-  * 30-2 The Costs of Inflation
+Chapter 29, "The Monetary System," explores the **functional role of money** and the institutions that govern its supply within a modern economy. It begins by defining money through its three primary functions—as a medium of **exchange**, a **unit of account**, and a **store of value**—while distinguishing between commodity money (which has intrinsic value, like gold) and fiat money (which is established by government decree).&#x20;
+
+The narrative then shifts to the Federal Reserve (the Fed), the central bank of the United States, detailing its dual responsibility of regulating banks and controlling the money supply through **monetary policy**. A critical portion of the chapter explains how the banking system "creates" money through **fractional-reserve banking**, where banks hold only a portion of deposits as reserves and lend out the rest, thereby expanding the total money supply via the money multiplier ($$1/R$$). To manage this process, the Fed utilizes three main tools: Open-Market Operations (buying or selling government bonds), changing the reserve requirements for banks, and adjusting the discount rate (the interest rate on loans the Fed makes to banks). The chapter concludes by highlighting the Fed's challenges in achieving precise control over the money supply, as the system ultimately depends on the behavior of households (how much cash they hold) and the discretion of bankers (how much they choose to lend).
+
+## Money Growth and Inflation
+
+* 30-1 The Classical Theory of Inflation
+* 30-2 The Costs of Inflation
 
 #### Part XI: The Macroeconomics of Open Economies
 
