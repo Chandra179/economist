@@ -419,37 +419,38 @@ The narrative then shifts to the Federal Reserve (the Fed), the central bank of 
 
 ## Money Growth and Inflation
 
-* 30-1 The Classical Theory of Inflation
-* 30-2 The Costs of Inflation
+Chapter 30 explores the **Money Growth and Inflation** relationship, primarily through the **Quantity Theory of Money**, which asserts that the quantity of money available determines the price level and that the growth rate in the quantity of money determines the inflation rate. Using the **Money Supply-Demand Diagram**, Mankiw illustrates that when the central bank increases the money supply, the value of money falls and the price level rises to bring the market into a new equilibrium. This logic is supported by the **Classical Dichotomy**, the theoretical separation of nominal variables (measured in monetary units) and real variables (measured in physical units), and the principle of **Monetary Neutrality**, which suggests that changes in the money supply do not affect real variables like GDP in the long run.&#x20;
 
-#### Part XI: The Macroeconomics of Open Economies
+The relationship is mathematically expressed by the **Quantity Equation** ($$M \times V = P \times Y$$), showing that if velocity ($$V$$) and real output ($$Y$$) are relatively stable, an increase in money ($$M$$) must lead to a proportional increase in prices ($$P$$). Additionally, the chapter covers the **Fisher Effect**, where the nominal interest rate adjusts one-for-one with changes in the inflation rate, and details the "costs" of inflation, such as **shoe-leather costs** (wasted resources from reducing money holdings), **menu costs** (costs of changing prices), and the **inflation tax**, which is the revenue the government raises by creating money—effectively acting as a tax on everyone who holds money.
 
-* Chapter 31: Open-Economy Macroeconomics: Basic Concepts
-  * 31-1 The International Flows of Goods and Capital
-  * 31-2 The Prices for International Transactions: Real and Nominal Exchange Rates
-  * 31-3 A First Theory of Exchange-Rate Determination: Purchasing-Power Parity
-* Chapter 32: A Macroeconomic Theory of the Open Economy
-  * 32-1 Supply and Demand for Loanable Funds and for Foreign-Currency Exchange
-  * 32-2 Equilibrium in the Open Economy
-  * 32-3 How Policies and Events Affect an Open Economy
+## Open-Economy Macroeconomics: Basic Concepts
 
-#### Part XII: Short-Run Economic Fluctuations
+Chapter 31 expands our perspective from a self-contained system to an **open economy**, where a nation actively trades goods, services, and assets across its borders. This global interaction is defined by two primary flows: **net exports**, which track the trade balance between what a country sells abroad versus what it buys, and **net capital outflow**, which measures the purchase of foreign assets by domestic residents minus the purchase of domestic assets by foreigners.&#x20;
 
-* Chapter 33: Aggregate Demand and Aggregate Supply
-  * 33-1 Three Key Facts about Economic Fluctuations
-  * 33-2 Explaining Short-Run Economic Fluctuations
-  * 33-3 The Aggregate-Demand Curve
-  * 33-4 The Aggregate-Supply Curve
-  * 33-5 Two Causes of Economic Fluctuations
-* Chapter 34: The Influence of Monetary and Fiscal Policy on Aggregate Demand
-  * 34-1 How Monetary Policy Influences Aggregate Demand
-  * 34-2 How Fiscal Policy Influences Aggregate Demand
-  * 34-3 Using Policy to Stabilize the Economy
-* Chapter 35: The Short-Run Trade-off between Inflation and Unemployment
-  * 35-1 The Phillips Curve
-  * 35-2 Shifts in the Phillips Curve: The Role of Expectations
-  * 35-3 Shifts in the Phillips Curve: The Role of Supply Shocks
-  * 35-4 The Cost of Reducing Inflation
+Because every international transaction involves an exchange of value, these two flows are fundamentally linked, reflecting how a trade surplus must be offset by an equivalent investment in foreign assets. To navigate these transactions, economists distinguish between the **nominal exchange rate**, the relative price of currencies, and the **real exchange rate**, which determines the relative price of goods and services between countries. Ultimately, the theory of **purchasing-power parity** provides a framework for understanding how exchange rates should behave in the long run, suggesting that a single currency's value ought to command the same buying power regardless of the country in which it is spent.
+
+## A Macroeconomic Theory of the Open Economy
+
+Chapter 32 integrates the concepts of the open economy by developing a model that simultaneously determines the equilibrium in the **market for loanable funds** and the **market for foreign-currency exchange**. The model shows that the supply of loanable funds comes from national saving, while demand comes from domestic investment and **net capital outflow (NCO)**. At the same time, NCO links the two markets because it represents the quantity of dollars supplied for foreign investment, which must match the quantity of dollars demanded for **net exports**. Key insights from this chapter include how government budget deficits lead to "crowding out" and trade deficits, and how **political instability** or capital flight can trigger a sharp increase in interest rates and a depreciation of the currency. Ultimately, the model demonstrates that policies specifically aimed at changing the trade balance, such as **import quotas or tariffs**, do not actually affect the trade balance itself because they cause the exchange rate to appreciate, which offsets the initial increase in net exports.
+
+## Aggregate Demand and Aggregate Supply
+
+* 33-1 Three Key Facts about Economic Fluctuations
+* 33-2 Explaining Short-Run Economic Fluctuations
+* 33-3 The Aggregate-Demand Curve
+* 33-4 The Aggregate-Supply Curve
+* 33-5 Two Causes of Economic Fluctuations
+
+## The Influence of Monetary and Fiscal Policy on Aggregate Demand
+
+Chapter 34 explores how **monetary and fiscal policy** directly influence the economy's aggregate demand. According to the **theory of liquidity preference**, the interest rate adjusts to balance the supply and demand for money, meaning that when the central bank increases the money supply, interest rates fall, stimulating investment and shifting the aggregate-demand curve to the right. Conversely, fiscal policy—government spending and taxation—impacts demand through two competing effects: the **multiplier effect**, where each dollar spent by the government can increase the aggregate demand for goods and services by more than a dollar, and the **crowding-out effect**, where a fiscal expansion raises the interest rate and reduces private investment. Policymakers must also weigh the arguments for **active stabilization** versus a hands-off approach, considering that while these tools can potentially offset economic shocks, the significant **time lags** involved in implementing policy changes can sometimes make such interventions destabilizing rather than helpful.
+
+## The Short-Run Trade-off between Inflation and Unemployment
+
+* 35-1 The Phillips Curve
+* 35-2 Shifts in the Phillips Curve: The Role of Expectations
+* 35-3 Shifts in the Phillips Curve: The Role of Supply Shocks
+* 35-4 The Cost of Reducing Inflation
 
 #### Part XIII: Final Thoughts
 
