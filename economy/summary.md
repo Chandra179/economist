@@ -435,22 +435,25 @@ Chapter 32 integrates the concepts of the open economy by developing a model tha
 
 ## Aggregate Demand and Aggregate Supply
 
-* 33-1 Three Key Facts about Economic Fluctuations
-* 33-2 Explaining Short-Run Economic Fluctuations
-* 33-3 The Aggregate-Demand Curve
-* 33-4 The Aggregate-Supply Curve
-* 33-5 Two Causes of Economic Fluctuations
+Chapter 33 introduces the **model of aggregate demand and aggregate supply** to explain short-run economic fluctuations and why the economy deviates from its long-run trends. Unlike the classical theories that assume **monetary neutrality**, this chapter highlights that in the short run, nominal variables like the money supply can impact real variables like GDP.&#x20;
+
+The **aggregate-demand curve** slopes downward because of the wealth effect, the interest-rate effect, and the exchange-rate effect, showing the total quantity of goods demanded at any given price level.&#x20;
+
+Conversely, the **aggregate-supply curve** is vertical in the long run but slopes upward in the short run due to market imperfections like **sticky wages**, sticky prices, or misperceptions. Economic shifts are caused by events that move these curves, such as changes in consumer confidence or a **supply shock** like a sudden spike in oil prices. When the economy falls into a **recession**, the model demonstrates how output drops and unemployment rises until prices and expectations adjust, eventually returning the system to its long-run equilibrium.
 
 ## The Influence of Monetary and Fiscal Policy on Aggregate Demand
 
-Chapter 34 explores how **monetary and fiscal policy** directly influence the economy's aggregate demand. According to the **theory of liquidity preference**, the interest rate adjusts to balance the supply and demand for money, meaning that when the central bank increases the money supply, interest rates fall, stimulating investment and shifting the aggregate-demand curve to the right. Conversely, fiscal policy—government spending and taxation—impacts demand through two competing effects: the **multiplier effect**, where each dollar spent by the government can increase the aggregate demand for goods and services by more than a dollar, and the **crowding-out effect**, where a fiscal expansion raises the interest rate and reduces private investment. Policymakers must also weigh the arguments for **active stabilization** versus a hands-off approach, considering that while these tools can potentially offset economic shocks, the significant **time lags** involved in implementing policy changes can sometimes make such interventions destabilizing rather than helpful.
+Chapter 34 explores how **monetary and fiscal policy** directly influence the economy's aggregate demand. According to the **theory of liquidity preference**, the interest rate adjusts to balance the supply and demand for money, meaning that when the central bank increases the money supply, interest rates fall, stimulating investment and shifting the aggregate-demand curve to the right.&#x20;
+
+Conversely, **fiscal policy**—government spending and taxation—impacts demand through two competing effects: the **multiplier effect**, where each dollar spent by the government can increase the aggregate demand for goods and services by more than a dollar, and the **crowding-out effect**, where a fiscal expansion raises the interest rate and reduces private investment. Policymakers must also weigh the arguments for **active stabilization** versus a hands-off approach, considering that while these tools can potentially offset economic shocks, the significant **time lags** involved in implementing policy changes can sometimes make such interventions destabilizing rather than helpful.
 
 ## The Short-Run Trade-off between Inflation and Unemployment
 
-* 35-1 The Phillips Curve
-* 35-2 Shifts in the Phillips Curve: The Role of Expectations
-* 35-3 Shifts in the Phillips Curve: The Role of Supply Shocks
-* 35-4 The Cost of Reducing Inflation
+Chapter 35 focuses on the **Short-Run Trade-off between Inflation and Unemployment**, primarily represented by the **Phillips Curve**. Historically, economists observed an inverse relationship where lower unemployment tended to correlate with higher inflation, suggesting that policymakers could "choose" a point on the curve. However, Mankiw explains that this trade-off only exists in the short run.&#x20;
+
+In the long run, according to the **Natural-Rate Hypothesis**, the **Long-Run Phillips Curve** is vertical at the natural rate of unemployment, meaning monetary policy only affects inflation and not unemployment. The position of the short-run curve shifts based on **Expected Inflation**; if people expect prices to rise, the curve shifts upward, resulting in higher inflation for any given unemployment rate.&#x20;
+
+The chapter also analyzes **Supply Shocks**, such as a spike in oil prices, which can shift the aggregate-supply curve and the Phillips curve simultaneously, leading to **stagflation** (high inflation and high unemployment). Finally, Mankiw discusses the **Cost of Reducing Inflation** (disinflation), which often requires a period of high unemployment and low output, measured by the **Sacrifice Ratio**, though the **Theory of Rational Expectations** suggests that if the government’s commitment to low inflation is credible, the cost of reaching a new equilibrium could be significantly lower.
 
 #### Part XIII: Final Thoughts
 
