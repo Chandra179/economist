@@ -1,14 +1,6 @@
 # Summary
 
-### Curve
-
 ​Supply and demand curve affected by Tax, Consumer and Producer surplus, Resource allocation, Elasticity and Inelasticity of Price, Tarrifs, Cost of production
-
-<br>
-
-Supply
-
-Demand
 
 Control on prices (ceiling, floor)
 
@@ -58,4 +50,32 @@ Measuring cost of living
 
 Production and growth
 
-* Productivity affected by:&#x20;
+* Productivity affected by: physical capital (tools and machinery), human capital (worker knowledge and skills), natural resources (land and minerals), and technological knowledge (the best ways to produce goods).
+
+Market for Loanable funds
+
+Basic tools of finance
+
+* Present value, risk management, diversification, asset valuation, efficient market hypothesis
+
+Unemployment
+
+* structural unemployment, minimum-wage laws, frictional unemployment,  unions and collective bargaining, efficiency wages
+
+Monetary system
+
+* Functional role of money, monetary policy, fractional reserve banking
+
+Money growth and inflation
+
+* Quantity theory of money, Classical Dichotomy, Monetary Neutrality
+
+Open Economy macro economics: Basic concepts
+
+Aggregate demand and Aggregate supply
+
+* short-run economic fluctuations and why the economy deviates from its long-run trends
+
+The Influence of Monetary and Fiscal Policy on Aggregate Demand
+
+The Short-Run Trade-off between Inflation and Unemployment<br>
