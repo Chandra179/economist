@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Economy](README.md)
-  * [Summary](economy/summary.md)
+* [Principle of Economics](README.md)
+  * [Summary](principle-of-economics/summary.md)
 * [Macroeconomics](macroeconomics.md)
 * [Usecases](usecases.md)
