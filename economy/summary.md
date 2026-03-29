@@ -1,81 +1,125 @@
 # Summary
 
-​Supply and demand curve affected by Tax, Consumer and Producer surplus, Resource allocation, Elasticity and Inelasticity of Price, Tarrifs, Cost of production
+### I. Foundations of Economics
 
-Control on prices (ceiling, floor)
+These are the building blocks: how societies make choices with limited resources.
 
-Taxes and their effect on tariffs , etc..
+* Production Possibilities Curve (PPC): Shows trade-offs and efficiency.
+* Absolute vs. Comparative Advantage:  _**Note**:_ Requires calculation of opportunity costs to determine who should specialize.
+* Economic Systems: Free Market (Capitalism): Driven by the "invisible hand."
+  * Mixed Economy: Blend of free markets and government intervention.
+* Circular Flow Model: Demonstrates the flow of resources, goods, and money between households and firms.
 
-Consumer & producer surplus
+<figure><img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSDp-5Zcs328y92P8QjF90bLx3VNsfEpczg1c9HursGtvR1FqYjUGZTrkgLT7hDFjJuclT4KyiEWgZ-OV-_Vn_YyzKcLKugzUafj1VUvp8GADLstJ8" alt=""><figcaption></figcaption></figure>
 
-Market efficiency : allocation to highest value, allocation to lowest cost, maximizes the sum of consumer and producer surplus.
+***
 
-Positive and negative externalities
+### II. Measuring Economic Performance (The "Big Three")
 
-Public goods and common resources
+How we track if an economy is healthy, growing, or struggling.
 
-Budget deficit and surplus
+### 1. Gross Domestic Product (GDP)
 
-The cost of production (explicit costs, implicit costs, accounting profit, economic profit, marginal product, diminishing marginal product)
+* Definition: Total value of all final goods produced within a country in a year.
+* What’s Excluded:
+  * Intermediate Goods: Only final goods count (e.g., the car, not the tires sold to the factory).
+  * Nonproduction Transactions: Financial assets (stocks/bonds) and used goods (old cars).
+  * Non-market Activities: Illegal "black market" activities and unpaid household work.
+* Calculations:
+  * Expenditure Approach: $$C + I + G + (X - M)$$
+  * Income Approach: Adding up all earnings in the economy.
+* Nominal vs. Real:
+  * Nominal GDP: Current prices; doesn't account for inflation.
+  * Real GDP: Adjusted for inflation; the best measure of economic growth.
+  * GDP Deflator: A price index used to convert Nominal to Real GDP.
 
-* Measure of costs: fixed costs, variable costs, avc, afc, atc, mc, …
+### 2. Unemployment
 
-Competitive firm and their revenue calculation
+* Labor Force: People 16+ who are working or actively looking for work.
+* Labor Force Participation Rate: % of the population in the labor force.
+* Types of Unemployment:
+  * Frictional: Temporary (searching for a better job, seasonal).
+  * Structural: Skills no longer needed (technological unemployment).
+  * Cyclical: Caused by a recession (the "bad" kind).
+* Natural Rate of Unemployment (NRU): Frictional + Structural (occurs at full employment).
 
-Monopoly, price discrimination, natural monopolies
+### 3. Inflation
 
-* Monopolistic competition
+* CPI (Consumer Price Index): Measures the change in prices of a "market basket" for consumers.
+* Real vs. Nominal Values:
+  * Real Wage/Interest: Adjusted for purchasing power.
+  * Nominal Wage/Interest: The actual dollar amount/percentage stated.
+* Causes of Inflation:
+  * Quantity Theory: Too much money printed (Quantity Theory of Money).
+  * Demand-Pull: "Too much money chasing too few goods."
+  * Cost-Push: Higher production costs (like oil prices) drive up prices.
 
-Oligopoly
+***
 
-Economic of labor markets
+### III. Aggregate Models & The Business Cycle
 
-Earnings and discrimination
+* Business Cycle: The ups and downs of GDP over time (Peak, Recession, Trough, Recovery).
+* Aggregate Demand (AD): Why the curve slopes down:
+  * Wealth Effect: Lower prices increase purchasing power.
+  * Interest Rate Effect: Lower prices lead to lower interest rates, boosting investment.
+  * Foreign Trade Effect: Lower US prices make exports more attractive.
+* Aggregate Supply (AS): **Short Run** (SRAS): Wages and prices are "sticky."
+  * Long Run (LRAS): Represents full employment (vertical line).
+* Market States:
+  * Recessionary Gap: Equilibrium is below full employment.
+  * Inflationary Gap: Equilibrium is beyond full employment.
+  * Stagflation: Simultaneous high inflation and high unemployment (leftward shift of SRAS).
 
-Income inequality and poverty
+***
 
-Theory of consumer choice (budget constraint, income effect, substitution effect)
+### IV. Fiscal Policy & The Multiplier
 
-Microeconomics
+How the government influences the economy through taxing and spending.
 
-* Asymmetric information
-* Political economy
-* Behavioral economics
+* Tools:
+  * Expansionary: Increase spending, decrease taxes (to fight recession).
+  * Contractionary: Decrease spending, increase taxes (to fight inflation).
+* Budgets:
+  * Budget Deficit: Spending > Tax revenue in one year.
+  * National Debt: Accumulation of all yearly deficits.
+* Multipliers:
+  * MPC + MPS = 1
+  * Spending Multiplier: $$ $1 / MPS$ $$
 
-GDP, real GDP, GDP deflator, nominal GDP, etc..
+***
 
-Measuring cost of living
+### V. Money & Monetary Policy
 
-* Consumer price index
+The role of the Federal Reserve and the banking system.
 
-Production and growth
+* Money:
+  * Types: Barter, Commodity (gold), Fiat (government decreed).
+  * Liquidity: Ease of turning an asset into cash.
+  * M1 Supply: Currency, checkable deposits, traveler's checks.
+* Banking:
+  * Fractional Reserve Banking: Banks hold a fraction of deposits and loan out the rest.
+  * Bank Balance Sheet: Assets vs. Liabilities.
+  * Money Multiplier: $$ $1 / \text{Reserve Requirement}$ $$.
+* The Federal Reserve (The Fed):
+  * 3 Shifters of Money Supply:
+    1. Reserve Requirement: % banks must keep.
+    2. Discount Rate: Interest rate Fed charges banks.
+    3. Open Market Operations: Buying/Selling bonds (Most important tool).
+  * Federal Funds Rate: Interest rate banks charge _each other_ for overnight loans.
+* Markets:
+  * Money Market: Relationship between interest rates and quantity of money.
+  * Loanable Funds Market: Supply and demand for loans (determines real interest rate).
 
-* Productivity affected by: physical capital (tools and machinery), human capital (worker knowledge and skills), natural resources (land and minerals), and technological knowledge (the best ways to produce goods).
+***
 
-Market for Loanable funds
+### VI. International Trade & Foreign Exchange (Forex)
 
-Basic tools of finance
+How the economy interacts with the rest of the world.
 
-* Present value, risk management, diversification, asset valuation, efficient market hypothesis
-
-Unemployment
-
-* structural unemployment, minimum-wage laws, frictional unemployment,  unions and collective bargaining, efficiency wages
-
-Monetary system
-
-* Functional role of money, monetary policy, fractional reserve banking
-
-Money growth and inflation
-
-* Quantity theory of money, Classical Dichotomy, Monetary Neutrality
-
-Open Economy macro economics: Basic concepts
-
-Aggregate demand and Aggregate supply
-
-* short-run economic fluctuations and why the economy deviates from its long-run trends
-
-The Influence of Monetary and Fiscal Policy on Aggregate Demand
-
-The Short-Run Trade-off between Inflation and Unemployment<br>
+* Balance of Payments (BOP):
+  * Current Account: Trades in goods/services, investment income, net transfers.
+  * Financial Account: Purchase/sale of assets (net capital outflow/inflow).
+* Foreign Exchange:
+  * Appreciation: Currency value goes up (Strong dollar).
+  * Depreciation: Currency value goes down (Weak dollar).
+  * Forex Shifters: Changes in Tastes, Relative Incomes, Inflation, and Interest Rates.
