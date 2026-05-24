@@ -61,6 +61,36 @@ graph TD
   Int -->|exchange rate| NX[Net Exports]
   NX --> AD
 
+  %% Global finance
+  NX -->|trade policy| Tariff[Trade & Tariffs<br/>Tariffs, WTO, Trade Blocs]
+  Tariff -->|retaliation| ExportCtrl[Export Controls<br/>chip war, rare earths]
+  ExportCtrl -->|supply shock| Cost
+  Tariff -->|supply chain shift| SC[Supply Chain<br/>advantages, relocation]
+  SC -->|lower cost| Cost
+  SC -->|resilience vs efficiency| Tariff
+
+  Int -->|hot money flows| CapitalFlows[Capital Flows<br/>boom-bust cycle]
+  Leverage[Leverage & Maturity Mismatch<br/>bank runs, repo, shadow banking] -->|crisis| Crisis[Financial Crises<br/>contagion, bailouts]
+  Crisis -->|credit crunch| Output
+  Crisis -->|wholesale run| CapitalFlows
+  CapitalFlows -->|currency crisis| NX
+  CapitalFlows -->|default risk| Debt[Sovereign Debt<br/>IMF bailouts]
+  Debt -->|austerity| Gov
+  Debt -->|devaluation| Inf
+
+  Dollar[Dollar System<br/>reserve currency, sanctions] -->|prices oil| NX
+  Dollar -->|printing| Inf
+  Dollar -->|Fed rates| Int
+  Dollar -->|sanctions| Tariff
+
+  Energy[Energy Geopolitics<br/>OPEC, gas, transition] -->|oil price| Cost
+  Energy -->|inflation| Inf
+  Energy -->|supply| NX
+
+  Digital[Digital Currencies<br/>CBDCs, de-dollarization] -->|challenge| Dollar
+  Climate[Climate Finance<br/>carbon markets, CBAM] -->|carbon tax| Tariff
+  Climate -->|green investment| Invest
+
   %% Supply side feedback
   Inf -->|inflation expectations| Wage[Wage Demands]
   Wage --> Cost
@@ -100,6 +130,14 @@ graph TD
 - [Aggregate Demand & Supply](macro/ad-as.md)
 - [Inflation & Unemployment](macro/phillips-curve.md)
 - [Currency & Exchange Rates](global/currency.md)
+- [Trade & Tariffs](global/trade.md)
+- [Financial Crises](global/financial-crises.md)
+- [Capital Flows & Crises](global/capital-flows.md)
+- [Sovereign Debt & IMF](global/sovereign-debt.md)
+- [Energy Geopolitics](global/energy-geopolitics.md)
+- [Digital Currencies](global/digital-currency.md)
+- [Climate Finance](global/climate-finance.md)
+- [Export Controls](global/export-controls.md)
 - [Supply Chain Advantages](global/supply-chain.md)
 - [Shadow Banking](global/shadow-banking.md)
 - [The Dollar System](global/dollar-system.md)
