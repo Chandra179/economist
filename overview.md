@@ -19,6 +19,12 @@ graph TD
   MktStr[Monopoly / Oligopoly / Monopolistic Competition] -->|market power| Market
   Market -->|supernormal profits| MktStr
 
+  %% Behavioral economics
+  WTP -->|not rational| Behavioral[Behavioral Economics<br/>prospect theory, biases, nudges]
+  Behavioral -->|loss aversion| Pcontrol
+  Behavioral -->|present bias| Gov
+  Behavioral -->|nudge| Reg
+
   %% Externalities & regulation
   Ext[Externalities<br/>+/- spillovers] -->|market failure| Reg[Regulation / Pigouvian Taxes]
   Reg --> Tax
@@ -114,6 +120,7 @@ graph TD
 
 ### Quick links
 
+- [Behavioral Economics](behavioral/behavioral-economics.md)
 - [Supply & Demand](micro/supply-demand.md)
 - [Market Intervention](micro/market-intervention.md)
 - [Welfare & Efficiency](micro/welfare-efficiency.md)

@@ -1,7 +1,7 @@
 # Table of contents
 
-* [README](README.md)
 * [Overview](overview.md)
+* [Behavioral Economics](behavioral/behavioral-economics.md)
 * [Microeconomics](micro/supply-demand.md)
   * [Supply & Demand](micro/supply-demand.md)
   * [Market Intervention](micro/market-intervention.md)
