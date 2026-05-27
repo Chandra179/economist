@@ -57,5 +57,5 @@ The dollar is declining — but there's no alternative at scale. The yuan can't 
 ## Related
 
 - [The Dollar System](dollar-system.md) — why the dollar is still dominant
-- [Currency & Exchange Rates](currency.md) — closed capital account limits yuan adoption
+- [Currency & Exchange Rates](exchange-rates.md) — closed capital account limits yuan adoption
 - [Trade & Tariffs](trade.md) — how sanctions drive interest in alternatives

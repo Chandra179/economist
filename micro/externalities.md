@@ -22,6 +22,25 @@ Private Solutions to Negative Externalities?
 * **Moral Codes** and Social Sanctions: Most people don't litter or cut in line, not because it's illegal, but because it's "the right thing to do." Social pressure forces people to consider how their actions affect others.
 * **Charities**: Non-profits are often established to deal with externalities. For example, the Sierra Club is a private organization that addresses the externality of pollution through private donations.
 
+### The Coase Theorem
+
+The **Coase theorem** states that if property rights are clearly defined and transaction costs are zero, private bargaining between affected parties will lead to an efficient outcome regardless of how property rights were initially assigned.
+
+*Example*: A factory emitting pollution that harms a nearby laundry. If the laundry has the right to clean air, the factory can pay the laundry to accept some pollution. If the factory has the right to pollute, the laundry can pay the factory to reduce emissions. In either case, bargaining leads to the efficient level of pollution — the same outcome.
+
+**Limitations**:
+- High transaction costs: bargaining breaks down when many parties are involved (coordination costs, free-riding)
+- Legal barriers: contracts may be difficult to enforce
+- Asymmetric information: parties may not know each other's true costs or benefits
+
+Despite these limitations, the Coase theorem provides the intellectual foundation for market-based environmental policy.
+
+### Tradable Pollution Permits (Cap and Trade)
+
+Instead of directly regulating pollution or taxing it, the government can set a total cap on emissions and issue tradable permits equal to that cap. Firms that can reduce pollution cheaply sell their excess permits; firms facing high abatement costs buy permits rather than cut emissions. The market price for permits ensures that pollution reduction occurs where it is cheapest, achieving the environmental target at minimum cost.
+
+Cap and trade combines the certainty of a quantity limit (the cap) with the efficiency of market pricing. It was successfully used to phase out acid-rain-causing sulfur dioxide emissions in the United States under the Clean Air Act Amendments of 1990.
+
 ## Public Goods and Common Resources
 
 **Excludability**: Can people be prevented from using the good?
@@ -54,40 +73,18 @@ Real-World Examples of Common Resources
 2. **Congested Roads**: If a road is not a toll road (non-excludable) but is crowded (rival), every extra driver creates a delay for everyone else.
 3. Fish, Whales, and Other Wildlife: Many species have been hunted to near extinction because the "ocean" is a common resource where it is difficult to enforce property rights.
 
-## The Design of the Tax System
+### Free-Rider Problem
 
-federal government collects about two-thirds of the taxes in the U.S. economy.
+A **free-rider** is a person who receives the benefit of a good but avoids paying for it. Public goods are non-excludable, so people have an incentive to let others pay and enjoy the benefit without contributing. This leads to under-provision by the private market — the classic justification for government provision of public goods.
 
-Receipts (Revenue Sources):
+### Lindahl Pricing
 
-* **Individual Income Tax**: The largest source of revenue. it is based on a family's total income.
-* **Social Insurance Taxes** (Payroll Taxes): Revenue earmarked to fund Social Security and Medicare.
-* **Corporate Income Tax**: Taxes on government-sanctioned "profits" of corporations.
-* **Other**: Excise taxes (on specific goods like gasoline), estate taxes, and customs duties.
+**Lindahl pricing** is a theoretical solution to the free-rider problem. Each individual pays a price (Lindahl tax) equal to their marginal benefit from the public good. If everyone pays their Lindahl price, the sum of individual contributions covers the total cost and the public good is provided at the efficient level. In practice, Lindahl pricing is difficult to implement because individuals have no incentive to reveal their true willingness to pay — they will understate their benefit to reduce their tax burden.
 
-Spending (Outlays):
+### Samuelson Condition
 
-* **Social Security**: Payments to the elderly.
-* **Medicare and Health**: Healthcare for the elderly and the poor (Medicaid).
-* **National Defense**: Spending on the military.
-* **Net Interest**: Paying back interest on the national debt.
+The **Samuelson condition** states the efficiency rule for public good provision:
 
-#### State and Local Governments
+$$\sum_i MRS_i = MRT$$
 
-Receipts:
-
-* Sales Taxes: A percentage of total expenditures at retail stores.
-* Property Taxes: A percentage of the estimated value of land and structures (the primary funder for public schools).
-* Individual and Corporate Income Taxes: Many states also tax income.
-* Federal Government Grants: Money transferred from the federal level to local levels.
-
-Spending:
-
-* Education: By far the largest expense for state and local governments.
-* Public Welfare: Programs for the poor.
-* Highways and Infrastructure: Building and maintaining roads.
-* Public Safety: Police and fire departments.
-
-**Budget Deficit**: An excess of government spending over government receipts (The government borrows money to cover the gap).
-
-**Budget Surplus**: An excess of government receipts over government spending (The government uses the extra to pay down debt).
+The sum of the marginal rates of substitution across all consumers (the sum of individuals' willingness to pay for an additional unit of the public good) must equal the marginal rate of transformation (the marginal cost of producing the public good). For private goods, efficiency requires each individual's MRS equals the MRT; for public goods, the sum of MRS across all consumers equals the MRT because the good is non-rival — one unit benefits everyone.

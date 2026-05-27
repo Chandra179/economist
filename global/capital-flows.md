@@ -2,7 +2,7 @@
 
 ## What Is Hot Money?
 
-When the Fed prints money (QE), those dollars flow to **emerging markets** chasing higher returns. US bonds pay ~0%, EM bonds pay ~8%. This is called **hot money** — portfolio investments (stocks, bonds) that can leave overnight.
+When the Fed prints money (QE), those dollars flow to **emerging markets** chasing higher returns. US Treasuries pay ~4–5%, EM bonds pay ~8%+. This is called **hot money** — portfolio investments (stocks, bonds) that can leave overnight.
 
 ## The Boom-Bust Cycle
 
@@ -36,6 +36,32 @@ It's supply and demand for the currency itself — the money doesn't have to be 
 
 Portfolio investments (stocks, bonds) can leave overnight. FDI (factories, infrastructure) is sticky — can't liquidate a factory in a week. Countries that rely on hot money are vulnerable.
 
+## The Other Side: Japan as Capital Exporter
+
+Japan is the world's largest creditor nation — it holds over $1T in US Treasuries. But Japan's capital flows work differently from the EM story above.
+
+### Why Japan Holds Dollars
+
+Japan runs persistent trade surpluses (exporting cars, machinery, electronics) and has negative net investment income outflows? No — Japan is a net saver with very low domestic interest rates (near zero or negative for decades). Japanese institutions — pension funds, insurers, the Government Pension Investment Fund (GPIF) — chase yield abroad. They borrow cheap in yen (0%) and lend in dollars (4%+), pocketing the spread. This is the **yen carry trade**.
+
+The Bank of Japan holds dollars for a different reason: to manage the yen's value. When the yen was strengthening in the 2010s (¥75/$ in 2011), Japan sold yen and bought dollars to weaken it and protect exporters. The accumulated dollars sit as US Treasury reserves.
+
+### The Importer/Exporter Trade-Off
+
+A weaker yen (¥150 per dollar) is good for exporters like Toyota — each dollar of US sales converts to more yen — but bad for consumers who pay more for imported energy and food. A stronger yen (¥100 per dollar) is the reverse: importers and households cheer, exporters suffer.
+
+Japan's dilemma: the yen's slide from ¥100 per dollar to ¥150 per dollar was a huge windfall for the export machine and inflated the yen value of Japan's $1T+ Treasury portfolio. But it also drove up the cost of essential imports, squeezing households and fueling inflation for the first time in decades.
+
+### Intervention Is a Choice
+
+When Japan intervenes to **strengthen** the yen (sells Treasuries, buys yen), it sacrifices:
+
+- Export competitiveness (Toyota's yen revenue shrinks)
+- The yen value of remaining bond holdings (stronger yen = each dollar is worth less)
+- The carry spread (giving up 4% US yields to hold 0% JGBs)
+
+Japan only intervenes when the yen moves too fast (disorderly), not when it's simply "too weak." The cost of intervention is real — selling Treasuries reduces future yen revenue from the portfolio.
+
 ## Classic Cases
 
 ### Asia 1997
@@ -65,4 +91,4 @@ When the Fed *hinted* it might slow QE, EM currencies crashed instantly — befo
 
 - [Sovereign Debt & IMF](sovereign-debt.md) — how capital flight triggers default
 - [The Dollar System](dollar-system.md) — how Fed printing drives global capital flows
-- [Currency & Exchange Rates](currency.md) — how capital controls protect against hot money
+- [Exchange Rates](exchange-rates.md) — how capital controls protect against hot money

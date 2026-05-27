@@ -1,23 +1,60 @@
 # Labor Markets & Inequality
 
-## The Economics of Labor Markets
+## The Marginal Product of Labor
 
-In a normal market (like for coffee), you are the buyer and the shop is the seller. In a labor market, the firm is the buyer (buying your time/skills) and you are the seller.
+In a competitive labor market, a firm hires workers up to the point where the value of the marginal product equals the wage:
 
-Think of it this way: a business only hires you if you make them more money than they have to pay you.
+$$VMPL = MPL \times P = W$$
 
-## Earnings and Discrimination
+The demand for labor is the VMPL curve — it slopes downward because of diminishing marginal product. Any factor that raises the marginal product of labor (better technology, more capital) shifts labor demand right and raises wages.
 
-wage differences exist because of human capital (the education and skills a worker gains), **compensating differentials** (extra pay for dangerous or unpleasant jobs), and the **superstar phenomenon** (where top performers in certain fields earn massive salaries due to technology and mass appeal). It also notes that while **discrimination** by employers, customers, or governments can create unfair pay gaps, a competitive market naturally rewards productivity, as profit-seeking firms generally prefer to hire the most capable workers at the lowest possible cost regardless of their background
+## Monopsony
 
-## Income Inequality and Poverty
+A **monopsony** is a market with a single buyer of labor (e.g., a dominant employer in a company town). The monopsonist faces an upward-sloping labor supply curve: to hire more workers, it must raise wages for all workers, not just the marginal hire.
 
-comparing **Utilitarianism** (maximizing total happiness), **Liberalism** (maximizing the well-being of the worst-off person via the "maximin" criterion), and **Libertarianism** (focusing on the fairness of the process rather than the outcome). Finally, it discusses practical policies to reduce poverty, such as minimum-wage laws, welfare, negative income taxes, and in-kind transfers, while cautioning that these programs can create "work disincentives" by effectively taxing the poor when they start earning more and lose their benefits.
+This creates a gap between the marginal cost of labor and the wage. The monopsonist hires fewer workers than a competitive market and pays a wage below the VMPL — **monopsonistic exploitation**.
 
-## The Theory of Consumer Choice
+## Minimum Wage Analysis
 
-explores the **Theory of Consumer Choice**, which uses the concept of **indifference curves** and **budget constraints** to explain how individuals make decisions. A budget constraint represents the combinations of goods a consumer can afford based on their income, while indifference curves show combinations of goods that provide the same level of satisfaction.
+In a **competitive labor market**, a binding minimum wage above the equilibrium creates a surplus of labor (unemployment): quantity supplied exceeds quantity demanded.
 
-The consumer reaches an **optimum** point where the budget constraint is tangent to the highest possible indifference curve—this is where the marginal rate of substitution (the rate at which a consumer is willing to trade one good for another) equals the relative price of the goods.
+In a **monopsonistic labor market**, a well-calibrated minimum wage can raise wages *and* increase employment. By setting a floor above the monopsony wage, the minimum wage eliminates the monopsonist's incentive to restrict hiring. The employment effect depends on where the minimum is set relative to the competitive equilibrium.
 
-When the price of a good changes, it affects the consumer through two channels: the **income effect**, where the consumer feels richer or poorer, and the **substitution effect**, where the consumer moves toward the good that has become relatively cheaper. This framework ultimately explains why demand curves usually slope downward and provides insight into complex behaviors, such as why a higher wage could potentially lead someone to work fewer hours if the income effect outweighs the substitution effect.
+Empirical evidence on minimum wage effects is mixed. The famous Card-Krueger (1994) study of fast-food restaurants in New Jersey and Pennsylvania found no negative employment effect from a minimum wage increase — consistent with the monopsony model.
+
+## Measuring Inequality: Gini Coefficient and Lorenz Curve
+
+The **Lorenz curve** plots the cumulative share of income received by the cumulative share of the population (from poorest to richest). Perfect equality is a 45-degree line; the deviation from it measures inequality.
+
+The **Gini coefficient** summarizes this deviation on a 0–1 scale:
+
+$$G = \frac{A}{A + B}$$
+
+where A is the area between the line of perfect equality and the Lorenz curve, and B is the area below the Lorenz curve. 0 = perfect equality, 1 = complete inequality (one person has everything).
+
+## Labor Supply: Income vs. Substitution Effects
+
+The labor supply decision is a trade-off between consumption and leisure. A higher wage has two opposing effects:
+
+- **Substitution effect**: leisure becomes more expensive → work more hours
+- **Income effect**: higher income allows more consumption of leisure (a normal good) → work fewer hours
+
+At low wages, the substitution effect dominates (higher wages increase hours worked). At high wages, the income effect may dominate (higher wages decrease hours worked), creating a **backward-bending labor supply curve**.
+
+This framework also explains why tax cuts for high earners may have modest effects on hours worked: the income effect offsets the substitution effect.
+
+## Efficiency Wages
+
+Firms may voluntarily pay above the market-clearing wage to increase productivity. Four models explain why:
+
+- **Shirking model**: higher wages raise the cost of job loss, reducing shirking when monitoring is imperfect
+- **Turnover model**: above-market wages reduce costly employee turnover
+- **Selection model**: higher wages attract a more productive applicant pool
+- **Morale model**: higher wages boost effort and morale
+
+Efficiency wages create involuntary unemployment: because firms pay above equilibrium, labor supply exceeds labor demand.
+
+## Discrimination
+
+- **Taste-based discrimination** (Becker): employers, coworkers, or customers have a preference for or against certain groups. In a competitive market, discriminatory employers face higher costs (they pass up talented workers), so market forces should erode discrimination over time. Employer discrimination is the least persistent form.
+- **Statistical discrimination**: employers use group averages as a proxy when individual characteristics are hard to observe (e.g., "women are more likely to quit"). Even without animus, this can produce persistent wage gaps. Statistical discrimination is harder to eliminate because it is information-based, not preference-based.

@@ -136,7 +136,7 @@ graph TD
 - [Open Economy](macro/open-economy.md)
 - [Aggregate Demand & Supply](macro/ad-as.md)
 - [Inflation & Unemployment](macro/phillips-curve.md)
-- [Currency & Exchange Rates](global/currency.md)
+- [Currency & Exchange Rates](global/exchange-rates.md)
 - [Trade & Tariffs](global/trade.md)
 - [Financial Crises](global/financial-crises.md)
 - [Capital Flows & Crises](global/capital-flows.md)

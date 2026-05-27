@@ -27,7 +27,7 @@ Nobody decides the reserve currency. It **emerges** from market choices. There i
 
 ### How It Happened
 
-1. **Bretton Woods (1944):** After WWII, the US had ~50% of global GDP and most of the world's gold. Countries pegged their currencies to the dollar, which was convertible to gold at $35/oz.
+1. **Bretton Woods (1944):** After WWII, the US had ~50% of global GDP and most of the world's gold. Countries pegged their currencies to the dollar, which was convertible to gold at $35/oz. The conference created the **IMF** (to monitor exchange rates and lend to countries with balance-of-payments crises) and the **World Bank** (to finance reconstruction and development). The IMF's lending came with **conditionality** — policy reforms in exchange for funds — a source of controversy ever since.
 2. **Nixon Shock (1971):** US ended dollar-to-gold convertibility (too many dollars had been printed for Vietnam War). But by then, everyone already used dollars for trade. The system had **network effects** — too costly to switch.
 3. **Petro-dollar Deal (1970s):** US + Saudi Arabia agreed — Saudi prices oil in dollars, invests profits in US Treasuries, US guarantees Saudi military protection. Other OPEC countries followed. Now *everyone* needs dollars to buy oil.
 
@@ -40,6 +40,37 @@ Nobody decides the reserve currency. It **emerges** from market choices. There i
 | **Open capital account** | Can money flow freely in/out? | Yes | No — closed capital account |
 
 Yuan is ~3% of global reserves vs. dollar's ~58%. China's closed capital account makes yuan not freely convertible — no central bank wants a currency it can't sell when needed.
+
+### The Triffin Dilemma
+
+The **Triffin dilemma** (Robert Triffin, 1960) identified an inherent tension in a national currency serving as the global reserve currency:
+
+- The world needs a steady supply of dollars to conduct trade and hold as reserves → the US must run **current account deficits** to supply dollars
+- But persistent deficits erode confidence in the dollar's value → foreign holders question whether the dollar will hold its purchasing power
+
+In short: the US must supply liquidity, but supplying too much undermines confidence. The dilemma was the fatal flaw in the Bretton Woods system — US gold reserves were being drained by rising foreign dollar claims, leading directly to the Nixon Shock of 1971. The tension persists today: US deficits supply the world with dollars, but every deficit deepens long-run concerns about dollar stability.
+
+### Exorbitant Privilege
+
+The US enjoys the **exorbitant privilege** — a term coined by Valéry Giscard d'Estaing (1960s) — of being able to borrow in its own currency. This means:
+
+- The US can run large deficits without facing the "sudden stop" risk that would trigger a crisis in an emerging market
+- US assets held by foreigners pay relatively low returns (Treasury yields), while US foreign investments earn higher returns — a positive **excess return** or "dark matter"
+- The US imposes financial sanctions with global reach because dollar clearing is unavoidable
+
+The privilege is not unconditional. It depends on continued confidence in US institutions, fiscal discipline, and the absence of a credible alternative.
+
+## Historical Exchange Rate Coordination
+
+### Plaza Accord (1985)
+
+The US dollar had appreciated ~50% against major currencies between 1980 and 1985, driven by high real interest rates (Volcker disinflation). The G5 (US, Japan, Germany, UK, France) met at the Plaza Hotel in New York and agreed to coordinate a dollar depreciation. Central banks sold dollars, and within two years the dollar fell by roughly 50% against the yen and mark.
+
+The Plaza Accord is the most successful example of coordinated exchange rate management in history.
+
+### Louvre Accord (1987)
+
+By 1987, the dollar had fallen too far. The G6 met at the Louvre and agreed to **stabilize** exchange rates around prevailing levels, with each country committing to intervene if their currency moved outside target zones. The Louvre Accord was less successful than the Plaza — the 1987 stock market crash (Black Monday) disrupted the coordination, and the target zones were eventually abandoned.
 
 ## Sanctions & Freezing Assets
 
@@ -188,5 +219,5 @@ That's why the Fed talks carefully, raises rates when inflation rises, and acts 
 ## Related
 
 - [Trade & Tariffs](trade.md) — how dollar sanctions enable US trade policy
-- [Currency & Exchange Rates](currency.md) — managed float and capital controls that shield China from dollar dominance
+- [Exchange Rates](exchange-rates.md) — managed float and capital controls that shield China from dollar dominance
 - [Shadow Banking](shadow-banking.md) — how dollar flows fuel private credit markets

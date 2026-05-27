@@ -165,5 +165,5 @@ The pressure to join: not being locked out. If Vietnam is in RCEP with China, Vi
 ## Related
 
 - [Supply Chain Advantages](supply-chain.md) — why China's manufacturing ecosystem is hard to replicate
-- [Currency & Exchange Rates](currency.md) — managed float and capital controls that underpin trade stability
+- [Currency & Exchange Rates](exchange-rates.md) — managed float and capital controls that underpin trade stability
 - [The Dollar System](dollar-system.md) — how dollar dominance enables US to impose financial sanctions

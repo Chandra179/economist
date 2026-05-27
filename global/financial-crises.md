@@ -133,6 +133,20 @@ A country with its own currency can't have a classic bank run (it can print mone
 | **Eurozone** (Greece 2010) | No printing press — like a bank run with no central bank backstop |
 | **Emerging markets** (Argentina, Turkey) | Borrow in dollars, earn in local currency. Devaluation makes debt *more expensive* in local terms. "Original sin" — EMs can't borrow internationally in their own currency |
 
+## Minsky's Financial Instability Hypothesis
+
+Hyman Minsky argued that financial systems are **inherently unstable** — stability breeds instability. Over a prolonged expansion, three types of borrowing units emerge:
+
+1. **Hedge units**: cash flows cover both principal and interest. Safe, conservative.
+2. **Speculative units**: cash flows cover interest but not principal. The borrower must roll over debt — relies on continued access to credit.
+3. **Ponzi units**: cash flows cover neither principal nor interest. The borrower relies entirely on asset price appreciation to repay. The slightest disruption triggers default.
+
+As the expansion matures, the composition shifts from hedge → speculative → Ponzi. The system becomes fragile. When the first Ponzi units fail, asset prices fall, which forces more units into distress, and the system collapses into a debt-deflation spiral.
+
+Minsky's key insight: **stability is destabilizing**. The longer the good times last, the more risk is accumulated in the tail of the distribution. This contrasts with the prevailing pre-2008 view that markets are self-stabilizing.
+
+The 2008 crisis is a textbook Minsky moment: the housing boom shifted speculative and Ponzi finance to unprecedented scale (subprime mortgages, CDOs, SIVs), and the first price declines triggered a chain reaction. Post-crisis regulation (Dodd-Frank, Basel III) attempts to contain this cycle, but regulatory arbitrage continually pushes risk into less-regulated parts of the system.
+
 ## Crisis propagation pattern
 
 ```
@@ -144,6 +158,17 @@ Each crisis follows this pattern. The only difference is the *trigger* and the *
 - 2008: housing crash → wholesale funding run
 - 2020 (COVID): health shock → corporate bond/Treasury dash-for-cash run (Fed stepped in immediately)
 - 2023 (SVB): rate hike → unrealized bond losses → social-media-fueled depositor run on uninsured deposits
+
+### 2022 UK Gilt Crisis: A Modern Shadow-Banking Run
+
+In September 2022, the UK government announced large unfunded tax cuts (the "mini-budget"). Bond markets panicked — gilt (UK government bond) yields surged by 100+ basis points in days. This triggered margin calls on **LDI funds** (liability-driven investment), which are pension fund hedging vehicles:
+
+1. UK pension funds use LDI funds to hedge interest rate risk — they hold gilts and interest rate swaps as collateral
+2. When gilt yields spike, the value of LDI collateral falls → LDI funds face margin calls on their swap positions
+3. To meet margin calls, LDI funds must sell gilts → selling gilts pushes yields even higher → more margin calls
+4. The Bank of England was forced into emergency gilt purchases — **quantitative easing to stop a crisis, not to stimulate the economy**
+
+The 2022 gilt crisis is a classic shadow-banking run: maturity and liquidity transformation in non-bank entities (LDI funds), with no central bank backstop, requiring emergency intervention. It closely mirrors the 2008 repo run (see [shadow-banking.md](shadow-banking.md)), confirming that the crisis propagation pattern is the same regardless of the trigger.
 
 ## Related
 

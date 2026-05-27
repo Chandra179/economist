@@ -80,4 +80,4 @@ No international bankruptcy court for countries. When a country defaults, there'
 
 - [Capital Flows & Currency Crises](capital-flows.md) — how hot money triggers defaults
 - [Trade & Tariffs](trade.md) — IMF conditions often involve trade liberalization
-- [Currency & Exchange Rates](currency.md) — fixed vs. floating exchange rates
+- [Currency & Exchange Rates](exchange-rates.md) — fixed vs. floating exchange rates
