@@ -92,3 +92,15 @@ When the Fed *hinted* it might slow QE, EM currencies crashed instantly — befo
 - [Sovereign Debt & IMF](sovereign-debt.md) — how capital flight triggers default
 - [The Dollar System](dollar-system.md) — how Fed printing drives global capital flows
 - [Exchange Rates](exchange-rates.md) — how capital controls protect against hot money
+
+## References
+
+1. Rey, H. (2015). [Dilemma not Trilemma: The Global Financial Cycle and Monetary Policy Independence](https://www.nber.org/papers/w21162). NBER Working Paper 21162. — Formal model showing Fed policy drives a global financial cycle that transmits to EM capital flows regardless of exchange rate regime.
+
+2. Calvo, G. (1998). Capital Flows and Capital-Market Crises: The Simple Economics of Sudden Stops. Journal of Applied Economics, 1(1), 35-54. — Foundational model of sudden stops in capital flows to emerging markets.
+
+3. US Treasury. [Treasury International Capital (TIC) System](https://ticdata.treasury.gov/). Monthly data on foreign holdings of US Treasuries, by country. Japan consistently the largest non-US holder.
+
+4. Bank for International Settlements. (2013). [BIS Quarterly Review: International banking and financial market developments](https://www.bis.org/publ/qtrpdf/r_qt1309.htm). September 2013. — Coverage of the Taper Tantrum and EM capital flow reversal.
+
+5. IMF. (1998). [The Asian Crisis: Causes and Cures](https://www.imf.org/external/pubs/ft/fandd/1998/06/imfstaff.htm). Finance & Development, June 1998. — IMF's own account of the Asian Financial Crisis.

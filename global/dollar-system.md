@@ -221,3 +221,15 @@ That's why the Fed talks carefully, raises rates when inflation rises, and acts 
 - [Trade & Tariffs](trade.md) — how dollar sanctions enable US trade policy
 - [Exchange Rates](exchange-rates.md) — managed float and capital controls that shield China from dollar dominance
 - [Shadow Banking](shadow-banking.md) — how dollar flows fuel private credit markets
+
+## References
+
+1. Atlantic Council. (2026). [Dollar Dominance Monitor](https://www.atlanticcouncil.org/programs/geoeconomics-center/dollar-dominance-monitor/). — Tracks dollar share of global reserves (58%), yuan share (3%), sanctions impact, and BRICS de-dollarization efforts.
+
+2. IMF. [Currency Composition of Official Foreign Exchange Reserves (COFER)](https://data.imf.org/en/datasets/IMF.STA:COFER). — Quarterly data on global reserve composition by currency.
+
+3. Federal Reserve History. (2013). [Creation of the Bretton Woods System](https://www.federalreservehistory.org/essays/bretton-woods-created). — Historical overview of the 1944 Bretton Woods conference, creation of the IMF and World Bank, and the system's collapse in 1971.
+
+4. Federal Reserve. [Federal Open Market Committee: Statements and Minutes](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm). — Primary source for QE announcements, rate decisions, and balance sheet policy.
+
+5. US Treasury. [Office of Foreign Assets Control (OFAC) — Russia/Ukraine Sanctions](https://ofac.treasury.gov/sanctions-programs-and-country-information/ukraine-russia-related-sanctions). — Official record of sanctions and asset freezes against Russia's central bank reserves.

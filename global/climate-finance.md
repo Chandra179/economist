@@ -63,3 +63,17 @@ Rich countries promised $100B/year in climate finance to poor countries. It has 
 - [Energy Geopolitics](energy-geopolitics.md) — the energy transition driving carbon markets
 - [Trade & Tariffs](trade.md) — CBAM as climate trade policy
 - [Sovereign Debt & IMF](sovereign-debt.md) — how climate disasters trigger debt crises
+
+## References
+
+1. World Bank. [State and Trends of Carbon Pricing Dashboard](https://carbonpricingdashboard.worldbank.org/). Tracks carbon prices, coverage, and revenue across all major ETS and carbon tax systems globally.
+
+2. Carbon Tracker Initiative. (2013). [Unburnable Carbon: Wasted Capital and Stranded Assets](https://carbontracker.org/reports/unburnable-carbon-2013/). — The original analysis introducing the "carbon bubble" and "stranded assets" framework.
+
+3. Climate Policy Initiative. (2023). [Global Landscape of Climate Finance 2023](https://www.climatepolicyinitiative.org/publication/global-landscape-of-climate-finance-2023/). — Tracks public and private climate finance flows, including the gap between the $100B pledge and actual delivery.
+
+4. IPCC. (2023). [Sixth Assessment Report (AR6): Synthesis Report](https://www.ipcc.ch/report/ar6/syr/). — Historical and per-capita emissions data by country group.
+
+5. UNFCCC. (2023). [Global Stocktake](https://unfccc.int/process-and-meetings/the-paris-agreement/the-paris-agreement#global-stocktake). — First global assessment of progress under the Paris Agreement, including climate finance delivery.
+
+6. European Commission. (2023). [EU Emissions Trading System (EU ETS)](https://climate.ec.europa.eu/eu-action/eu-emissions-trading-system-eu-ets_en). — Rules, coverage, and price data for the EU carbon market.

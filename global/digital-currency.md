@@ -57,5 +57,17 @@ The dollar is declining — but there's no alternative at scale. The yuan can't 
 ## Related
 
 - [The Dollar System](dollar-system.md) — why the dollar is still dominant
-- [Currency & Exchange Rates](exchange-rates.md) — closed capital account limits yuan adoption
+- [Exchange Rates](exchange-rates.md) — closed capital account limits yuan adoption
 - [Trade & Tariffs](trade.md) — how sanctions drive interest in alternatives
+
+## References
+
+1. Atlantic Council. (2026). [Central Bank Digital Currency Tracker](https://www.atlanticcouncil.org/cbdctracker/). — Tracks 146 countries exploring CBDCs; e-CNY had processed >3.4B transactions worth ~$2.3T as of Dec 2025.
+
+2. Atlantic Council. (2026). [Dollar Dominance Monitor](https://www.atlanticcouncil.org/programs/geoeconomics-center/dollar-dominance-monitor/). — Tracks dollar share of global reserves (58%), yuan share (3%), BRICS de-dollarization efforts, CIPS participants, mBridge transaction volume.
+
+3. IMF. [Currency Composition of Official Foreign Exchange Reserves (COFER)](https://data.imf.org/en/datasets/IMF.STA:COFER). — The official source for reserve currency composition data by quarter.
+
+4. Federal Reserve. (2023). [FedNow Service](https://www.federalreserve.gov/paymentsystems/fednow_about.htm). — Official information on the Fed's instant payment service.
+
+5. Bank for International Settlements. (2024). [Project mBridge: Connecting Economies through CBDC](https://www.bis.org/publ/othp76.htm). — BIS-led cross-border CBDC project connecting China, Hong Kong, Thailand, UAE, and Saudi Arabia.
