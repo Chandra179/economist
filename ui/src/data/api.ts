@@ -63,3 +63,28 @@ export async function fetchFredLatest(seriesId: string): Promise<number | null> 
     return null;
   }
 }
+
+export async function fetchFredHistory(
+  seriesId: string,
+  fromDate: string,
+): Promise<Array<{ date: string; value: number | null }>> {
+  const key = import.meta.env.VITE_FRED_API_KEY;
+  if (!key) return [];
+
+  const url = `/api/fred/fred/series/observations?series_id=${seriesId}&api_key=${key}&observation_start=${fromDate}&sort_order=asc&file_type=json`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return [];
+    const data = await response.json();
+    return (data.observations ?? []).map((obs: { date: string; value: string }) => {
+      if (obs.value === undefined || obs.value === '.' || obs.value === '') {
+        return { date: obs.date, value: null };
+      }
+      const num = parseFloat(obs.value);
+      return { date: obs.date, value: isNaN(num) ? null : num };
+    });
+  } catch {
+    return [];
+  }
+}

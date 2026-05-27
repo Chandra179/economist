@@ -3,6 +3,7 @@ import { countries } from './data/countries';
 import { fetchExchangeRates, fetchHistoricalRates, fetchFredLatest } from './data/api';
 import CountryCard from './components/CountryCard';
 import TrendChart from './components/TrendChart';
+import DollarPanel from './components/DollarPanel';
 
 type RangeKey = '1Y' | '5Y' | '10Y' | 'MAX';
 
@@ -28,8 +29,7 @@ interface ChartPoint {
 export default function App() {
   const [liveRates, setLiveRates] = useState<Map<string, number>>(new Map());
   const [fxLoading, setFxLoading] = useState(true);
-  const [chartData, setChartData] = useState<ChartPoint[]>([]);
-  const [chartLoading, setChartLoading] = useState(true);
+  const [chartData, setChartData] = useState<ChartPoint[] | null>(null);
   const [fredData, setFredData] = useState<Record<string, number>>({});
   const [fredLoading, setFredLoading] = useState(true);
   const [range, setRange] = useState<RangeKey>('10Y');
@@ -46,7 +46,6 @@ export default function App() {
     const cfg = rangeConfig[range];
     const fromDate = cfg.yearsBack !== null ? dateAgo(cfg.yearsBack) : '1948-01-01';
 
-    setChartLoading(true);
     Promise.all([
       fetchHistoricalRates('CNY', fromDate, cfg.group),
       fetchHistoricalRates('IDR', fromDate, cfg.group),
@@ -63,7 +62,6 @@ export default function App() {
       }));
 
       setChartData(merged);
-      setChartLoading(false);
     });
   }, [range]);
 
@@ -105,9 +103,11 @@ export default function App() {
         ))}
       </div>
 
+      <DollarPanel />
+
       <TrendChart
         data={chartData}
-        loading={chartLoading}
+        loading={chartData === null}
         range={range}
         onRangeChange={setRange}
         rangeConfig={rangeConfig}

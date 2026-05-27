@@ -18,7 +18,7 @@ interface DataPoint {
 type RangeKey = '1Y' | '5Y' | '10Y' | 'MAX';
 
 interface Props {
-  data: DataPoint[];
+  data: DataPoint[] | null;
   loading: boolean;
   range: RangeKey;
   onRangeChange: (r: RangeKey) => void;
@@ -27,12 +27,26 @@ interface Props {
   onCurrencyChange: (c: 'both' | 'CNY' | 'IDR') => void;
 }
 
-function CustomTooltip({ active, payload, label }: any) {
+interface TooltipItem {
+  name: string;
+  value: number | null;
+  color: string;
+}
+
+function CustomTooltip({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean;
+  payload?: TooltipItem[];
+  label?: string;
+}) {
   if (!active || !payload || !payload.length) return null;
   return (
     <div className="bg-white border border-slate-200 rounded-md px-3 py-2 text-xs font-mono shadow-sm">
       <p className="text-slate-900 font-semibold mb-1">{label}</p>
-      {payload.map((p: any) =>
+      {payload.map((p) =>
         p.value !== null ? (
           <p key={p.name} style={{ color: p.color }}>
             USD/{p.name}: {typeof p.value === 'number' ? p.value.toLocaleString() : p.value}
@@ -106,7 +120,7 @@ export default function TrendChart({ data, loading, range, onRangeChange, rangeC
         </div>
       ) : (
         <ResponsiveContainer width="100%" height={320}>
-          <LineChart data={data}>
+          <LineChart data={data ?? []}>
             <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" />
             <XAxis
               dataKey="date"
