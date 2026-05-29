@@ -1,16 +1,20 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
+  getSortedRowModel,
   getPaginationRowModel,
   flexRender,
   type ColumnDef,
+  type SortingState,
 } from '@tanstack/react-table';
 
 interface Column {
   key: string;
   header: string;
-  format?: (value: unknown) => string;
+  format?: (value: unknown) => string | React.ReactNode;
+  formatRow?: (row: Record<string, unknown>, value: unknown) => string | React.ReactNode;
+  sortable?: boolean;
 }
 
 interface DataTableProps {
@@ -38,13 +42,17 @@ function pageNumbers(total: number, current: number): (number | 'ellipsis')[] {
 }
 
 export default function DataTable({ columns: columnConfig, data, defaultPageSize = 10 }: DataTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   const columns: ColumnDef<Record<string, unknown>>[] = useMemo(
     () =>
       columnConfig.map((col) => ({
         accessorKey: col.key,
         header: col.header,
+        enableSorting: col.sortable ?? true,
         cell: (info) => {
           const value = info.getValue();
+          if (col.formatRow) return col.formatRow(info.row.original, value);
           return col.format ? col.format(value) : String(value ?? '');
         },
       })),
@@ -54,7 +62,10 @@ export default function DataTable({ columns: columnConfig, data, defaultPageSize
   const table = useReactTable({
     data,
     columns,
+    state: { sorting },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageSize: defaultPageSize } },
   });
@@ -69,14 +80,23 @@ export default function DataTable({ columns: columnConfig, data, defaultPageSize
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className="border-b border-slate-200">
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map((header) => {
+                  const sorted = header.column.getIsSorted();
+                  const canSort = header.column.getCanSort();
+                  return (
                     <th
-                    key={header.id}
-                    className="text-slate-400 font-semibold uppercase tracking-wide py-1 px-2"
-                  >
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                  </th>
-                ))}
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                      className={`text-slate-400 font-semibold uppercase tracking-wide py-1 px-2 select-none ${canSort ? 'cursor-pointer' : ''}`}
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {sorted === 'asc' && <span className="text-slate-300 text-[10px]">&#9650;</span>}
+                        {sorted === 'desc' && <span className="text-slate-300 text-[10px]">&#9660;</span>}
+                      </span>
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>

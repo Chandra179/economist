@@ -7,7 +7,6 @@ import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
 
 type FreqInterval = 'day' | 'week' | 'month';
-type GdpInterval = 'quarter' | 'year';
 
 function findClosestDate(map: Map<string, number>, targetDate: string): number | null {
   if (map.has(targetDate)) return map.get(targetDate)!;
@@ -46,7 +45,7 @@ export default function App() {
   const [fxInterval, setFxInterval] = useState<FreqInterval>('month');
   const [gdpChartData, setGdpChartData] = useState<GdpPoint[] | null>(null);
   const [gdpCurrency, setGdpCurrency] = useState<'both' | 'CNY' | 'IDR'>('both');
-  const [gdpInterval, setGdpInterval] = useState<GdpInterval>('year');
+
 
   useEffect(() => {
     fetchExchangeRates(['CNY', 'IDR']).then((rates) => {
@@ -117,31 +116,27 @@ export default function App() {
         merged.push({ date, cnyGdp, idrGdp });
       }
 
-      if (gdpInterval === 'year') {
-        const yearMap = new Map<string, { cnyGdp: number | null; idrSum: number; idrCount: number }>();
-        for (const point of merged) {
-          const year = point.date.slice(0, 4);
-          const entry = yearMap.get(year) ?? { cnyGdp: null, idrSum: 0, idrCount: 0 };
-          if (point.cnyGdp !== null) entry.cnyGdp = point.cnyGdp;
-          if (point.idrGdp !== null) {
-            entry.idrSum += point.idrGdp;
-            entry.idrCount++;
-          }
-          yearMap.set(year, entry);
+      const yearMap = new Map<string, { cnyGdp: number | null; idrSum: number; idrCount: number }>();
+      for (const point of merged) {
+        const year = point.date.slice(0, 4);
+        const entry = yearMap.get(year) ?? { cnyGdp: null, idrSum: 0, idrCount: 0 };
+        if (point.cnyGdp !== null) entry.cnyGdp = point.cnyGdp;
+        if (point.idrGdp !== null) {
+          entry.idrSum += point.idrGdp;
+          entry.idrCount++;
         }
-        const annual = [...yearMap.entries()]
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([year, entry]) => ({
-            date: `${year}-01-01`,
-            cnyGdp: entry.cnyGdp,
-            idrGdp: entry.idrCount >= 3 ? entry.idrSum : null,
-          }));
-        setGdpChartData(annual);
-      } else {
-        setGdpChartData(merged);
+        yearMap.set(year, entry);
       }
+      const annual = [...yearMap.entries()]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([year, entry]) => ({
+          date: `${year}-01-01`,
+          cnyGdp: entry.cnyGdp,
+          idrGdp: entry.idrCount >= 3 ? entry.idrSum : null,
+        }));
+      setGdpChartData(annual);
     });
-  }, [gdpInterval]);
+  }, []);
 
   useEffect(() => {
     const seriesIds = new Set<string>();
@@ -166,7 +161,6 @@ export default function App() {
   }, []);
 
   const handleFxInterval = (value: string) => setFxInterval(value as FreqInterval);
-  const handleGdpInterval = (value: string) => setGdpInterval(value as GdpInterval);
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-8 flex flex-col gap-8">
@@ -202,8 +196,6 @@ export default function App() {
         loading={gdpChartData === null}
         selectedCurrencies={gdpCurrency}
         onCurrencyChange={setGdpCurrency}
-        interval={gdpInterval}
-        onIntervalChange={handleGdpInterval}
       />
 
       <footer className="text-center pt-2 border-t border-slate-200">

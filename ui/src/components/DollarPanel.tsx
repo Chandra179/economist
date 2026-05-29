@@ -133,7 +133,7 @@ export default function DollarPanel() {
         ) : (
           <DataTable
             columns={[
-              { key: 'date', header: 'Year' },
+              { key: 'date', header: 'Year', format: (v: unknown) => String(v).replace(/-01-01$/, '') },
               { key: 'value', header: 'Debt/GDP', format: fmtPct },
             ]}
             data={debtRows as unknown as Record<string, unknown>[]}

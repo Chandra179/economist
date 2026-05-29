@@ -1,1 +1,14 @@
-[{"date":"2026-05-27","base":"USD","quote":"CNY","rate":6.7809},{"date":"2026-05-27","base":"USD","quote":"IDR","rate":17775}]
+[
+  {
+    "date": "2026-05-27",
+    "base": "USD",
+    "quote": "CNY",
+    "rate": 6.7809
+  },
+  {
+    "date": "2026-05-27",
+    "base": "USD",
+    "quote": "IDR",
+    "rate": 17775
+  }
+]
