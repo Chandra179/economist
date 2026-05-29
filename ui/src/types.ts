@@ -5,6 +5,8 @@ export interface CountryData {
   flag: string;
   fredRateSeries: string | null;
   fredReservesSeries: string | null;
+  fredGdpSeries: string | null;
+  fredDebtSeries: string | null;
 }
 
 export interface RatePoint {

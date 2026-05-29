@@ -70,6 +70,60 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
           </div>
         )}
       </div>
+
+      {(country.fredGdpSeries || country.fredDebtSeries) && (
+        <div className="grid grid-cols-2 gap-2">
+          {country.fredGdpSeries && (
+            <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
+              <span className="text-[10px] text-slate-400 uppercase tracking-wide flex items-center gap-1">
+                GDP
+                <span className="relative group flex items-center">
+                  <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-48 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+                    Gross Domestic Product — the total value of all goods and services a country produces in a year.
+                  </span>
+                </span>
+              </span>
+              <span className="text-sm font-semibold text-slate-900 font-mono">
+                {formatGdp(fredData[country.fredGdpSeries], country.code)
+                  ?? (fredLoading ? '...' : '\u2014')}
+              </span>
+            </div>
+          )}
+          {country.fredDebtSeries && (
+            <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
+              <span className="text-[10px] text-slate-400 uppercase tracking-wide flex items-center gap-1">
+                Debt / GDP
+                <span className="relative group flex items-center">
+                  <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-48 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+                    Government debt divided by yearly economic output. Below 50% is low; above 100% means debt exceeds a full year of production.
+                  </span>
+                </span>
+              </span>
+              <span className="text-sm font-semibold text-slate-900 font-mono">
+                {fredData[country.fredDebtSeries] !== undefined
+                  ? `${fredData[country.fredDebtSeries].toFixed(1)}%`
+                  : fredLoading
+                    ? '...'
+                    : '\u2014'}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
+}
+
+const gdpFormat: Record<string, { divisor: number; suffix: string }> = {
+  CNY: { divisor: 1_000_000, suffix: 'T \u00A5' },
+  IDR: { divisor: 1_000, suffix: 'T Rp' },
+};
+
+function formatGdp(value: number | undefined, code: string): string | null {
+  if (value === undefined) return null;
+  const fmt = gdpFormat[code];
+  if (!fmt) return value.toLocaleString();
+  return `${(value / fmt.divisor).toFixed(1)}${fmt.suffix}`;
 }

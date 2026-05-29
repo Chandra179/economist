@@ -67,11 +67,13 @@ export async function fetchFredLatest(seriesId: string): Promise<number | null> 
 export async function fetchFredHistory(
   seriesId: string,
   fromDate: string,
+  frequency?: string,
 ): Promise<Array<{ date: string; value: number | null }>> {
   const key = import.meta.env.VITE_FRED_API_KEY;
   if (!key) return [];
 
-  const url = `/api/fred/fred/series/observations?series_id=${seriesId}&api_key=${key}&observation_start=${fromDate}&sort_order=asc&file_type=json`;
+  let url = `/api/fred/fred/series/observations?series_id=${seriesId}&api_key=${key}&observation_start=${fromDate}&sort_order=asc&file_type=json`;
+  if (frequency) url += `&frequency=${frequency}`;
 
   try {
     const response = await fetch(url);

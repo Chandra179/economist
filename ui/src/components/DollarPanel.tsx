@@ -1,76 +1,30 @@
 import { useState, useEffect } from 'react';
-import {
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-} from 'recharts';
 import { fetchFredLatest, fetchFredHistory } from '../data/api';
+import IntervalSelector from './IntervalSelector';
+import DataTable from './DataTable';
 
-type RangeKey = '1Y' | '5Y' | '10Y' | 'MAX';
+type FreqInterval = 'day' | 'week' | 'month';
 
-interface TooltipItem {
-  name: string;
-  value: number | null;
-  color: string;
-}
-
-const rangeConfig: Record<RangeKey, { label: string; yearsBack: number | null }> = {
-  '1Y': { label: '1 Year', yearsBack: 1 },
-  '5Y': { label: '5 Years', yearsBack: 5 },
-  '10Y': { label: '10 Years', yearsBack: 10 },
-  'MAX': { label: 'All (since 2006)', yearsBack: null },
+const FRED_FREQ: Record<FreqInterval, string | undefined> = {
+  day: undefined,
+  week: 'w',
+  month: 'm',
 };
 
-function dateAgo(years: number): string {
-  const d = new Date();
-  d.setFullYear(d.getFullYear() - years);
-  return d.toISOString().split('T')[0];
-}
-
-const rangeLabels: Record<RangeKey, string> = {
-  '1Y': '1Y',
-  '5Y': '5Y',
-  '10Y': '10Y',
-  'MAX': 'MAX',
+const INTERVAL_LABELS: Record<FreqInterval, string> = {
+  day: 'Day',
+  week: 'Week',
+  month: 'Month',
 };
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: {
-  active?: boolean;
-  payload?: TooltipItem[];
-  label?: string;
-}) {
-  if (!active || !payload || !payload.length) return null;
-  return (
-    <div className="bg-white border border-slate-200 rounded-md px-3 py-2 text-xs font-mono shadow-sm">
-      <p className="text-slate-900 font-semibold mb-1">{label}</p>
-      {payload.map((p) =>
-        p.value !== null ? (
-          <p key={p.name} style={{ color: p.color }}>
-            {p.name}:{' '}
-            {typeof p.value === 'number'
-              ? p.value.toLocaleString(undefined, { maximumFractionDigits: 2 })
-              : p.value}
-            {p.name.includes('Debt') ? '%' : ''}
-          </p>
-        ) : null,
-      )}
-    </div>
-  );
+function fmtDxy(v: unknown): string {
+  if (v === null || v === undefined) return '\u2014';
+  return (v as number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function formatDate(dateStr: string, range: RangeKey): string {
-  const parts = dateStr.split('-');
-  if (range === 'MAX' || range === '10Y') return parts[0];
-  if (range === '5Y') return `${parts[0]}-${parts[1]}`;
-  return `${parts[1]}/${parts[2]}`;
+function fmtPct(v: unknown): string {
+  if (v === null || v === undefined) return '\u2014';
+  return (v as number).toFixed(1) + '%';
 }
 
 export default function DollarPanel() {
@@ -78,18 +32,15 @@ export default function DollarPanel() {
   const [dxyHistory, setDxyHistory] = useState<Array<{ date: string; value: number | null }> | null>(null);
   const [debtGdpLatest, setDebtGdpLatest] = useState<number | null>(null);
   const [debtGdpHistory, setDebtGdpHistory] = useState<Array<{ date: string; value: number | null }> | null>(null);
-  const [range, setRange] = useState<RangeKey>('10Y');
+  const [dxyInterval, setDxyInterval] = useState<FreqInterval>('month');
 
   useEffect(() => {
     fetchFredLatest('DTWEXBGS').then(setDxyLatest);
   }, []);
 
   useEffect(() => {
-    const cfg = rangeConfig[range];
-    const fromDate = cfg.yearsBack !== null ? dateAgo(cfg.yearsBack) : '2006-01-01';
-
-    fetchFredHistory('DTWEXBGS', fromDate).then(setDxyHistory);
-  }, [range]);
+    fetchFredHistory('DTWEXBGS', '2006-01-01', FRED_FREQ[dxyInterval]).then(setDxyHistory);
+  }, [dxyInterval]);
 
   useEffect(() => {
     Promise.all([
@@ -100,6 +51,13 @@ export default function DollarPanel() {
       setDebtGdpHistory(history);
     });
   }, []);
+
+  const handleIntervalChange = (value: string) => {
+    setDxyInterval(value as FreqInterval);
+  };
+
+  const dxyRows = (dxyHistory ?? []).map((p) => ({ date: p.date, value: p.value }));
+  const debtRows = (debtGdpHistory ?? []).map((p) => ({ date: p.date, value: p.value }));
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col gap-4">
@@ -145,54 +103,23 @@ export default function DollarPanel() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h5 className="text-xs text-slate-400 uppercase tracking-wide font-semibold">DXY Historical</h5>
-          <div className="flex gap-1">
-            {(Object.keys(rangeConfig) as RangeKey[]).map((key) => (
-              <button
-                key={key}
-                onClick={() => setRange(key)}
-                className={`px-3 py-1 text-xs font-semibold font-mono rounded-md border transition cursor-pointer
-                  ${range === key
-                    ? 'bg-orange-600 text-white border-orange-600'
-                    : 'bg-slate-50 text-slate-400 border-slate-200 hover:border-orange-600 hover:text-orange-600'
-                  }`}
-              >
-                {rangeLabels[key]}
-              </button>
-            ))}
-          </div>
+          <IntervalSelector
+            intervals={(['day', 'week', 'month'] as FreqInterval[]).map((i) => ({ value: i, label: INTERVAL_LABELS[i] }))}
+            value={dxyInterval}
+            onChange={handleIntervalChange}
+          />
         </div>
 
         {dxyHistory === null ? (
-          <div className="h-[240px] flex items-center justify-center text-slate-400 text-sm">
-            Loading...
-          </div>
+          <div className="flex items-center justify-center text-slate-400 text-sm py-8">Loading...</div>
         ) : (
-          <ResponsiveContainer width="100%" height={240}>
-            <LineChart data={dxyHistory}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" />
-              <XAxis
-                dataKey="date"
-                stroke="#94a3b8"
-                tick={{ fontSize: 11 }}
-                tickFormatter={(d: string) => formatDate(d, range)}
-              />
-              <YAxis
-                stroke="#94a3b8"
-                tick={{ fontSize: 11 }}
-                domain={['auto', 'auto']}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Line
-                type="monotone"
-                dataKey="value"
-                name="DXY"
-                stroke="#334155"
-                strokeWidth={2}
-                dot={false}
-                connectNulls
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <DataTable
+            columns={[
+              { key: 'date', header: 'Date' },
+              { key: 'value', header: 'DXY', format: fmtDxy },
+            ]}
+            data={dxyRows as unknown as Record<string, unknown>[]}
+          />
         )}
       </div>
 
@@ -202,37 +129,15 @@ export default function DollarPanel() {
         </h5>
 
         {debtGdpHistory === null ? (
-          <div className="h-[160px] flex items-center justify-center text-slate-400 text-sm">
-            Loading...
-          </div>
+          <div className="flex items-center justify-center text-slate-400 text-sm py-8">Loading...</div>
         ) : (
-          <ResponsiveContainer width="100%" height={160}>
-            <LineChart data={debtGdpHistory}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" />
-              <XAxis
-                dataKey="date"
-                stroke="#94a3b8"
-                tick={{ fontSize: 11 }}
-                tickFormatter={(d: string) => d.split('-')[0]}
-              />
-              <YAxis
-                stroke="#94a3b8"
-                tick={{ fontSize: 11 }}
-                domain={['auto', 'auto']}
-                tickFormatter={(v: number) => `${v}%`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Line
-                type="monotone"
-                dataKey="value"
-                name="Debt/GDP"
-                stroke="#d97706"
-                strokeWidth={2}
-                dot={false}
-                connectNulls
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <DataTable
+            columns={[
+              { key: 'date', header: 'Year' },
+              { key: 'value', header: 'Debt/GDP', format: fmtPct },
+            ]}
+            data={debtRows as unknown as Record<string, unknown>[]}
+          />
         )}
       </div>
     </div>
