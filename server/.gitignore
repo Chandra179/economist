@@ -1,0 +1,23 @@
+# Go binary
+/economist-server
+
+# Cache database
+/data/
+
+# Vendored dependencies
+/vendor/
+
+# Environment
+.env
+*.local
+
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+vendor

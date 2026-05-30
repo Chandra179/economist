@@ -7,7 +7,7 @@ interface DataPoint {
   usdidr: number | null;
 }
 
-type FreqInterval = 'day' | 'week' | 'month';
+type FreqInterval = 'day' | 'week' | 'month' | 'year';
 
 interface Props {
   data: DataPoint[] | null;
@@ -22,7 +22,14 @@ const FX_INTERVAL_OPTIONS: Record<FreqInterval, string> = {
   day: 'Day',
   week: 'Week',
   month: 'Month',
+  year: 'Year',
 };
+
+function formatDate(dateStr: string, interval: string): string {
+  if (interval === 'year') return dateStr.slice(0, 4);
+  if (interval === 'month') return dateStr.slice(0, 7);
+  return dateStr.slice(0, 10);
+}
 
 function fmtRate(v: unknown): string {
   if (v === null || v === undefined) return '\u2014';
@@ -39,7 +46,7 @@ export default function FxTable({ data, loading, selectedCurrencies, onCurrencyC
   }));
 
   const columns = [
-    { key: 'date', header: 'Date' },
+    { key: 'date', header: 'Date', format: (v: unknown) => formatDate(String(v), interval) },
     ...(selectedCurrencies === 'both' || selectedCurrencies === 'CNY'
       ? [{ key: 'usdcny' as const, header: 'USD/CNY', format: fmtRate }]
       : []),
@@ -73,7 +80,7 @@ export default function FxTable({ data, loading, selectedCurrencies, onCurrencyC
             ))}
           </div>
           <IntervalSelector
-            intervals={(['day', 'week', 'month'] as FreqInterval[]).map((i) => ({ value: i, label: FX_INTERVAL_OPTIONS[i] }))}
+            intervals={(['day', 'week', 'month', 'year'] as FreqInterval[]).map((i) => ({ value: i, label: FX_INTERVAL_OPTIONS[i] }))}
             value={interval}
             onChange={handleInterval}
           />

@@ -47,9 +47,9 @@ export default function DataTable({ columns: columnConfig, data, defaultPageSize
   const columns: ColumnDef<Record<string, unknown>>[] = useMemo(
     () =>
       columnConfig.map((col) => ({
-        accessorKey: col.key,
+        accessorFn: (row) => row[col.key],
         header: col.header,
-        enableSorting: col.sortable ?? true,
+        enableSorting: col.sortable !== false,
         cell: (info) => {
           const value = info.getValue();
           if (col.formatRow) return col.formatRow(info.row.original, value);
@@ -86,13 +86,13 @@ export default function DataTable({ columns: columnConfig, data, defaultPageSize
                   return (
                     <th
                       key={header.id}
-                      onClick={header.column.getToggleSortingHandler()}
-                      className={`text-slate-400 font-semibold uppercase tracking-wide py-1 px-2 select-none ${canSort ? 'cursor-pointer' : ''}`}
+                      onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
+                      className={`text-slate-400 font-semibold uppercase tracking-wide py-1 px-2 select-none ${canSort ? 'cursor-pointer hover:text-slate-600' : ''}`}
                     >
                       <span className="inline-flex items-center gap-1">
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {sorted === 'asc' && <span className="text-slate-300 text-[10px]">&#9650;</span>}
-                        {sorted === 'desc' && <span className="text-slate-300 text-[10px]">&#9660;</span>}
+                        {sorted === 'asc' && <span className="text-slate-500 text-[11px]">&#9650;</span>}
+                        {sorted === 'desc' && <span className="text-slate-500 text-[11px]">&#9660;</span>}
                       </span>
                     </th>
                   );

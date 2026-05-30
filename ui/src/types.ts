@@ -7,9 +7,16 @@ export interface CountryData {
   fredReservesSeries: string | null;
   fredGdpSeries: string | null;
   fredDebtSeries: string | null;
+  debtSource?: 'fred' | 'worldbank';
+  gdpMultiplier?: number;
 }
 
-export interface RatePoint {
+export interface TimeSeriesPoint {
   date: string;
-  rate: number;
+  value: number | null;
+}
+
+export interface GdpRecord {
+  date: string;
+  gdpUsd: number;
 }

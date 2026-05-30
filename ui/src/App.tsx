@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { countries } from './data/countries';
-import { fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredHistory } from './data/api';
+import { fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredBatchLatest, fetchFredHistory, fetchWorldBankDebt } from './data/api';
 import CountryCard from './components/CountryCard';
-import DollarPanel from './components/DollarPanel';
 import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
+import type { TimeSeriesPoint, GdpRecord } from './types';
 
-type FreqInterval = 'day' | 'week' | 'month';
+type FreqInterval = 'day' | 'week' | 'month' | 'year';
 
 function findClosestDate(map: Map<string, number>, targetDate: string): number | null {
   if (map.has(targetDate)) return map.get(targetDate)!;
@@ -23,17 +23,28 @@ function findClosestDate(map: Map<string, number>, targetDate: string): number |
   return closest ? map.get(closest) ?? null : null;
 }
 
+function aggregateToYear(data: TimeSeriesPoint[]): TimeSeriesPoint[] {
+  const byYear = new Map<string, { sum: number; count: number }>();
+  for (const { date, value } of data) {
+    if (value === null) continue;
+    const year = date.slice(0, 4);
+    const entry = byYear.get(year) ?? { sum: 0, count: 0 };
+    entry.sum += value;
+    entry.count += 1;
+    byYear.set(year, entry);
+  }
+  return [...byYear.entries()]
+    .map(([year, { sum, count }]) => ({ date: year, value: sum / count }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
 interface ChartPoint {
   date: string;
   usdcny: number | null;
   usdidr: number | null;
 }
 
-interface GdpPoint {
-  date: string;
-  cnyGdp: number | null;
-  idrGdp: number | null;
-}
+
 
 export default function App() {
   const [liveRates, setLiveRates] = useState<Map<string, number>>(new Map());
@@ -43,9 +54,13 @@ export default function App() {
   const [fredLoading, setFredLoading] = useState(true);
   const [selectedCurrencies, setSelectedCurrencies] = useState<'both' | 'CNY' | 'IDR'>('both');
   const [fxInterval, setFxInterval] = useState<FreqInterval>('month');
-  const [gdpChartData, setGdpChartData] = useState<GdpPoint[] | null>(null);
-  const [gdpCurrency, setGdpCurrency] = useState<'both' | 'CNY' | 'IDR'>('both');
+  const [dxyLatest, setDxyLatest] = useState<number | null>(null);
+  const [gdpData, setGdpData] = useState<Map<string, GdpRecord[]> | null>(null);
+  const [gdpLoading, setGdpLoading] = useState(true);
+  const [debtData, setDebtData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
 
+  const gdpCountries = useMemo(() => countries.filter((c) => c.fredGdpSeries), []);
+  const debtCountries = useMemo(() => countries.filter((c) => c.fredDebtSeries), []);
 
   useEffect(() => {
     fetchExchangeRates(['CNY', 'IDR']).then((rates) => {
@@ -55,12 +70,13 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    Promise.all([
-      fetchHistoricalRates('CNY', '1999-01-01', fxInterval),
-      fetchHistoricalRates('IDR', '1999-01-01', fxInterval),
-    ]).then(([cnyData, idrData]) => {
-      const cnyMap = new Map(cnyData.map((p) => [p.date, p.rate]));
-      const idrMap = new Map(idrData.map((p) => [p.date, p.rate]));
+    fetchHistoricalRates(['CNY', 'IDR'], '1999-01-01', fxInterval).then((rateMap) => {
+      const cnyData = rateMap.get('CNY') ?? [];
+      const idrData = rateMap.get('IDR') ?? [];
+      const cny = fxInterval === 'year' ? aggregateToYear(cnyData) : cnyData;
+      const idr = fxInterval === 'year' ? aggregateToYear(idrData) : idrData;
+      const cnyMap = new Map(cny.map((p) => [p.date, p.value!]));
+      const idrMap = new Map(idr.map((p) => [p.date, p.value!]));
       const allDates = new Set([...cnyMap.keys(), ...idrMap.keys()]);
       const sorted = [...allDates].sort();
 
@@ -75,67 +91,71 @@ export default function App() {
   }, [fxInterval]);
 
   useEffect(() => {
-    const cnyGdpSeries = countries.find((c) => c.code === 'CNY')?.fredGdpSeries;
-    const idrGdpSeries = countries.find((c) => c.code === 'IDR')?.fredGdpSeries;
-    if (!cnyGdpSeries || !idrGdpSeries) return;
+    if (gdpCountries.length === 0) return;
 
-    Promise.all([
-      fetchFredHistory(cnyGdpSeries, '1990-01-01'),
-      fetchFredHistory(idrGdpSeries, '1990-01-01'),
-      fetchHistoricalRates('CNY', '1990-01-01', 'month'),
-      fetchHistoricalRates('IDR', '1990-01-01', 'month'),
-    ]).then(([cnyHistory, idrHistory, cnyRates, idrRates]) => {
-      const cnyGdpMap = new Map(cnyHistory.filter((p) => p.value !== null).map((p) => [p.date, p.value!]));
-      const idrGdpMap = new Map(idrHistory.filter((p) => p.value !== null).map((p) => [p.date, p.value!]));
-      const cnyFxMap = new Map(cnyRates.map((p) => [p.date, p.rate]));
-      const idrFxMap = new Map(idrRates.map((p) => [p.date, p.rate]));
-      const allDates = new Set([...cnyGdpMap.keys(), ...idrGdpMap.keys()]);
-      const sorted = [...allDates].sort();
+    const fxCurrencies = gdpCountries.filter((c) => c.code !== 'USD').map((c) => c.code);
+    const fxHistoryPromise = fxCurrencies.length > 0
+      ? fetchHistoricalRates(fxCurrencies, '1990-01-01', 'month')
+      : Promise.resolve(new Map<string, TimeSeriesPoint[]>());
 
-      const merged: GdpPoint[] = [];
-      let lastCny: number | null = null;
+    fxHistoryPromise.then((fxHistoryMap) => {
+      const fetches = gdpCountries.map(async (country) => {
+        const gdpHistory = await fetchFredHistory(country.fredGdpSeries!, '1990-01-01', 'a');  // annual
 
-      for (const date of sorted) {
-        const cnyRaw = cnyGdpMap.get(date) ?? null;
-        const idrRaw = idrGdpMap.get(date) ?? null;
+        const fxHistory = country.code !== 'USD'
+          ? (fxHistoryMap.get(country.code) ?? [])
+          : [];
 
-        if (cnyRaw !== null) lastCny = cnyRaw;
+        const gdpMap = new Map(gdpHistory.filter((p) => p.value !== null).map((p) => [p.date, p.value!]));
+        const fxMap = new Map(fxHistory.map((p) => [p.date, p.value!]));
 
-        let cnyGdp: number | null = null;
-        let idrGdp: number | null = null;
-
-        if (lastCny !== null) {
-          const fx = findClosestDate(cnyFxMap, date);
-          if (fx !== null) cnyGdp = (lastCny * 1_000_000) / fx;
-        }
-        if (idrRaw !== null) {
-          const fx = findClosestDate(idrFxMap, date);
-          if (fx !== null) idrGdp = (idrRaw * 1_000_000) / fx;
-        }
-
-        merged.push({ date, cnyGdp, idrGdp });
-      }
-
-      const yearMap = new Map<string, { cnyGdp: number | null; idrSum: number; idrCount: number }>();
-      for (const point of merged) {
-        const year = point.date.slice(0, 4);
-        const entry = yearMap.get(year) ?? { cnyGdp: null, idrSum: 0, idrCount: 0 };
-        if (point.cnyGdp !== null) entry.cnyGdp = point.cnyGdp;
-        if (point.idrGdp !== null) {
-          entry.idrSum += point.idrGdp;
-          entry.idrCount++;
-        }
+      const yearMap = new Map<string, { sum: number; count: number }>();
+      for (const [date, raw] of gdpMap) {
+        const year = date.slice(0, 4);
+        const fx = country.code === 'USD' ? 1 : findClosestDate(fxMap, date);
+        if (fx === null) continue;
+        const multiplier = country.gdpMultiplier ?? 1_000_000;
+        const usd = (raw * multiplier) / fx;
+        const entry = yearMap.get(year) ?? { sum: 0, count: 0 };
+        entry.sum += usd;
+        entry.count += 1;
         yearMap.set(year, entry);
       }
-      const annual = [...yearMap.entries()]
-        .sort(([a], [b]) => a.localeCompare(b))
+
+      const records = [...yearMap.entries()]
         .map(([year, entry]) => ({
           date: `${year}-01-01`,
-          cnyGdp: entry.cnyGdp,
-          idrGdp: entry.idrCount >= 3 ? entry.idrSum : null,
-        }));
-      setGdpChartData(annual);
+          gdpUsd: entry.sum / entry.count,
+        }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+      return { code: country.code, records };
     });
+
+        Promise.all(fetches).then((results) => {
+          setGdpData(new Map(results.map((r) => [r.code, r.records])));
+          setGdpLoading(false);
+        });
+    });
+  }, [gdpCountries]);
+
+  useEffect(() => {
+    if (debtCountries.length === 0) return;
+
+    const fetches = debtCountries.map(async (country) => {
+      const history = country.debtSource === 'worldbank'
+        ? await fetchWorldBankDebt(country.code)
+        : await fetchFredHistory(country.fredDebtSeries!, '1990-01-01');
+      return { code: country.code, records: history.filter((p) => p.value !== null) };
+    });
+
+    Promise.all(fetches).then((results) => {
+      setDebtData(new Map(results.map((r) => [r.code, r.records])));
+    });
+  }, [debtCountries]);
+
+  useEffect(() => {
+    fetchFredLatest('DTWEXBGS').then(setDxyLatest);
   }, []);
 
   useEffect(() => {
@@ -144,18 +164,15 @@ export default function App() {
       if (c.fredRateSeries) seriesIds.add(c.fredRateSeries);
       if (c.fredReservesSeries) seriesIds.add(c.fredReservesSeries);
       if (c.fredGdpSeries) seriesIds.add(c.fredGdpSeries);
-      if (c.fredDebtSeries) seriesIds.add(c.fredDebtSeries);
+      if (c.fredDebtSeries && c.debtSource !== 'worldbank') seriesIds.add(c.fredDebtSeries);
     }
 
-    const results: Record<string, number> = {};
-
-    Promise.allSettled(
-      [...seriesIds].map(async (id) => {
-        const value = await fetchFredLatest(id);
-        if (value !== null) results[id] = value;
-      }),
-    ).then(() => {
-      setFredData(results);
+    fetchFredBatchLatest([...seriesIds]).then((results) => {
+      const cleaned: Record<string, number> = {};
+      for (const [id, v] of Object.entries(results)) {
+        if (v !== null) cleaned[id] = v;
+      }
+      setFredData(cleaned);
       setFredLoading(false);
     });
   }, []);
@@ -176,11 +193,10 @@ export default function App() {
             fredData={fredData}
             fredLoading={fredLoading}
             loading={fxLoading && c.code !== 'USD'}
+            dxyLatest={c.code === 'USD' ? dxyLatest : null}
           />
         ))}
       </div>
-
-      <DollarPanel />
 
       <FxTable
         data={chartData}
@@ -192,10 +208,11 @@ export default function App() {
       />
 
       <GdpTable
-        data={gdpChartData}
-        loading={gdpChartData === null}
-        selectedCurrencies={gdpCurrency}
-        onCurrencyChange={setGdpCurrency}
+        gdpData={gdpData}
+        gdpCountries={gdpCountries}
+        debtData={debtData}
+        debtCountries={debtCountries}
+        loading={gdpLoading}
       />
 
       <footer className="text-center pt-2 border-t border-slate-200">

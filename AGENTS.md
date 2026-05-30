@@ -1,92 +1,106 @@
 # Economist — AGENTS.md
 
-Pure markdown documentation repository — economics study notes.
+Pure markdown economics study notes + `ui/` dashboard.
 
-## Content
+## Root markdown docs
 
-| Directory | Topic | Files |
-|-----------|-------|-------|
-| `micro/`  | Microeconomics | 9 |
-| `macro/`  | Macroeconomics | 8 |
-| `global/` | Global finance | 12 |
-| `behavioral/` | Behavioral economics | 1 |
-| root      | `README.md`, `overview.md`, `SUMMARY.md`, `ROADMAP.md` | 4 |
+No formatter, linter, typechecker, or test runner. Just edit `.md` files. Published via GitBook (GitHub-synced). Do not break relative links between `.md` files.
 
-### Key files
+- **`overview.md`** — mermaid diagram; best starting point
+- **`SUMMARY.md`** — GitBook ToC; update when adding/renaming pages
+- **`ROADMAP.md`** — content quality ratings; identifies thin pages needing expansion
+- **`init`** — empty sentinel file; ignore
 
-- **`overview.md`** — mermaid diagram showing micro–macro–global linkages; best starting point
-- **`SUMMARY.md`** — GitBook table of contents; update when adding/renaming pages
-- **`ROADMAP.md`** — content quality ratings per section
-- **`init`** — empty file; ignore
+## `Makefile` — root-level commands
 
-### Markdown workflow
+```sh
+make build       # build server + UI
+make run-server  # run Go API server (needs FRED_API_KEY in .env or env var)
+make run-ui      # Vite dev server
+make lint        # vet Go server + eslint UI
+make clean       # remove binaries, cache, dist
+```
 
-No formatter, linter, typechecker, or test runner. Just edit markdown directly. Published via GitBook (synced to GitHub). Do not break relative links between `.md` files.
+## `server/` — Go + Gin + bbolt API server
 
----
+Caches upstream API responses (Frankfurter, FRED, World Bank) in bbolt to avoid rate limits and speed up reloads.
 
-## `ui/` — React + TypeScript + Vite app
+### Setup
 
-Standalone dashboard project with its own `package.json`, config, and dependencies.
+Copy `server/.env.example` → `server/.env` and fill in your FRED API key:
 
-### Stack
+```
+FRED_API_KEY=your_32_char_key
+```
 
-- React 19, TypeScript 6, Vite 8
-- **Tailwind CSS v4** (no config file, no PostCSS — uses `@tailwindcss/vite` plugin + `@import "tailwindcss"` in `index.css`)
-- **Recharts** for line charts
-- **Frankfurter API** (free, no key) — live and historical exchange rates for CNY, IDR
-- **FRED API** (free, requires API key) — Fed rate (`DFF`) and reserves (`TRESEGCNM052N`, `TRESEGIDM052N`)
+The server loads `.env` via godotenv on startup. Env vars set in the shell take precedence.
 
 ### Commands
 
 ```sh
-npm run dev       # Vite dev server with proxy
-npm run build     # tsc -b && vite build (order matters — run typecheck first)
+make build-server  # or: cd server && go build -o economist-server .
+make run-server    # or: FRED_API_KEY=key ./server/economist-server
+```
+
+### Env vars
+
+| Var | Default | |
+|-----|---------|-|
+| `FRED_API_KEY` | — | **Required** for Fed rate, reserves, GDP, debt |
+| `ADDR` | `:8080` | Listen address |
+| `CACHE_PATH` | `data/cache.db` | bbolt database path |
+
+### API endpoints (proxied to upstream, cached in bbolt)
+
+| Endpoint | Upstream | TTL |
+|----------|----------|-----|
+| `GET /api/exchange-rates?currencies=CNY,IDR` | Frankfurter `/v2/rates` | 6h |
+| `GET /api/historical-rates?currencies=...&from=&group=` | Frankfurter `/v2/rates` | 24h |
+| `GET /api/fred/latest?series=DTWEXBGS` | FRED observations | 1h |
+| `GET /api/fred/batch-latest?series=DFF,GDP,...` | FRED (server fan-out) | 1h |
+| `GET /api/fred/history?series=&from=&frequency=` | FRED observations | 24h |
+| `GET /api/worldbank/debt?country=USD` | World Bank | 24h |
+
+FRED API key stays server-side — no client exposure.
+
+## `ui/` — React + TypeScript + Vite dashboard
+
+Standalone project in `ui/` with its own `package.json`, config, deps. Calls the Go server at `http://localhost:8080` — start the server first.
+
+### Commands
+
+```sh
+npm run dev       # Vite dev server
+npm run build     # tsc -b && vite build (typecheck first — dead code fails)
 npm run lint      # eslint .
 ```
 
-### FRED API key
+### Critical tsconfig rules (in `ui/tsconfig.app.json`)
 
-Required for FRED data (Fed rate + reserves). Copy `.env.example` to `.env.local` and add your key:
+- `noUnusedLocals: true`, `noUnusedParameters: true` — any dead import/var/param fails build
+- `verbatimModuleSyntax: true` — use `import type` for type-only imports
+- `erasableSyntaxOnly: true` — no enums, no namespaces, no parameter properties
+
+### Stack quirks
+
+- **Tailwind CSS v4** — no config file, no PostCSS. Uses `@tailwindcss/vite` plugin + `@import "tailwindcss"` in `index.css`
+- **ESLint** flat config (`eslint.config.js`) with typescript-eslint, react-hooks, react-refresh
+- No routing, no state library, no test framework — plain `useState`/`useEffect`
+
+### Current components (`ui/src/components/`)
 
 ```
-VITE_FRED_API_KEY=your_32_char_key
+CountryCard.tsx       — single country display card
+DataTable.tsx         — generic sortable table (used by FxTable, GdpTable)
+FxTable.tsx           — FX history with range selector + currency filter
+GdpTable.tsx          — GDP comparison table (USD-converted)
+IntervalSelector.tsx  — day/week/month toggle
 ```
-
-The `.env.local` file is gitignored. Vite exposes it as `import.meta.env.VITE_FRED_API_KEY`.
-
-### Dev proxy
-
-`vite.config.ts` proxies `/api/fred/*` → `https://api.stlouisfed.org/*` to avoid CORS. Only works in dev. No production deployment setup exists yet.
 
 ### Data sources
 
 | Data | API | Auth | Frequency |
 |------|-----|------|-----------|
-| USD/CNY, USD/IDR rates | Frankfurter | None | Daily (live) |
-| 6mo–MAX FX history | Frankfurter | None | Daily/weekly/monthly |
-| Fed effective rate | FRED `DFF` | API key | Daily |
-| China reserves | FRED `TRESEGCNM052N` | API key | Monthly |
-| Indonesia reserves | FRED `TRESEGIDM052N` | API key | Monthly |
-
-### Architecture
-
-```
-src/
-├── App.tsx                  — dashboard layout, all fetch orchestration
-├── types.ts                 — shared types
-├── index.css                — just @import "tailwindcss"
-├── data/
-│   ├── api.ts               — Frankfurter + FRED fetch functions
-│   ├── countries.ts         — 3 country profiles (metadata only, no numeric data)
-│   ├── frankfurter-rates.json   — API response reference
-│   ├── frankfurter-history.json — API response reference
-│   └── fred-observations.json   — API response reference
-└── components/
-    ├── CountryCard.tsx       — single country display card
-    └── TrendChart.tsx        — FX chart with range selector + currency filter
-```
-
-- No routing, no state library, no test framework — plain React with `useState`/`useEffect`
-- No CSS files other than `index.css` (all styling is Tailwind utility classes in JSX)
-- `noUnusedLocals` and `noUnusedParameters` are strict in tsconfig — dead code causes build failure
+| USD/CNY, USD/IDR rates | Frankfurter (frankfurter.dev) | None | Daily |
+| 1999–MAX FX history | Frankfurter | None | Daily/weekly/monthly |
+| Fed rate (DFF), reserves (TRESEG*), GDP (NGDP*), debt (GGGDT*) | FRED | API key | Daily/monthly |
