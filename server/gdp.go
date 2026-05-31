@@ -3,14 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"net/url"
 	"sort"
 	"strings"
 	"sync"
 	"time"
 
+	"economist/pkg/client"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,84 +19,27 @@ type GdpRecord struct {
 	Growth *float64 `json:"growth"`
 }
 
-type frankfurterRate struct {
-	Date  string  `json:"date"`
-	Base  string  `json:"base"`
-	Quote string  `json:"quote"`
-	Rate  float64 `json:"rate"`
-}
-
-type fxRatesByDate map[string]map[string]float64
-
-func fetchFxHistory(cache *Cache, currencies []string, from string) (fxRatesByDate, error) {
-	u := fmt.Sprintf("%s/rates?from=%s&base=USD&quotes=%s&group=month",
-		frankfurterBase,
-		url.QueryEscape(from),
-		url.QueryEscape(strings.Join(currencies, ",")),
-	)
+func fetchFxHistory(cache *Cache, currencies []string, from string) (client.FxRatesByDate, error) {
 	cacheKey := fmt.Sprintf("fxhist:%s:%s", strings.Join(currencies, ","), from)
 
 	if data, ok := cache.Get("frankfurter", cacheKey); ok {
-		var rates []frankfurterRate
+		var rates []client.FrankfurterRate
 		if err := json.Unmarshal(data, &rates); err == nil {
-			return buildFxMap(rates), nil
+			return client.BuildFxMap(rates), nil
 		}
 	}
 
-	resp, err := http.Get(u)
+	body, err := client.FetchFxHistory(from, currencies, gdpConfig.FxApiGroup)
 	if err != nil {
-		return nil, fmt.Errorf("frankfurter request: %w", err)
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("frankfurter %d: %s", resp.StatusCode, string(body))
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("read frankfurter: %w", err)
-	}
-
-	var rates []frankfurterRate
-	if err := json.Unmarshal(body, &rates); err != nil {
-		return nil, fmt.Errorf("parse frankfurter: %w", err)
-	}
-	_ = cache.Set("frankfurter", cacheKey, body, 24*time.Hour)
-	return buildFxMap(rates), nil
-}
-
-func buildFxMap(rates []frankfurterRate) fxRatesByDate {
-	m := make(fxRatesByDate)
-	for _, r := range rates {
-		if m[r.Date] == nil {
-			m[r.Date] = make(map[string]float64)
-		}
-		m[r.Date][r.Quote] = r.Rate
-	}
-	return m
-}
-
-func parseFredObs(raw []byte) (map[string]float64, error) {
-	var resp struct {
-		Observations []struct {
-			Date  string `json:"date"`
-			Value string `json:"value"`
-		} `json:"observations"`
-	}
-	if err := json.Unmarshal(raw, &resp); err != nil {
 		return nil, err
 	}
-	out := make(map[string]float64, len(resp.Observations))
-	for _, o := range resp.Observations {
-		if o.Value == "" || o.Value == "." {
-			continue
-		}
-		var v float64
-		if _, err := fmt.Sscanf(o.Value, "%f", &v); err == nil {
-			out[o.Date] = v
-		}
+
+	rates, err := client.ParseFrankfurterRates(body)
+	if err != nil {
+		return nil, err
 	}
-	return out, nil
+	_ = cache.Set("frankfurter", cacheKey, body, gdpConfig.FxCacheTTL)
+	return client.BuildFxMap(rates), nil
 }
 
 func closestRate(fxSorted []string, fxRates map[string]float64, targetDate string) (float64, bool) {
@@ -132,10 +74,10 @@ func parseFlexDate(s string) (time.Time, error) {
 	return time.Parse("2006-01-02", s)
 }
 
-func convertGdp(cc CountryConfig, gdpObs map[string]float64, fx fxRatesByDate) []GdpRecord {
+func convertGdp(cc CountryConfig, gdpObs map[string]float64, fx client.FxRatesByDate) []GdpRecord {
 	multiplier := cc.GdpMultiplier
 	if multiplier == 0 {
-		multiplier = 1_000_000
+		multiplier = gdpConfig.DefaultMultiplier
 	}
 	isUsd := cc.Code == "USD"
 
@@ -224,57 +166,17 @@ func convertGdp(cc CountryConfig, gdpObs map[string]float64, fx fxRatesByDate) [
 }
 
 func fetchWorldBankGdpData(cache *Cache, code string) (map[string]float64, error) {
-	mapped, ok := worldbankCountry[code]
-	if !ok {
-		mapped = code
-	}
+	mapped := client.WorldBankCountry(code)
 	cacheKey := "gdp:" + mapped
 	if data, ok := cache.Get("worldbank", cacheKey); ok {
-		return parseWorldBankGdpObs(data)
+		return client.ParseWorldBankObs(data)
 	}
-	u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/NY.GDP.MKTP.CN?format=json",
-		url.QueryEscape(mapped))
-	resp, err := http.Get(u)
+	body, err := client.FetchWorldBankGdpLcu(mapped)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("world bank %d: %s", resp.StatusCode, string(body))
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	_ = cache.Set("worldbank", cacheKey, body, 24*time.Hour)
-	return parseWorldBankGdpObs(body)
-}
-
-// parseWorldBankGdpObs parses World Bank JSON format:
-// [{page:...}, [{date: "2000", value: 12345.0}, ...]]
-func parseWorldBankGdpObs(raw []byte) (map[string]float64, error) {
-	var data []json.RawMessage
-	if err := json.Unmarshal(raw, &data); err != nil {
-		return nil, err
-	}
-	if len(data) < 2 {
-		return nil, fmt.Errorf("unexpected world bank response format")
-	}
-	var records []struct {
-		Date  string   `json:"date"`
-		Value *float64 `json:"value"`
-	}
-	if err := json.Unmarshal(data[1], &records); err != nil {
-		return nil, err
-	}
-	obs := make(map[string]float64, len(records))
-	for _, r := range records {
-		if r.Value != nil {
-			obs[r.Date] = *r.Value
-		}
-	}
-	return obs, nil
+	_ = cache.Set("worldbank", cacheKey, body, gdpConfig.WorldBankCacheTTL)
+	return client.ParseWorldBankObs(body)
 }
 
 func handleCountries(cache *Cache) gin.HandlerFunc {
@@ -294,10 +196,10 @@ func handleGdpUsd(cache *Cache) gin.HandlerFunc {
 		countries := c.Query("countries")
 		from := c.Query("from")
 		if countries == "" {
-			countries = "CNY,IDR"
+			countries = gdpConfig.DefaultCountries
 		}
 		if from == "" {
-			from = "1990-01-01"
+			from = gdpConfig.DefaultFrom
 		}
 		from = normalizeFrom(from)
 		codes := strings.Split(countries, ",")
@@ -328,7 +230,7 @@ func handleGdpUsd(cache *Cache) gin.HandlerFunc {
 			}
 		}
 
-		var fxData fxRatesByDate
+		var fxData client.FxRatesByDate
 		if len(fxCurrencies) > 0 {
 			var err error
 			fxData, err = fetchFxHistory(cache, fxCurrencies, from)
@@ -360,12 +262,10 @@ func handleGdpUsd(cache *Cache) gin.HandlerFunc {
 					// World Bank NY.GDP.MKTP.CN goes back to 1990; FRED series may start later
 					obs, err = fetchWorldBankGdpData(cache, cc.Code)
 				} else {
-					path := fmt.Sprintf("/fred/series/observations?series_id=%s&observation_start=%s&sort_order=asc&file_type=json&frequency=a",
-						url.QueryEscape(*cc.FredGdpSeries), url.QueryEscape(from))
 					var body []byte
-					body, err = fetchFred(path)
+					body, err = client.FetchFredObservations(*cc.FredGdpSeries, from, "a")
 					if err == nil {
-						obs, err = parseFredObs(body)
+						obs, err = client.ParseFredObs(body)
 					}
 			}
 			ch <- gdpResult{code: cc.Code, obs: obs, err: err}
@@ -392,7 +292,7 @@ func handleGdpUsd(cache *Cache) gin.HandlerFunc {
 
 		raw, _ := json.Marshal(out)
 		if !hasError {
-			_ = cache.Set("computed", cacheKey, raw, 24*time.Hour)
+			_ = cache.Set("computed", cacheKey, raw, gdpConfig.ComputedCacheTTL)
 		}
 		c.Data(http.StatusOK, "application/json", raw)
 	}

@@ -1,5 +1,27 @@
 package main
 
+import "time"
+
+type GdpConfig struct {
+	DefaultCountries  string
+	DefaultFrom       string
+	FxApiGroup        string
+	DefaultMultiplier float64
+	FxCacheTTL        time.Duration
+	WorldBankCacheTTL time.Duration
+	ComputedCacheTTL  time.Duration
+}
+
+var gdpConfig = GdpConfig{
+	DefaultCountries:  "CNY,IDR",
+	DefaultFrom:       "1990-01-01",
+	FxApiGroup:        "month",
+	DefaultMultiplier: 1_000_000,
+	FxCacheTTL:        24 * time.Hour,
+	WorldBankCacheTTL: 24 * time.Hour,
+	ComputedCacheTTL:  24 * time.Hour,
+}
+
 type CountryConfig struct {
 	Code               string   `json:"code"`
 	Name               string   `json:"name"`

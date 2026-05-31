@@ -6,16 +6,14 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"regexp"
 	"strings"
 	"sync"
 	"time"
 
+	"economist/pkg/client"
 	"github.com/gin-gonic/gin"
 )
-
-const frankfurterBase = "https://api.frankfurter.dev/v2"
 
 func fetchUpstream(cache *Cache, bucket, cacheKey, upstreamURL string, ttl time.Duration, c *gin.Context) {
 	if data, ok := cache.Get(bucket, cacheKey); ok {
@@ -48,7 +46,7 @@ func handleExchangeRates(cache *Cache) gin.HandlerFunc {
 		if currencies == "" {
 			currencies = "CNY,IDR"
 		}
-		u := fmt.Sprintf("%s/rates?base=USD&quotes=%s", frankfurterBase, url.QueryEscape(currencies))
+		u := fmt.Sprintf("%s/rates?base=USD&quotes=%s", client.FrankfurterBase, url.QueryEscape(currencies))
 		fetchUpstream(cache, "frankfurter", "exchange:"+currencies, u, 6*time.Hour, c)
 	}
 }
@@ -64,7 +62,7 @@ func handleHistoricalRates(cache *Cache) gin.HandlerFunc {
 		if from == "" {
 			from = "1999-01-01"
 		}
-		u := fmt.Sprintf("%s/rates?from=%s&base=USD&quotes=%s", frankfurterBase, url.QueryEscape(from), url.QueryEscape(currencies))
+		u := fmt.Sprintf("%s/rates?from=%s&base=USD&quotes=%s", client.FrankfurterBase, url.QueryEscape(from), url.QueryEscape(currencies))
 		if group != "" && group != "day" {
 			apiGroup := group
 			if apiGroup == "year" {
@@ -75,25 +73,6 @@ func handleHistoricalRates(cache *Cache) gin.HandlerFunc {
 		cacheKey := fmt.Sprintf("history:%s:%s:%s", currencies, from, group)
 		fetchUpstream(cache, "frankfurter", cacheKey, u, 24*time.Hour, c)
 	}
-}
-
-func fetchFred(key string) ([]byte, error) {
-	fredKey := os.Getenv("FRED_API_KEY")
-	if fredKey == "" {
-		return nil, fmt.Errorf("FRED_API_KEY not set")
-	}
-	prefix := "https://api.stlouisfed.org"
-	fullURL := prefix + key + "&api_key=" + fredKey
-	resp, err := http.Get(fullURL)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("FRED %d: %s", resp.StatusCode, string(body))
-	}
-	return io.ReadAll(resp.Body)
 }
 
 func handleFredLatest(cache *Cache) gin.HandlerFunc {
@@ -109,7 +88,7 @@ func handleFredLatest(cache *Cache) gin.HandlerFunc {
 			return
 		}
 		path := fmt.Sprintf("/fred/series/observations?series_id=%s&sort_order=desc&limit=1&file_type=json", url.QueryEscape(series))
-		body, err := fetchFred(path)
+		body, err := client.FetchFred(path)
 		if err != nil {
 			c.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
 			return
@@ -150,7 +129,7 @@ func handleFredBatchLatest(cache *Cache) gin.HandlerFunc {
 				sem <- struct{}{}
 				defer func() { <-sem }()
 				path := fmt.Sprintf("/fred/series/observations?series_id=%s&sort_order=desc&limit=1&file_type=json", url.QueryEscape(series))
-				body, err := fetchFred(path)
+		body, err := client.FetchFred(path)
 				if err != nil {
 					body, _ = json.Marshal(gin.H{"error": err.Error()})
 				} else {
@@ -191,7 +170,7 @@ func handleFredHistory(cache *Cache) gin.HandlerFunc {
 		if freq != "" {
 			path += "&frequency=" + url.QueryEscape(freq)
 		}
-		body, err := fetchFred(path)
+		body, err := client.FetchFred(path)
 		if err != nil {
 			c.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
 			return
@@ -199,12 +178,6 @@ func handleFredHistory(cache *Cache) gin.HandlerFunc {
 		_ = cache.Set("fred", cacheKey, body, fredHistoryCache)
 		c.Data(http.StatusOK, "application/json", body)
 	}
-}
-
-var worldbankCountry = map[string]string{
-	"USD": "US",
-	"IDR": "ID",
-	"CNY": "CN",
 }
 
 var wbDateRe = regexp.MustCompile(`"date":"(\d{4})"`)
@@ -215,9 +188,7 @@ func handleWorldBankDebt(cache *Cache) gin.HandlerFunc {
 		if country == "" {
 			country = "US"
 		}
-		if mapped, ok := worldbankCountry[country]; ok {
-			country = mapped
-		}
+		country = client.WorldBankCountry(country)
 		u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/GC.DOD.TOTL.GD.ZS?format=json", url.QueryEscape(country))
 		fetchUpstream(cache, "worldbank", "debt:"+country, u, 24*time.Hour, c)
 	}
@@ -229,9 +200,7 @@ func handleWorldBankGdp(cache *Cache) gin.HandlerFunc {
 		if country == "" {
 			country = "US"
 		}
-		if mapped, ok := worldbankCountry[country]; ok {
-			country = mapped
-		}
+		country = client.WorldBankCountry(country)
 		// NY.GDP.MKTP.CN = GDP in current local currency units (full units, not scaled)
 		u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/NY.GDP.MKTP.CN?format=json", url.QueryEscape(country))
 		fetchUpstream(cache, "worldbank", "gdp:"+country, u, 24*time.Hour, c)
@@ -244,9 +213,7 @@ func handleWorldBankPoverty(cache *Cache) gin.HandlerFunc {
 		if country == "" {
 			country = "US"
 		}
-		if mapped, ok := worldbankCountry[country]; ok {
-			country = mapped
-		}
+		country = client.WorldBankCountry(country)
 		// SI.POV.UMIC = Poverty headcount ratio at $8.30/day (2021 PPP) (% of population)
 		u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/SI.POV.UMIC?format=json&per_page=10", url.QueryEscape(country))
 		fetchUpstream(cache, "worldbank", "poverty:"+country, u, 24*time.Hour, c)
