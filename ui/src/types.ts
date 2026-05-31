@@ -20,8 +20,18 @@ export interface TimeSeriesPoint {
   value: number | null;
 }
 
+export interface FxPoint {
+  date: string;
+  usdcny: number | null;
+  usdidr: number | null;
+}
+
 export interface GdpRecord {
   date: string;
   gdpUsd: number;
   growth?: number | null;
 }
+
+export type FreqInterval = 'day' | 'week' | 'month' | 'year';
+
+export type CurrencyFilter = 'both' | 'CNY' | 'IDR';

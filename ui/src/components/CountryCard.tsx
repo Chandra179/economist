@@ -1,3 +1,4 @@
+import { NULL_PLACEHOLDER } from '../config';
 import type { CountryData } from '../types';
 
 interface Props {
@@ -31,7 +32,7 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
             ? '...'
             : liveRate
               ? liveRate.toLocaleString(undefined, { maximumFractionDigits: 2 })
-              : '\u2014'}
+              : NULL_PLACEHOLDER}
           <span className="text-sm text-slate-400 font-normal"> {country.code}</span>
         </span>
       </div>
@@ -53,7 +54,7 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
                 ? `${fredData[country.fredRateSeries]}%`
                 : fredLoading
                   ? '...'
-                  : '\u2014'}
+                  : NULL_PLACEHOLDER}
             </span>
           </div>
         )}
@@ -76,7 +77,7 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
                   ).toLocaleString()}B`
                 : fredLoading
                   ? '...'
-                  : '\u2014'}
+                  : NULL_PLACEHOLDER}
             </span>
           </div>
         )}
@@ -113,7 +114,7 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
                 </span>
               </span>
               <span className="text-sm font-semibold text-slate-900 font-mono">
-                {latestGdpUsd !== null ? fmtGdpUsd(latestGdpUsd) : (loading ? '...' : '\u2014')}
+                {latestGdpUsd !== null ? fmtGdpUsd(latestGdpUsd) : (loading ? '...' : NULL_PLACEHOLDER)}
               </span>
             </div>
           )}

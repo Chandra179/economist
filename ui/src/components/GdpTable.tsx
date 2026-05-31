@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
+import { NULL_PLACEHOLDER, STEPS } from '../config';
 import DataTable from './DataTable';
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-} from 'recharts';
-import type { ReactNode } from 'react';
+import TimeSeriesChart from './TimeSeriesChart';
 import type { CountryData, GdpRecord, TimeSeriesPoint } from '../types';
+
+type Step = typeof STEPS[number];
 
 interface Props {
   gdpData: Map<string, GdpRecord[]> | null;
@@ -14,16 +14,8 @@ interface Props {
   loading: boolean;
 }
 
-const STEPS = [1, 3, 5, 10] as const;
-type Step = typeof STEPS[number];
-
-const COUNTRY_COLORS = [
-  '#ef4444', '#16a34a', '#3b82f6', '#f59e0b', '#8b5cf6', '#ec4899',
-  '#14b8a6', '#f97316', '#6366f1', '#84cc16',
-];
-
 function fmtUsd(v: unknown): string {
-  if (v === null || v === undefined) return '\u2014';
+  if (v === null || v === undefined) return NULL_PLACEHOLDER;
   const n = v as number;
   if (n >= 1e12) return '$' + (n / 1e12).toFixed(1) + 'T';
   if (n >= 1e9) return '$' + (n / 1e9).toFixed(1) + 'B';
@@ -31,7 +23,7 @@ function fmtUsd(v: unknown): string {
 }
 
 function fmtPct(v: unknown): string {
-  if (v === null || v === undefined) return '\u2014';
+  if (v === null || v === undefined) return NULL_PLACEHOLDER;
   return (v as number).toFixed(1) + '%';
 }
 
@@ -236,123 +228,21 @@ export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountrie
           data={filteredTableRows as unknown as Record<string, unknown>[]}
         />
       ) : view === 'debtChart' ? (
-        <div className="py-4" key="debtChart">
-          <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={debtChartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="date" tickFormatter={(v: string) => v.slice(0, 4)} tick={{ fontSize: 11, fontFamily: 'monospace' }} stroke="#94a3b8" />
-              <YAxis
-                tickFormatter={(v: number) => fmtPct(v)}
-                tick={{ fontSize: 11, fontFamily: 'monospace' }}
-                stroke="#94a3b8"
-              />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (!active || !payload?.length) return null;
-                  return (
-                    <div className="bg-white border border-slate-200 rounded-lg p-3 text-xs shadow-lg">
-                      <div className="font-semibold text-slate-700 mb-1.5">{String(label).slice(0, 4)}</div>
-                      {payload.map((entry) => {
-                        const name = String(entry.name ?? '');
-                        const value = Number(entry.value ?? 0);
-                        const color = String(entry.color ?? '#94a3b8');
-                        const country = gdpCountries.find((c) => c.code === name);
-                        return (
-                          <div key={name} className="flex items-center gap-2 text-slate-600">
-                            <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: color }} />
-                            <span>{country?.name ?? name}:</span>
-                            <span className="font-semibold text-slate-800">{fmtPct(value)}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                }}
-              />
-              <Legend
-                formatter={(value: string) => {
-                  const country = gdpCountries.find((c) => c.code === value);
-                  return country?.name ?? value;
-                }}
-              />
-              {(debtCountries ?? []).filter((c) => selectedCode === null || c.code === selectedCode).map((c) => {
-                const origIndex = debtCountries!.findIndex((dc) => dc.code === c.code);
-                return (
-                  <Line
-                    key={c.code}
-                    type="monotone"
-                    dataKey={c.code}
-                    stroke={COUNTRY_COLORS[origIndex % COUNTRY_COLORS.length]}
-                    strokeWidth={2}
-                    dot={false}
-                    activeDot={{ r: 4 }}
-                    name={c.code}
-                    connectNulls={false}
-                  />
-                );
-              })}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+        <TimeSeriesChart
+          key="debtChart"
+          data={debtChartData}
+          valueFormatter={(v: number) => fmtPct(v)}
+          countries={debtCountries ?? []}
+          selectedCode={selectedCode}
+        />
       ) : (
-        <div className="py-4" key="gdpChart">
-          <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={gdpChartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="date" tickFormatter={(v: string) => v.slice(0, 4)} tick={{ fontSize: 11, fontFamily: 'monospace' }} stroke="#94a3b8" />
-              <YAxis
-                tickFormatter={(v: number) => fmtUsd(v)}
-                tick={{ fontSize: 11, fontFamily: 'monospace' }}
-                stroke="#94a3b8"
-              />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (!active || !payload?.length) return null;
-                  return (
-                    <div className="bg-white border border-slate-200 rounded-lg p-3 text-xs shadow-lg">
-                      <div className="font-semibold text-slate-700 mb-1.5">{String(label).slice(0, 4)}</div>
-                      {payload.map((entry) => {
-                        const name = String(entry.name ?? '');
-                        const value = Number(entry.value ?? 0);
-                        const color = String(entry.color ?? '#94a3b8');
-                        const country = gdpCountries.find((c) => c.code === name);
-                        return (
-                          <div key={name} className="flex items-center gap-2 text-slate-600">
-                            <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: color }} />
-                            <span>{country?.name ?? name}:</span>
-                            <span className="font-semibold text-slate-800">{fmtUsd(value)}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                }}
-              />
-              <Legend
-                formatter={(value: string) => {
-                  const country = gdpCountries.find((c) => c.code === value);
-                  return country?.name ?? value;
-                }}
-              />
-              {gdpCountries.filter((c) => selectedCode === null || c.code === selectedCode).map((c) => {
-                const origIndex = gdpCountries.findIndex((dc) => dc.code === c.code);
-                return (
-                  <Line
-                    key={c.code}
-                    type="monotone"
-                    dataKey={c.code}
-                    stroke={COUNTRY_COLORS[origIndex % COUNTRY_COLORS.length]}
-                    strokeWidth={2}
-                    dot={false}
-                    activeDot={{ r: 4 }}
-                    name={c.code}
-                    connectNulls={false}
-                  />
-                );
-              })}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+        <TimeSeriesChart
+          key="gdpChart"
+          data={gdpChartData}
+          valueFormatter={(v: number) => fmtUsd(v)}
+          countries={gdpCountries}
+          selectedCode={selectedCode}
+        />
       )}
     </div>
   );

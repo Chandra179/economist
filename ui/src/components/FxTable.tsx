@@ -1,44 +1,39 @@
-import IntervalSelector from './IntervalSelector';
+import { useState } from 'react';
+import { NULL_PLACEHOLDER } from '../config';
+import type { FxPoint, CurrencyFilter } from '../types';
+
 import DataTable from './DataTable';
-
-interface DataPoint {
-  date: string;
-  usdcny: number | null;
-  usdidr: number | null;
-}
-
-type FreqInterval = 'day' | 'week' | 'month' | 'year';
+import TimeSeriesChart from './TimeSeriesChart';
 
 interface Props {
-  data: DataPoint[] | null;
+  data: FxPoint[] | null;
   loading: boolean;
-  selectedCurrencies: 'both' | 'CNY' | 'IDR';
-  onCurrencyChange: (c: 'both' | 'CNY' | 'IDR') => void;
-  interval: string;
-  onIntervalChange: (i: string) => void;
+  selectedCurrencies: CurrencyFilter;
+  onCurrencyChange: (c: CurrencyFilter) => void;
 }
 
-const FX_INTERVAL_OPTIONS: Record<FreqInterval, string> = {
-  day: 'Day',
-  week: 'Week',
-  month: 'Month',
-  year: 'Year',
-};
-
-function formatDate(dateStr: string, interval: string): string {
-  if (interval === 'year') return dateStr.slice(0, 4);
-  if (interval === 'month') return dateStr.slice(0, 7);
-  return dateStr.slice(0, 10);
+function formatDate(dateStr: string): string {
+  return dateStr.slice(0, 4);
 }
 
 function fmtRate(v: unknown): string {
-  if (v === null || v === undefined) return '\u2014';
+  if (v === null || v === undefined) return NULL_PLACEHOLDER;
   return (v as number).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 });
 }
 
-export default function FxTable({ data, loading, selectedCurrencies, onCurrencyChange, interval, onIntervalChange }: Props) {
-  const handleInterval = (value: string) => onIntervalChange(value as FreqInterval);
+function fmtPctChange(v: unknown): string {
+  if (v === null || v === undefined) return NULL_PLACEHOLDER;
+  const n = v as number;
+  return (n >= 0 ? '+' : '') + n.toFixed(2) + '%';
+}
 
+const FX_COUNTRIES = [
+  { code: 'CNY', name: 'China Yuan' },
+  { code: 'IDR', name: 'Indonesia Rupiah' },
+];
+
+export default function FxTable({ data, loading, selectedCurrencies, onCurrencyChange }: Props) {
+  const [view, setView] = useState<'table' | 'chart'>('table');
   const rows = (data ?? []).map((p) => ({
     date: p.date,
     usdcny: p.usdcny,
@@ -46,7 +41,7 @@ export default function FxTable({ data, loading, selectedCurrencies, onCurrencyC
   }));
 
   const columns = [
-    { key: 'date', header: 'Date', format: (v: unknown) => formatDate(String(v), interval) },
+    { key: 'date', header: 'Date', format: (v: unknown) => formatDate(String(v)) },
     ...(selectedCurrencies === 'both' || selectedCurrencies === 'CNY'
       ? [{ key: 'usdcny' as const, header: 'USD/CNY', format: fmtRate }]
       : []),
@@ -55,13 +50,53 @@ export default function FxTable({ data, loading, selectedCurrencies, onCurrencyC
       : []),
   ];
 
+  const baseRow = rows.find((r) => r.usdcny != null && r.usdidr != null) ?? rows[0];
+  const baseCny = baseRow?.usdcny ?? null;
+  const baseIdr = baseRow?.usdidr ?? null;
+  const chartData = rows.map((r) => ({
+    date: r.date,
+    ...(selectedCurrencies === 'both' || selectedCurrencies === 'CNY'
+      ? { CNY: baseCny != null && r.usdcny != null ? ((baseCny - r.usdcny) / baseCny) * 100 : null }
+      : {}),
+    ...(selectedCurrencies === 'both' || selectedCurrencies === 'IDR'
+      ? { IDR: baseIdr != null && r.usdidr != null ? ((baseIdr - r.usdidr) / baseIdr) * 100 : null }
+      : {}),
+  }));
+
+  const chartCountries = FX_COUNTRIES.filter(
+    (c) => selectedCurrencies === 'both' || c.code === selectedCurrencies
+  );
+
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-xs text-slate-400 uppercase tracking-wide font-semibold">Exchange Rate Trend</h4>
+        <h4 className="text-xs text-slate-400 uppercase tracking-wide font-semibold flex items-center gap-1">
+          Exchange Rate Trend
+          <span className="relative group flex items-center">
+            <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-60 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+              +% = currency strengthened vs USD. -% = currency weakened vs USD.
+            </span>
+          </span>
+        </h4>
         <div className="flex items-center gap-2">
           <div className="flex gap-1 mr-2">
-            {(['both', 'CNY', 'IDR'] as const).map((c) => (
+            {(['table', 'chart'] as const).map((v) => (
+              <button
+                key={v}
+                onClick={() => setView(v)}
+                className={`px-2 py-1 text-[10px] font-semibold rounded-md border transition cursor-pointer uppercase tracking-wide
+                  ${view === v
+                    ? 'bg-slate-800 text-white border-slate-800'
+                    : 'bg-slate-50 text-slate-400 border-slate-200 hover:border-slate-400'
+                  }`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-1 mr-2">
+            {(['both', 'CNY', 'IDR'] as CurrencyFilter[]).map((c) => (
               <button
                 key={c}
                 onClick={() => onCurrencyChange(c)}
@@ -79,20 +114,23 @@ export default function FxTable({ data, loading, selectedCurrencies, onCurrencyC
               </button>
             ))}
           </div>
-          <IntervalSelector
-            intervals={(['day', 'week', 'month', 'year'] as FreqInterval[]).map((i) => ({ value: i, label: FX_INTERVAL_OPTIONS[i] }))}
-            value={interval}
-            onChange={handleInterval}
-          />
         </div>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center text-slate-400 text-sm py-12">Loading...</div>
-      ) : (
+      ) : view === 'table' ? (
         <DataTable
           columns={columns}
           data={rows as unknown as Record<string, unknown>[]}
+        />
+      ) : (
+        <TimeSeriesChart
+          key="fxChart"
+          data={chartData as Record<string, unknown>[]}
+          valueFormatter={fmtPctChange}
+          countries={chartCountries}
+          selectedCode={null}
         />
       )}
     </div>

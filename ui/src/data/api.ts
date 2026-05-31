@@ -1,6 +1,5 @@
-import type { CountryData, GdpRecord, TimeSeriesPoint } from '../types';
-
-const API_BASE = 'http://localhost:8080/api';
+import { API_BASE } from '../config';
+import type { CountryData, GdpRecord, TimeSeriesPoint, FreqInterval } from '../types';
 
 export async function fetchCountries(): Promise<CountryData[]> {
   try {
@@ -51,7 +50,7 @@ export async function fetchExchangeRates(
 export async function fetchHistoricalRates(
   currencies: string[],
   fromDate: string,
-  group?: 'day' | 'week' | 'month' | 'year',
+  group?: FreqInterval,
 ): Promise<Map<string, TimeSeriesPoint[]>> {
   const quotes = currencies.join(',');
   let url = `${API_BASE}/historical-rates?currencies=${quotes}&from=${fromDate}`;

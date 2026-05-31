@@ -3,25 +3,17 @@ import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLate
 import CountryCard from './components/CountryCard';
 import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
-import type { CountryData, TimeSeriesPoint, GdpRecord } from './types';
-
-type FreqInterval = 'day' | 'week' | 'month' | 'year';
-
-interface ChartPoint {
-  date: string;
-  usdcny: number | null;
-  usdidr: number | null;
-}
+import type { CountryData, TimeSeriesPoint, GdpRecord, FxPoint, FreqInterval, CurrencyFilter } from './types';
 
 export default function App() {
   const [countries, setCountries] = useState<CountryData[]>([]);
   const [liveRates, setLiveRates] = useState<Map<string, number>>(new Map());
   const [fxLoading, setFxLoading] = useState(true);
-  const [chartData, setChartData] = useState<ChartPoint[] | null>(null);
+  const [chartData, setChartData] = useState<FxPoint[] | null>(null);
   const [fredData, setFredData] = useState<Record<string, number>>({});
   const [fredLoading, setFredLoading] = useState(true);
-  const [selectedCurrencies, setSelectedCurrencies] = useState<'both' | 'CNY' | 'IDR'>('both');
-  const [fxInterval, setFxInterval] = useState<FreqInterval>('month');
+  const [selectedCurrencies, setSelectedCurrencies] = useState<CurrencyFilter>('both');
+  const [fxInterval] = useState<FreqInterval>('year');
   const [dxyLatest, setDxyLatest] = useState<number | null>(null);
   const [gdpData, setGdpData] = useState<Map<string, GdpRecord[]> | null>(null);
   const [gdpLoading, setGdpLoading] = useState(true);
@@ -61,7 +53,7 @@ export default function App() {
       const allDates = new Set([...cnyMap.keys(), ...idrMap.keys()]);
       const sorted = [...allDates].sort();
 
-      const merged: ChartPoint[] = sorted.map((date) => ({
+      const merged: FxPoint[] = sorted.map((date) => ({
         date,
         usdcny: cnyMap.get(date) ?? null,
         usdidr: idrMap.get(date) ?? null,
@@ -133,8 +125,6 @@ export default function App() {
     });
   }, [countries]);
 
-  const handleFxInterval = (value: string) => setFxInterval(value as FreqInterval);
-
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-8 flex flex-col gap-8">
       <header className="text-center">
@@ -161,8 +151,6 @@ export default function App() {
         loading={chartData === null}
         selectedCurrencies={selectedCurrencies}
         onCurrencyChange={setSelectedCurrencies}
-        interval={fxInterval}
-        onIntervalChange={handleFxInterval}
       />
 
       <GdpTable

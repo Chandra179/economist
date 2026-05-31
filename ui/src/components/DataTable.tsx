@@ -8,6 +8,7 @@ import {
   type ColumnDef,
   type SortingState,
 } from '@tanstack/react-table';
+import { PAGE_SIZE_OPTIONS } from '../config';
 
 interface Column {
   key: string;
@@ -22,8 +23,6 @@ interface DataTableProps {
   data: Record<string, unknown>[];
   defaultPageSize?: number;
 }
-
-const PAGE_SIZE_OPTIONS = [5, 10, 25, 50];
 
 function pageNumbers(total: number, current: number): (number | 'ellipsis')[] {
   const pages: (number | 'ellipsis')[] = [];
