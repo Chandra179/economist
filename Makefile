@@ -3,7 +3,7 @@
 build: build-server build-ui
 
 build-server:
-	cd server && go build -o economist-server .
+	cd server && go build -o economist-server ./cmd/economist-server/
 
 build-ui:
 	cd ui && npm run build

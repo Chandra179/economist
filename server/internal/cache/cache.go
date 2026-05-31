@@ -1,4 +1,4 @@
-package main
+package cache
 
 import (
 	"encoding/json"
@@ -19,7 +19,7 @@ type Cache struct {
 	db *bbolt.DB
 }
 
-func NewCache(path string) (*Cache, error) {
+func New(path string) (*Cache, error) {
 	if dir := filepath.Dir(path); dir != "" {
 		_ = os.MkdirAll(dir, 0755)
 	}
