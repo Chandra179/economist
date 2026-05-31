@@ -3,7 +3,7 @@ import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLate
 import CountryCard from './components/CountryCard';
 import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
-import CapitalFlowMonitor from './components/CapitalFlowMonitor';
+
 import type { CountryData, TimeSeriesPoint, GdpRecord, FxPoint, FreqInterval, CurrencyFilter } from './types';
 
 export default function App() {
@@ -146,8 +146,6 @@ export default function App() {
           />
         ))}
       </div>
-
-      <CapitalFlowMonitor />
 
       <FxTable
         data={chartData}
