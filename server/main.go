@@ -50,6 +50,7 @@ func main() {
 
 		api.GET("/worldbank/debt", handleWorldBankDebt(cache))
 		api.GET("/worldbank/gdp", handleWorldBankGdp(cache))
+		api.GET("/worldbank/poverty", handleWorldBankPoverty(cache))
 	}
 
 	addr := os.Getenv("ADDR")

@@ -237,3 +237,18 @@ func handleWorldBankGdp(cache *Cache) gin.HandlerFunc {
 		fetchUpstream(cache, "worldbank", "gdp:"+country, u, 24*time.Hour, c)
 	}
 }
+
+func handleWorldBankPoverty(cache *Cache) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		country := c.Query("country")
+		if country == "" {
+			country = "US"
+		}
+		if mapped, ok := worldbankCountry[country]; ok {
+			country = mapped
+		}
+		// SI.POV.UMIC = Poverty headcount ratio at $8.30/day (2021 PPP) (% of population)
+		u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/SI.POV.UMIC?format=json&per_page=10", url.QueryEscape(country))
+		fetchUpstream(cache, "worldbank", "poverty:"+country, u, 24*time.Hour, c)
+	}
+}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredBatchLatest, fetchFredHistory, fetchWorldBankDebt, fetchGdpUsd } from './data/api';
+import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredBatchLatest, fetchFredHistory, fetchWorldBankDebt, fetchWorldBankPoverty, fetchGdpUsd } from './data/api';
 import CountryCard from './components/CountryCard';
 import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
@@ -36,6 +36,7 @@ export default function App() {
     return map;
   }, [gdpData]);
   const [debtData, setDebtData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
+  const [povertyData, setPovertyData] = useState<Record<string, number>>({});
 
   const gdpCountries = useMemo(() => countries.filter((c) => c.fredGdpSeries), [countries]);
   const debtCountries = useMemo(() => countries.filter((c) => c.fredDebtSeries), [countries]);
@@ -100,6 +101,20 @@ export default function App() {
 
   useEffect(() => {
     if (countries.length === 0) return;
+    Promise.all(countries.map(async (c) => {
+      const value = await fetchWorldBankPoverty(c.code);
+      return { code: c.code, value };
+    })).then((results) => {
+      const map: Record<string, number> = {};
+      for (const r of results) {
+        if (r.value !== null) map[r.code] = r.value;
+      }
+      setPovertyData(map);
+    });
+  }, [countries]);
+
+  useEffect(() => {
+    if (countries.length === 0) return;
     const seriesIds = new Set<string>();
     for (const c of countries) {
       if (c.fredRateSeries) seriesIds.add(c.fredRateSeries);
@@ -136,6 +151,7 @@ export default function App() {
             loading={fxLoading && c.code !== 'USD'}
             dxyLatest={c.code === 'USD' ? dxyLatest : null}
             latestGdpUsd={latestGdpUsd.get(c.code) ?? null}
+            povertyValue={povertyData[c.code] ?? null}
           />
         ))}
       </div>
