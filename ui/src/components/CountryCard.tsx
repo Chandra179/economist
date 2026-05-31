@@ -7,9 +7,10 @@ interface Props {
   fredLoading: boolean;
   loading: boolean;
   dxyLatest: number | null;
+  latestGdpUsd: number | null;
 }
 
-export default function CountryCard({ country, liveRate, fredData, fredLoading, loading, dxyLatest }: Props) {
+export default function CountryCard({ country, liveRate, fredData, fredLoading, loading, dxyLatest, latestGdpUsd }: Props) {
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col gap-4">
       <div className="flex items-start gap-3">
@@ -57,7 +58,15 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
         )}
         {country.fredReservesSeries && (
           <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
-            <span className="text-[10px] text-slate-400 uppercase tracking-wide">Reserves</span>
+            <span className="text-[10px] text-slate-400 uppercase tracking-wide flex items-center gap-1">
+              Reserves
+              <span className="relative group flex items-center">
+                <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-52 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+                  Total foreign exchange reserves held by the central bank, mostly in US dollars.
+                </span>
+              </span>
+            </span>
             <span className="text-sm font-semibold text-slate-900 font-mono">
               {fredData[country.fredReservesSeries] !== undefined
                 ? `$${(fredData[country.fredReservesSeries] > 10000
@@ -89,37 +98,30 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
         )}
       </div>
 
-      {(country.fredGdpSeries) && (
+      {(country.fredGdpSeries || latestGdpUsd !== null) && (
         <div className="grid grid-cols-2 gap-2">
-          {country.fredGdpSeries && (
-            <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wide flex items-center gap-1">
-                GDP
-                <span className="relative group flex items-center">
-                  <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
-                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-48 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
-                    Gross Domestic Product — the total value of all goods and services a country produces in a year.
-                  </span>
+          <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
+            <span className="text-[10px] text-slate-400 uppercase tracking-wide flex items-center gap-1">
+              GDP
+              <span className="relative group flex items-center">
+                <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-48 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+                  Gross Domestic Product in US dollars.
                 </span>
               </span>
-              <span className="text-sm font-semibold text-slate-900 font-mono">
-                {formatGdp(fredData[country.fredGdpSeries], country)
-                  ?? (fredLoading ? '...' : '\u2014')}
-              </span>
-            </div>
-          )}
+            </span>
+            <span className="text-sm font-semibold text-slate-900 font-mono">
+              {latestGdpUsd !== null ? fmtGdpUsd(latestGdpUsd) : (loading ? '...' : '\u2014')}
+            </span>
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-function formatGdp(value: number | undefined, country: CountryData): string | null {
-  if (value === undefined) return null;
-  const multiplier = country.gdpMultiplier ?? 1_000_000;
-  if (multiplier === 1_000_000_000) {
-    return '$' + value.toLocaleString();
-  }
-  const sym = country.localCurrencySymbol ?? country.code;
-  return `${(value / multiplier).toFixed(1)}T ${sym}`;
+function fmtGdpUsd(value: number): string {
+  if (value >= 1e12) return '$' + (value / 1e12).toFixed(2) + 'T';
+  if (value >= 1e9) return '$' + (value / 1e9).toFixed(2) + 'B';
+  return '$' + (value / 1e6).toFixed(2) + 'M';
 }

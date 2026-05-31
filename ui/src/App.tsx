@@ -25,6 +25,16 @@ export default function App() {
   const [dxyLatest, setDxyLatest] = useState<number | null>(null);
   const [gdpData, setGdpData] = useState<Map<string, GdpRecord[]> | null>(null);
   const [gdpLoading, setGdpLoading] = useState(true);
+  const latestGdpUsd = useMemo(() => {
+    if (!gdpData) return new Map<string, number>();
+    const map = new Map<string, number>();
+    for (const [code, records] of gdpData) {
+      if (records.length > 0) {
+        map.set(code, records[records.length - 1].gdpUsd);
+      }
+    }
+    return map;
+  }, [gdpData]);
   const [debtData, setDebtData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
 
   const gdpCountries = useMemo(() => countries.filter((c) => c.fredGdpSeries), [countries]);
@@ -125,6 +135,7 @@ export default function App() {
             fredLoading={fredLoading}
             loading={fxLoading && c.code !== 'USD'}
             dxyLatest={c.code === 'USD' ? dxyLatest : null}
+            latestGdpUsd={latestGdpUsd.get(c.code) ?? null}
           />
         ))}
       </div>
