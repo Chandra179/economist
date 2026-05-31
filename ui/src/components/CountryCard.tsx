@@ -103,7 +103,7 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
                 </span>
               </span>
               <span className="text-sm font-semibold text-slate-900 font-mono">
-                {formatGdp(fredData[country.fredGdpSeries], country.code)
+                {formatGdp(fredData[country.fredGdpSeries], country)
                   ?? (fredLoading ? '...' : '\u2014')}
               </span>
             </div>
@@ -114,15 +114,12 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
   );
 }
 
-const gdpFormat: Record<string, { divisor: number; suffix: string }> = {
-  CNY: { divisor: 1_000_000, suffix: 'T \u00A5' },
-  // FRED value is in billions, divisor 1e6 converts to trillions for display
-  IDR: { divisor: 1_000_000, suffix: 'T Rp' },
-};
-
-function formatGdp(value: number | undefined, code: string): string | null {
+function formatGdp(value: number | undefined, country: CountryData): string | null {
   if (value === undefined) return null;
-  const fmt = gdpFormat[code];
-  if (!fmt) return value.toLocaleString();
-  return `${(value / fmt.divisor).toFixed(1)}${fmt.suffix}`;
+  const multiplier = country.gdpMultiplier ?? 1_000_000;
+  if (multiplier === 1_000_000_000) {
+    return '$' + value.toLocaleString();
+  }
+  const sym = country.localCurrencySymbol ?? country.code;
+  return `${(value / multiplier).toFixed(1)}T ${sym}`;
 }

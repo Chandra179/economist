@@ -59,7 +59,7 @@ function makeFormatWithGrowth(growthKey: string, debtKey?: string) {
 }
 
 export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountries, loading }: Props) {
-  const [view, setView] = useState<'table' | 'chart'>('table');
+  const [view, setView] = useState<'table' | 'debtChart' | 'gdpChart'>('table');
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [step, setStep] = useState<Step>(1);
 
@@ -87,7 +87,9 @@ export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountrie
       const row: Record<string, string | number | null> = { date };
       for (const c of gdpCountries) {
         const records = gdpData.get(c.code) ?? [];
-        row[c.code] = records.find((r) => r.date === date)?.gdpUsd ?? null;
+        const rec = records.find((r) => r.date === date);
+        row[c.code] = rec?.gdpUsd ?? null;
+        row[c.code + '_gr'] = rec?.growth ?? null;
       }
       if (hasDebt) {
         for (const c of debtCountries!) {
@@ -98,20 +100,7 @@ export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountrie
       return row;
     });
 
-    const prev: Record<string, number | null> = {};
-    for (const c of gdpCountries) prev[c.code] = null;
-
-    const withGrowth = merged.map((row) => {
-      const r: Record<string, string | number | null> = { ...row };
-      for (const c of gdpCountries) {
-        const val = r[c.code] as number | null;
-        r[c.code + '_gr'] = val != null && prev[c.code] != null ? (val - prev[c.code]!) / prev[c.code]! : null;
-        prev[c.code] = val ?? prev[c.code];
-      }
-      return r;
-    });
-
-    const reversed = [...withGrowth].reverse();
+    const reversed = [...merged].reverse();
 
     const chartRows = hasDebt ? reversed.map((row) => {
       const r: Record<string, string | number | null> = { date: row.date as string };
@@ -123,6 +112,28 @@ export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountrie
 
     return { tableRows: reversed, chartRows };
   }, [gdpData, gdpCountries, debtData, debtCountries, hasDebt]);
+
+  const gdpChartRows = useMemo(() => {
+    if (!gdpData || gdpCountries.length === 0) return [];
+
+    const gdpDates = new Set<string>();
+    for (const records of gdpData.values()) {
+      for (const r of records) gdpDates.add(r.date);
+    }
+
+    return [...gdpDates].sort().reverse().map((date) => {
+      const r: Record<string, number | string | null> = { date };
+      for (const c of gdpCountries) {
+        const records = gdpData.get(c.code) ?? [];
+        const rec = records.find((rec) => rec.date === date);
+        r[c.code] = rec?.gdpUsd ?? null;
+      }
+      return r;
+    });
+  }, [gdpData, gdpCountries]);
+
+  const debtChartData = useMemo(() => [...chartRows].reverse(), [chartRows]);
+  const gdpChartData = useMemo(() => [...gdpChartRows].reverse(), [gdpChartRows]);
 
   const filteredTableRows = useMemo(() => {
     return tableRows.filter((_, i) => i % step === 0);
@@ -162,27 +173,29 @@ export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountrie
     <div className="bg-white border border-slate-200 rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
         <h4 className="text-xs text-slate-400 uppercase tracking-wide font-semibold flex items-center gap-1">
-          Debt/GDP Trend
-          <span className="relative group flex items-center">
-            <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
-            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-56 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
-              Government debt as % of GDP per country. [brackets] show debt ratio, (parentheses) show year-over-year change.
+          {view === 'gdpChart' ? 'GDP in USD' : 'Debt/GDP Trend'}
+          {view !== 'gdpChart' && (
+            <span className="relative group flex items-center">
+              <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-56 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+                Government debt as % of GDP per country. [brackets] show debt ratio, (parentheses) show year-over-year change.
+              </span>
             </span>
-          </span>
+          )}
         </h4>
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
-            {(['table', 'chart'] as const).map((v) => (
+            {[{ id: 'table', label: 'Table' }, { id: 'debtChart', label: 'Debt/GDP' }, { id: 'gdpChart', label: 'GDP' }].map(({ id, label }) => (
               <button
-                key={v}
-                onClick={() => setView(v)}
+                key={id}
+                onClick={() => setView(id as typeof view)}
                 className={`px-2 py-1 text-[10px] font-semibold rounded-md border transition cursor-pointer uppercase tracking-wide
-                  ${view === v
+                  ${view === id
                     ? 'bg-slate-700 text-white border-slate-700'
                     : 'bg-slate-50 text-slate-400 border-slate-200 hover:border-slate-400'
                   }`}
               >
-                {v}
+                {label}
               </button>
             ))}
           </div>
@@ -222,10 +235,10 @@ export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountrie
           columns={columns}
           data={filteredTableRows as unknown as Record<string, unknown>[]}
         />
-      ) : (
-        <div className="py-4">
+      ) : view === 'debtChart' ? (
+        <div className="py-4" key="debtChart">
           <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={[...chartRows].reverse()}>
+            <LineChart data={debtChartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
               <XAxis dataKey="date" tickFormatter={(v: string) => v.slice(0, 4)} tick={{ fontSize: 11, fontFamily: 'monospace' }} stroke="#94a3b8" />
               <YAxis
@@ -262,19 +275,81 @@ export default function GdpTable({ gdpData, gdpCountries, debtData, debtCountrie
                   return country?.name ?? value;
                 }}
               />
-              {(debtCountries ?? []).map((c) => c.code).map((code, i) => (
-                <Line
-                  key={code}
-                  type="monotone"
-                  dataKey={code}
-                  stroke={COUNTRY_COLORS[i % COUNTRY_COLORS.length]}
-                  strokeWidth={2}
-                  dot={false}
-                  activeDot={{ r: 4 }}
-                  name={code}
-                  connectNulls={false}
-                />
-              ))}
+              {(debtCountries ?? []).filter((c) => selectedCode === null || c.code === selectedCode).map((c) => {
+                const origIndex = debtCountries!.findIndex((dc) => dc.code === c.code);
+                return (
+                  <Line
+                    key={c.code}
+                    type="monotone"
+                    dataKey={c.code}
+                    stroke={COUNTRY_COLORS[origIndex % COUNTRY_COLORS.length]}
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                    name={c.code}
+                    connectNulls={false}
+                  />
+                );
+              })}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <div className="py-4" key="gdpChart">
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={gdpChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis dataKey="date" tickFormatter={(v: string) => v.slice(0, 4)} tick={{ fontSize: 11, fontFamily: 'monospace' }} stroke="#94a3b8" />
+              <YAxis
+                tickFormatter={(v: number) => fmtUsd(v)}
+                tick={{ fontSize: 11, fontFamily: 'monospace' }}
+                stroke="#94a3b8"
+              />
+              <Tooltip
+                content={({ active, payload, label }) => {
+                  if (!active || !payload?.length) return null;
+                  return (
+                    <div className="bg-white border border-slate-200 rounded-lg p-3 text-xs shadow-lg">
+                      <div className="font-semibold text-slate-700 mb-1.5">{String(label).slice(0, 4)}</div>
+                      {payload.map((entry) => {
+                        const name = String(entry.name ?? '');
+                        const value = Number(entry.value ?? 0);
+                        const color = String(entry.color ?? '#94a3b8');
+                        const country = gdpCountries.find((c) => c.code === name);
+                        return (
+                          <div key={name} className="flex items-center gap-2 text-slate-600">
+                            <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: color }} />
+                            <span>{country?.name ?? name}:</span>
+                            <span className="font-semibold text-slate-800">{fmtUsd(value)}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                }}
+              />
+              <Legend
+                formatter={(value: string) => {
+                  const country = gdpCountries.find((c) => c.code === value);
+                  return country?.name ?? value;
+                }}
+              />
+              {gdpCountries.filter((c) => selectedCode === null || c.code === selectedCode).map((c) => {
+                const origIndex = gdpCountries.findIndex((dc) => dc.code === c.code);
+                return (
+                  <Line
+                    key={c.code}
+                    type="monotone"
+                    dataKey={c.code}
+                    stroke={COUNTRY_COLORS[origIndex % COUNTRY_COLORS.length]}
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                    name={c.code}
+                    connectNulls={false}
+                  />
+                );
+              })}
             </LineChart>
           </ResponsiveContainer>
         </div>

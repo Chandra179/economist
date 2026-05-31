@@ -1,42 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import { countries } from './data/countries';
-import { fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredBatchLatest, fetchFredHistory, fetchWorldBankDebt } from './data/api';
+import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredBatchLatest, fetchFredHistory, fetchWorldBankDebt, fetchGdpUsd } from './data/api';
 import CountryCard from './components/CountryCard';
 import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
-import type { TimeSeriesPoint, GdpRecord } from './types';
+import type { CountryData, TimeSeriesPoint, GdpRecord } from './types';
 
 type FreqInterval = 'day' | 'week' | 'month' | 'year';
-
-function findClosestDate(map: Map<string, number>, targetDate: string): number | null {
-  if (map.has(targetDate)) return map.get(targetDate)!;
-  const target = new Date(targetDate).getTime();
-  let closest: string | null = null;
-  let minDiff = Infinity;
-  for (const date of map.keys()) {
-    const diff = Math.abs(new Date(date).getTime() - target);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = date;
-    }
-  }
-  return closest ? map.get(closest) ?? null : null;
-}
-
-function aggregateToYear(data: TimeSeriesPoint[]): TimeSeriesPoint[] {
-  const byYear = new Map<string, { sum: number; count: number }>();
-  for (const { date, value } of data) {
-    if (value === null) continue;
-    const year = date.slice(0, 4);
-    const entry = byYear.get(year) ?? { sum: 0, count: 0 };
-    entry.sum += value;
-    entry.count += 1;
-    byYear.set(year, entry);
-  }
-  return [...byYear.entries()]
-    .map(([year, { sum, count }]) => ({ date: year, value: sum / count }))
-    .sort((a, b) => a.date.localeCompare(b.date));
-}
 
 interface ChartPoint {
   date: string;
@@ -44,9 +13,8 @@ interface ChartPoint {
   usdidr: number | null;
 }
 
-
-
 export default function App() {
+  const [countries, setCountries] = useState<CountryData[]>([]);
   const [liveRates, setLiveRates] = useState<Map<string, number>>(new Map());
   const [fxLoading, setFxLoading] = useState(true);
   const [chartData, setChartData] = useState<ChartPoint[] | null>(null);
@@ -59,8 +27,12 @@ export default function App() {
   const [gdpLoading, setGdpLoading] = useState(true);
   const [debtData, setDebtData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
 
-  const gdpCountries = useMemo(() => countries.filter((c) => c.fredGdpSeries), []);
-  const debtCountries = useMemo(() => countries.filter((c) => c.fredDebtSeries), []);
+  const gdpCountries = useMemo(() => countries.filter((c) => c.fredGdpSeries), [countries]);
+  const debtCountries = useMemo(() => countries.filter((c) => c.fredDebtSeries), [countries]);
+
+  useEffect(() => {
+    fetchCountries().then(setCountries);
+  }, []);
 
   useEffect(() => {
     fetchExchangeRates(['CNY', 'IDR']).then((rates) => {
@@ -73,10 +45,8 @@ export default function App() {
     fetchHistoricalRates(['CNY', 'IDR'], '1999-01-01', fxInterval).then((rateMap) => {
       const cnyData = rateMap.get('CNY') ?? [];
       const idrData = rateMap.get('IDR') ?? [];
-      const cny = fxInterval === 'year' ? aggregateToYear(cnyData) : cnyData;
-      const idr = fxInterval === 'year' ? aggregateToYear(idrData) : idrData;
-      const cnyMap = new Map(cny.map((p) => [p.date, p.value!]));
-      const idrMap = new Map(idr.map((p) => [p.date, p.value!]));
+      const cnyMap = new Map(cnyData.map((p) => [p.date, p.value!]));
+      const idrMap = new Map(idrData.map((p) => [p.date, p.value!]));
       const allDates = new Set([...cnyMap.keys(), ...idrMap.keys()]);
       const sorted = [...allDates].sort();
 
@@ -92,50 +62,10 @@ export default function App() {
 
   useEffect(() => {
     if (gdpCountries.length === 0) return;
-
-    const fxCurrencies = gdpCountries.filter((c) => c.code !== 'USD').map((c) => c.code);
-    const fxHistoryPromise = fxCurrencies.length > 0
-      ? fetchHistoricalRates(fxCurrencies, '1990-01-01', 'month')
-      : Promise.resolve(new Map<string, TimeSeriesPoint[]>());
-
-    fxHistoryPromise.then((fxHistoryMap) => {
-      const fetches = gdpCountries.map(async (country) => {
-        const gdpHistory = await fetchFredHistory(country.fredGdpSeries!, '1990-01-01', 'a');  // annual
-
-        const fxHistory = country.code !== 'USD'
-          ? (fxHistoryMap.get(country.code) ?? [])
-          : [];
-
-        const gdpMap = new Map(gdpHistory.filter((p) => p.value !== null).map((p) => [p.date, p.value!]));
-        const fxMap = new Map(fxHistory.map((p) => [p.date, p.value!]));
-
-      const yearMap = new Map<string, { sum: number; count: number }>();
-      for (const [date, raw] of gdpMap) {
-        const year = date.slice(0, 4);
-        const fx = country.code === 'USD' ? 1 : findClosestDate(fxMap, date);
-        if (fx === null) continue;
-        const multiplier = country.gdpMultiplier ?? 1_000_000;
-        const usd = (raw * multiplier) / fx;
-        const entry = yearMap.get(year) ?? { sum: 0, count: 0 };
-        entry.sum += usd;
-        entry.count += 1;
-        yearMap.set(year, entry);
-      }
-
-      const records = [...yearMap.entries()]
-        .map(([year, entry]) => ({
-          date: `${year}-01-01`,
-          gdpUsd: entry.sum / entry.count,
-        }))
-        .sort((a, b) => a.date.localeCompare(b.date));
-
-      return { code: country.code, records };
-    });
-
-        Promise.all(fetches).then((results) => {
-          setGdpData(new Map(results.map((r) => [r.code, r.records])));
-          setGdpLoading(false);
-        });
+    const codes = gdpCountries.map((c) => c.code);
+    fetchGdpUsd(codes, '1976-01-01').then((data) => {
+      setGdpData(data);
+      setGdpLoading(false);
     });
   }, [gdpCountries]);
 
@@ -159,6 +89,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (countries.length === 0) return;
     const seriesIds = new Set<string>();
     for (const c of countries) {
       if (c.fredRateSeries) seriesIds.add(c.fredRateSeries);
@@ -175,7 +106,7 @@ export default function App() {
       setFredData(cleaned);
       setFredLoading(false);
     });
-  }, []);
+  }, [countries]);
 
   const handleFxInterval = (value: string) => setFxInterval(value as FreqInterval);
 

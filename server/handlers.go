@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -132,7 +133,7 @@ func handleFredBatchLatest(cache *Cache) gin.HandlerFunc {
 		}
 		ch := make(chan result, len(seriesList))
 		var wg sync.WaitGroup
-		sem := make(chan struct{}, 5)
+		sem := make(chan struct{}, 3)
 		for _, s := range seriesList {
 			s = strings.TrimSpace(s)
 			if s == "" {
@@ -206,6 +207,8 @@ var worldbankCountry = map[string]string{
 	"CNY": "CN",
 }
 
+var wbDateRe = regexp.MustCompile(`"date":"(\d{4})"`)
+
 func handleWorldBankDebt(cache *Cache) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		country := c.Query("country")
@@ -217,5 +220,20 @@ func handleWorldBankDebt(cache *Cache) gin.HandlerFunc {
 		}
 		u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/GC.DOD.TOTL.GD.ZS?format=json", url.QueryEscape(country))
 		fetchUpstream(cache, "worldbank", "debt:"+country, u, 24*time.Hour, c)
+	}
+}
+
+func handleWorldBankGdp(cache *Cache) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		country := c.Query("country")
+		if country == "" {
+			country = "US"
+		}
+		if mapped, ok := worldbankCountry[country]; ok {
+			country = mapped
+		}
+		// NY.GDP.MKTP.CN = GDP in current local currency units (full units, not scaled)
+		u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/NY.GDP.MKTP.CN?format=json", url.QueryEscape(country))
+		fetchUpstream(cache, "worldbank", "gdp:"+country, u, 24*time.Hour, c)
 	}
 }

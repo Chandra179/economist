@@ -26,3 +26,6 @@ clean:
 	rm -f server/economist-server
 	rm -rf server/data/
 	rm -rf ui/dist/
+
+kill:
+	sudo kill -9 $(sudo lsof -t -i :8080)   

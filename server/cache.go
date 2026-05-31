@@ -28,7 +28,7 @@ func NewCache(path string) (*Cache, error) {
 		return nil, fmt.Errorf("open cache db: %w", err)
 	}
 	err = db.Update(func(tx *bbolt.Tx) error {
-		for _, name := range []string{"frankfurter", "fred", "worldbank"} {
+		for _, name := range []string{"frankfurter", "fred", "worldbank", "computed"} {
 			if _, err := tx.CreateBucketIfNotExists([]byte(name)); err != nil {
 				return err
 			}

@@ -1,6 +1,34 @@
-import type { TimeSeriesPoint } from '../types';
+import type { CountryData, GdpRecord, TimeSeriesPoint } from '../types';
 
 const API_BASE = 'http://localhost:8080/api';
+
+export async function fetchCountries(): Promise<CountryData[]> {
+  try {
+    const response = await fetch(`${API_BASE}/countries`);
+    if (!response.ok) return [];
+    return await response.json();
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchGdpUsd(
+  countries: string[],
+  from: string,
+): Promise<Map<string, GdpRecord[]>> {
+  try {
+    const response = await fetch(`${API_BASE}/gdp/usd?countries=${countries.join(',')}&from=${from}`);
+    if (!response.ok) return new Map();
+    const data: Record<string, GdpRecord[]> = await response.json();
+    const map = new Map<string, GdpRecord[]>();
+    for (const [code, records] of Object.entries(data)) {
+      if (records) map.set(code, records);
+    }
+    return map;
+  } catch {
+    return new Map();
+  }
+}
 
 export async function fetchExchangeRates(
   currencies: string[],
@@ -106,6 +134,10 @@ export async function fetchFredHistory(
   }
 }
 
+function normalizeDate(d: string): string {
+  return d.length === 4 ? d + '-01-01' : d;
+}
+
 export async function fetchWorldBankDebt(
   countryCode: string,
 ): Promise<TimeSeriesPoint[]> {
@@ -116,7 +148,7 @@ export async function fetchWorldBankDebt(
     const records: Array<{ date: string; value: number | null }> = data[1] ?? [];
     return records
       .filter((r) => r.value !== null && r.value !== undefined)
-      .map((r) => ({ date: r.date + '-01-01', value: r.value }));
+      .map((r) => ({ date: normalizeDate(r.date), value: r.value }));
   } catch {
     return [];
   }

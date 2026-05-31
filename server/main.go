@@ -34,6 +34,7 @@ func main() {
 	{
 		api.GET("/exchange-rates", handleExchangeRates(cache))
 		api.GET("/historical-rates", handleHistoricalRates(cache))
+		api.GET("/countries", handleCountries(cache))
 
 		fred := api.Group("/fred")
 		{
@@ -42,7 +43,13 @@ func main() {
 			fred.GET("/history", handleFredHistory(cache))
 		}
 
+		gdp := api.Group("/gdp")
+		{
+			gdp.GET("/usd", handleGdpUsd(cache))
+		}
+
 		api.GET("/worldbank/debt", handleWorldBankDebt(cache))
+		api.GET("/worldbank/gdp", handleWorldBankGdp(cache))
 	}
 
 	addr := os.Getenv("ADDR")
