@@ -3,7 +3,7 @@ import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLate
 import CountryCard from './components/CountryCard';
 import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
-import TradeBalance from './components/TradeBalance';
+
 
 import type { CountryData, TimeSeriesPoint, GdpRecord, FxPoint, FreqInterval, CurrencyFilter } from './types';
 
@@ -154,8 +154,6 @@ export default function App() {
         selectedCurrencies={selectedCurrencies}
         onCurrencyChange={setSelectedCurrencies}
       />
-
-      <TradeBalance />
 
       <GdpTable
         gdpData={gdpData}
