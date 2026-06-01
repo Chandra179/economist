@@ -1,8 +1,9 @@
 import { useMemo, useState, type ReactNode } from 'react';
-import { NULL_PLACEHOLDER, STEPS } from '../config';
+import { NULL_PLACEHOLDER, STEPS, COUNTRY_COLORS } from '../config';
 import DataTable from './DataTable';
-import TimeSeriesChart, { type LineConfig } from './TimeSeriesChart';
-import { COUNTRY_COLORS } from '../config';
+import GdpChartPanel from './GdpChartPanel';
+import DebtChartPanel from './DebtChartPanel';
+import RateCpiChartPanel from './RateCpiChartPanel';
 import type { CountryData, GdpRecord, TimeSeriesPoint } from '../types';
 
 type Step = typeof STEPS[number];
@@ -25,11 +26,6 @@ function fmtUsd(v: unknown): string {
   if (n >= 1e12) return '$' + (n / 1e12).toFixed(1) + 'T';
   if (n >= 1e9) return '$' + (n / 1e9).toFixed(1) + 'B';
   return '$' + (n / 1e6).toFixed(0) + 'M';
-}
-
-function fmtPct(v: unknown): string {
-  if (v === null || v === undefined) return NULL_PLACEHOLDER;
-  return (v as number).toFixed(1) + '%';
 }
 
 function fmtGrowth(n: number | null): ReactNode {
@@ -62,49 +58,57 @@ export default function GdpTable({
   const [step, setStep] = useState<Step>(1);
   const [showTable, setShowTable] = useState(true);
 
+  const debtSafe = useMemo(() => debtData ?? null, [debtData]);
+  const debtCountriesSafe = useMemo(() => debtCountries ?? [], [debtCountries]);
+  const rateSafe = useMemo(() => rateData ?? null, [rateData]);
+  const rateCountriesSafe = useMemo(() => rateCountries ?? [], [rateCountries]);
+  const cpiSafe = useMemo(() => cpiData ?? null, [cpiData]);
+  const cpiCountriesSafe = useMemo(() => cpiCountries ?? [], [cpiCountries]);
+
+  const hasDebt = debtSafe !== null && debtCountriesSafe.length > 0;
+  const hasRates = rateSafe !== null && rateCountriesSafe.length > 0;
+  const hasCpi = cpiSafe !== null && cpiCountriesSafe.length > 0;
+
+  const allFilterCountries = useMemo(() => {
+    const set = new Set<string>();
+    for (const c of gdpCountries) set.add(c.code);
+    for (const c of debtCountriesSafe) set.add(c.code);
+    for (const c of rateCountriesSafe) set.add(c.code);
+    for (const c of cpiCountriesSafe) set.add(c.code);
+    return [...set];
+  }, [gdpCountries, debtCountriesSafe, rateCountriesSafe, cpiCountriesSafe]);
+
+  const filterButtons = useMemo(() => {
+    const buttons: { code: string; label: string }[] = [{ code: '', label: 'All' }];
+    for (const code of allFilterCountries) {
+      const all = [...gdpCountries, ...debtCountriesSafe, ...rateCountriesSafe, ...cpiCountriesSafe];
+      const c = all.find((x) => x.code === code);
+      buttons.push({ code, label: (c?.flag ?? '') + ' ' + code });
+    }
+    return buttons;
+  }, [allFilterCountries, gdpCountries, debtCountriesSafe, rateCountriesSafe, cpiCountriesSafe]);
+
   const activeCodes = useMemo(() =>
     selectedCode === null
       ? gdpCountries.map((c) => c.code)
       : [selectedCode],
     [selectedCode, gdpCountries]);
 
-  const hasDebt = debtData !== null && debtData !== undefined && (debtCountries?.length ?? 0) > 0;
-  const hasRates = rateData !== null && rateData !== undefined && (rateCountries?.length ?? 0) > 0;
-  const hasCpi = cpiData !== null && cpiData !== undefined && (cpiCountries?.length ?? 0) > 0;
-
-  const allFilterCountries = useMemo(() => {
-    const set = new Set<string>();
-    for (const c of gdpCountries) set.add(c.code);
-    if (debtCountries) for (const c of debtCountries) set.add(c.code);
-    if (rateCountries) for (const c of rateCountries) set.add(c.code);
-    if (cpiCountries) for (const c of cpiCountries) set.add(c.code);
-    return [...set];
-  }, [gdpCountries, debtCountries, rateCountries, cpiCountries]);
-
-  const filterButtons = useMemo(() => {
-    const buttons: { code: string; label: string }[] = [{ code: '', label: 'All' }];
-    for (const code of allFilterCountries) {
-      const c = [...gdpCountries, ...(debtCountries ?? []), ...(rateCountries ?? []), ...(cpiCountries ?? [])].find((x) => x.code === code);
-      buttons.push({ code, label: (c?.flag ?? '') + ' ' + code });
-    }
-    return buttons;
-  }, [allFilterCountries, gdpCountries, debtCountries, rateCountries, cpiCountries]);
-
-  const { tableRows, chartRows } = useMemo(() => {
-    if (!gdpData || gdpCountries.length === 0) return { tableRows: [], chartRows: [] };
+  const tableRows = useMemo(() => {
+    if (!gdpData || gdpCountries.length === 0) return [];
 
     const allDates = new Set<string>();
     for (const records of gdpData.values()) {
       for (const r of records) allDates.add(r.date);
     }
-    if (hasDebt) {
-      for (const records of debtData!.values()) {
+    if (debtSafe && debtCountriesSafe.length > 0) {
+      for (const records of debtSafe.values()) {
         for (const r of records) allDates.add(r.date);
       }
     }
-    const sorted = [...allDates].sort();
 
-    const merged = sorted.map((date) => {
+    const sorted = [...allDates].sort();
+    return sorted.map((date) => {
       const row: Record<string, string | number | null> = { date };
       for (const c of gdpCountries) {
         const records = gdpData.get(c.code) ?? [];
@@ -112,158 +116,15 @@ export default function GdpTable({
         row[c.code] = rec?.gdpUsd ?? null;
         row[c.code + '_gr'] = rec?.growth ?? null;
       }
-      if (hasDebt) {
-        for (const c of debtCountries!) {
-          const records = debtData!.get(c.code) ?? [];
+      if (debtSafe && debtCountriesSafe.length > 0) {
+        for (const c of debtCountriesSafe) {
+          const records = debtSafe.get(c.code) ?? [];
           row[c.code + '_debt'] = records.find((r) => r.date === date)?.value ?? null;
         }
       }
       return row;
-    });
-
-    const reversed = [...merged].reverse();
-
-    const chartRows = hasDebt ? reversed.map((row) => {
-      const r: Record<string, string | number | null> = { date: row.date as string };
-      for (const c of debtCountries!) {
-        r[c.code] = row[c.code + '_debt'] as number | null;
-      }
-      return r;
-    }) : [];
-
-    return { tableRows: reversed, chartRows };
-  }, [gdpData, gdpCountries, debtData, debtCountries, hasDebt]);
-
-  const gdpChartRows = useMemo(() => {
-    if (!gdpData || gdpCountries.length === 0) return [];
-
-    const gdpDates = new Set<string>();
-    for (const records of gdpData.values()) {
-      for (const r of records) gdpDates.add(r.date);
-    }
-
-    return [...gdpDates].sort().reverse().map((date) => {
-      const r: Record<string, number | string | null> = { date };
-      for (const c of gdpCountries) {
-        const records = gdpData.get(c.code) ?? [];
-        const rec = records.find((rec) => rec.date === date);
-        r[c.code] = rec?.gdpUsd ?? null;
-      }
-      return r;
-    });
-  }, [gdpData, gdpCountries]);
-
-  const rateChartRows = useMemo(() => {
-    if (!hasRates || !rateData) return [];
-
-    const allCodes = rateCountries!.map((c) => c.code);
-    const yearMap = new Map<string, Record<string, number[]>>();
-
-    for (const code of allCodes) {
-      const records = rateData.get(code) ?? [];
-      for (const r of records) {
-        if (r.value === null) continue;
-        const year = r.date.slice(0, 4);
-        if (!yearMap.has(year)) yearMap.set(year, {});
-        const acc = yearMap.get(year)!;
-        if (!acc[code]) acc[code] = [];
-        acc[code].push(r.value);
-      }
-    }
-
-    return [...yearMap.keys()].sort((a, b) => Number(b) - Number(a)).map((year) => {
-      const r: Record<string, number | string | null> = { date: year };
-      for (const code of allCodes) {
-        const values = yearMap.get(year)?.[code];
-        r[code] = values?.length ? +(values.reduce((a, b) => a + b, 0) / values.length).toFixed(2) : null;
-      }
-      return r;
-    });
-  }, [rateData, rateCountries, hasRates]);
-
-  const cpiChartRows = useMemo(() => {
-    if (!hasCpi || !cpiData) return [];
-
-    const allCodes = cpiCountries!.map((c) => c.code);
-    const yearMap = new Map<string, Record<string, number[]>>();
-
-    for (const code of allCodes) {
-      const records = cpiData.get(code) ?? [];
-      for (const r of records) {
-        if (r.value === null) continue;
-        const year = r.date.slice(0, 4);
-        if (!yearMap.has(year)) yearMap.set(year, {});
-        const acc = yearMap.get(year)!;
-        if (!acc[code]) acc[code] = [];
-        acc[code].push(r.value);
-      }
-    }
-
-    return [...yearMap.keys()].sort((a, b) => Number(b) - Number(a)).map((year) => {
-      const r: Record<string, number | string | null> = { date: year };
-      for (const code of allCodes) {
-        const values = yearMap.get(year)?.[code];
-        r[code] = values?.length ? +(values.reduce((a, b) => a + b, 0) / values.length).toFixed(2) : null;
-      }
-      return r;
-    });
-  }, [cpiData, cpiCountries, hasCpi]);
-
-  const debtChartData = useMemo(() => [...chartRows].reverse(), [chartRows]);
-  const gdpChartData = useMemo(() => [...gdpChartRows].reverse(), [gdpChartRows]);
-  const rateChartData = useMemo(() => [...rateChartRows].reverse(), [rateChartRows]);
-  const cpiChartData = useMemo(() => [...cpiChartRows].reverse(), [cpiChartRows]);
-
-  const mergedChartRows = useMemo(() => {
-    const allYears = new Set<string>();
-    for (const r of rateChartData) allYears.add(r.date as string);
-    for (const r of cpiChartData) allYears.add(r.date as string);
-
-    const rateByYear = new Map<string, Record<string, unknown>>();
-    for (const r of rateChartData) rateByYear.set(r.date as string, r);
-    const cpiByYear = new Map<string, Record<string, unknown>>();
-    for (const r of cpiChartData) cpiByYear.set(r.date as string, r);
-
-    const allCodes = [...new Set([
-      ...(rateCountries ?? []).map((c) => c.code),
-      ...(cpiCountries ?? []).map((c) => c.code),
-    ])];
-
-    return [...allYears].sort().map((year) => {
-      const row: Record<string, string | number | null> = { date: year };
-      const rateRow = rateByYear.get(year);
-      const cpiRow = cpiByYear.get(year);
-      for (const code of allCodes) {
-        if (rateRow && code in rateRow) row[code + '_rate'] = (rateRow[code] as number | null) ?? null;
-        if (cpiRow && code in cpiRow) row[code + '_cpi'] = (cpiRow[code] as number | null) ?? null;
-      }
-      return row;
-    });
-  }, [rateChartData, cpiChartData, rateCountries, cpiCountries]);
-
-  const mergedLines = useMemo(() => {
-    const allCodes = [...new Set([
-      ...(rateCountries ?? []).map((c) => c.code),
-      ...(cpiCountries ?? []).map((c) => c.code),
-    ])];
-
-    const lines: LineConfig[] = [];
-    for (const [idx, code] of allCodes.entries()) {
-      const country = [...(rateCountries ?? []), ...(cpiCountries ?? [])].find((c) => c.code === code);
-      const name = country?.name ?? code;
-      const color = COUNTRY_COLORS[idx % COUNTRY_COLORS.length];
-
-      if (hasRates) {
-        lines.push({ dataKey: code + '_rate', name: name + ' Rate', color, yAxisId: 'left' });
-      }
-      if (hasCpi) {
-        lines.push({ dataKey: code + '_cpi', name: name + ' Inflation', color, yAxisId: 'left', strokeDasharray: '4 4' });
-      }
-    }
-
-    if (selectedCode === null) return lines;
-    return lines.filter((l) => l.dataKey.startsWith(selectedCode + '_'));
-  }, [rateCountries, cpiCountries, hasRates, hasCpi, selectedCode]);
+    }).reverse();
+  }, [gdpData, gdpCountries, debtSafe, debtCountriesSafe]);
 
   const filteredTableRows = useMemo(() => {
     return tableRows.filter((_, i) => i % step === 0);
@@ -290,61 +151,6 @@ export default function GdpTable({
     }
     return cols;
   }, [activeCodes, gdpCountries, hasDebt]);
-
-  const chartPanels: { key: string; title: string; render: () => ReactNode }[] = [];
-
-  if (hasDebt) {
-    chartPanels.push({
-      key: 'debt',
-      title: 'Debt/GDP Trend',
-      render: () => (
-        <TimeSeriesChart
-          data={debtChartData}
-          valueFormatter={(v: number) => fmtPct(v)}
-          countries={debtCountries ?? []}
-          selectedCode={selectedCode}
-          referenceLines={[{ value: 100, label: '100%' }]}
-          hideLegend
-        />
-      ),
-    });
-  }
-
-  chartPanels.push({
-    key: 'gdp',
-    title: 'GDP in USD',
-    render: () => (
-      <TimeSeriesChart
-        data={gdpChartData}
-        valueFormatter={(v: number) => fmtUsd(v)}
-        countries={gdpCountries}
-        selectedCode={selectedCode}
-        hideLegend
-      />
-    ),
-  });
-
-  if (hasRates || hasCpi) {
-    const mergedTitle = hasRates && hasCpi
-      ? 'Interest Rate & Inflation'
-      : hasRates ? 'Interest Rate' : 'Inflation (CPI YoY)';
-
-    chartPanels.push({
-      key: 'rate-cpi',
-      title: mergedTitle,
-      render: () => (
-        <TimeSeriesChart
-          data={mergedChartRows as Record<string, unknown>[]}
-          valueFormatter={(v: number) => v.toFixed(1) + '%'}
-          lines={mergedLines}
-          hideLegend
-          groupByCountry
-        />
-      ),
-    });
-  }
-
-  const gridCols = 'lg:grid-cols-2';
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-6">
@@ -383,15 +189,29 @@ export default function GdpTable({
               </span>
             ))}
           </div>
-          <div className={`grid grid-cols-1 md:grid-cols-2 ${gridCols} gap-4`}>
-            {chartPanels.map((panel) => (
-              <div key={panel.key} className="bg-white border border-slate-100 rounded-lg p-3">
-                <div className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-1">
-                  {panel.title}
-                </div>
-                {panel.render()}
-              </div>
-            ))}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+            {hasDebt && (
+              <DebtChartPanel
+                debtData={debtSafe}
+                debtCountries={debtCountriesSafe}
+                selectedCode={selectedCode}
+              />
+            )}
+            <GdpChartPanel
+              gdpData={gdpData}
+              gdpCountries={gdpCountries}
+              selectedCode={selectedCode}
+            />
+            {(hasRates || hasCpi) && (
+              <RateCpiChartPanel
+                rateData={rateSafe}
+                rateCountries={rateCountriesSafe}
+                cpiData={cpiSafe}
+                cpiCountries={cpiCountriesSafe}
+                selectedCode={selectedCode}
+              />
+            )}
           </div>
 
           <div className="mt-4 border-t border-slate-200 pt-4">
