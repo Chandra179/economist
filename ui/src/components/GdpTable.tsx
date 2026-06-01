@@ -1,11 +1,11 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { NULL_PLACEHOLDER, STEPS } from '../config';
 import DataTable from './DataTable';
-import TimeSeriesChart from './TimeSeriesChart';
+import TimeSeriesChart, { type LineConfig } from './TimeSeriesChart';
+import { COUNTRY_COLORS } from '../config';
 import type { CountryData, GdpRecord, TimeSeriesPoint } from '../types';
 
 type Step = typeof STEPS[number];
-type View = 'table' | 'debtChart' | 'gdpChart' | 'rate';
 
 interface Props {
   gdpData: Map<string, GdpRecord[]> | null;
@@ -14,6 +14,8 @@ interface Props {
   debtCountries?: CountryData[];
   rateData?: Map<string, TimeSeriesPoint[]> | null;
   rateCountries?: CountryData[];
+  cpiData?: Map<string, TimeSeriesPoint[]> | null;
+  cpiCountries?: CountryData[];
   loading: boolean;
 }
 
@@ -54,35 +56,39 @@ function makeFormatWithGrowth(growthKey: string, debtKey?: string) {
 }
 
 export default function GdpTable({
-  gdpData, gdpCountries, debtData, debtCountries, rateData, rateCountries, loading,
+  gdpData, gdpCountries, debtData, debtCountries, rateData, rateCountries, cpiData, cpiCountries, loading,
 }: Props) {
-  const [view, setView] = useState<View>('table');
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [step, setStep] = useState<Step>(1);
+  const [showTable, setShowTable] = useState(true);
 
-  const activeCodes = selectedCode === null
-    ? gdpCountries.map((c) => c.code)
-    : [selectedCode];
+  const activeCodes = useMemo(() =>
+    selectedCode === null
+      ? gdpCountries.map((c) => c.code)
+      : [selectedCode],
+    [selectedCode, gdpCountries]);
 
   const hasDebt = debtData !== null && debtData !== undefined && (debtCountries?.length ?? 0) > 0;
   const hasRates = rateData !== null && rateData !== undefined && (rateCountries?.length ?? 0) > 0;
+  const hasCpi = cpiData !== null && cpiData !== undefined && (cpiCountries?.length ?? 0) > 0;
 
   const allFilterCountries = useMemo(() => {
     const set = new Set<string>();
     for (const c of gdpCountries) set.add(c.code);
     if (debtCountries) for (const c of debtCountries) set.add(c.code);
     if (rateCountries) for (const c of rateCountries) set.add(c.code);
+    if (cpiCountries) for (const c of cpiCountries) set.add(c.code);
     return [...set];
-  }, [gdpCountries, debtCountries, rateCountries]);
+  }, [gdpCountries, debtCountries, rateCountries, cpiCountries]);
 
   const filterButtons = useMemo(() => {
     const buttons: { code: string; label: string }[] = [{ code: '', label: 'All' }];
     for (const code of allFilterCountries) {
-      const c = [...gdpCountries, ...(debtCountries ?? []), ...(rateCountries ?? [])].find((x) => x.code === code);
+      const c = [...gdpCountries, ...(debtCountries ?? []), ...(rateCountries ?? []), ...(cpiCountries ?? [])].find((x) => x.code === code);
       buttons.push({ code, label: (c?.flag ?? '') + ' ' + code });
     }
     return buttons;
-  }, [allFilterCountries, gdpCountries, debtCountries, rateCountries]);
+  }, [allFilterCountries, gdpCountries, debtCountries, rateCountries, cpiCountries]);
 
   const { tableRows, chartRows } = useMemo(() => {
     if (!gdpData || gdpCountries.length === 0) return { tableRows: [], chartRows: [] };
@@ -175,9 +181,89 @@ export default function GdpTable({
     });
   }, [rateData, rateCountries, hasRates]);
 
+  const cpiChartRows = useMemo(() => {
+    if (!hasCpi || !cpiData) return [];
+
+    const allCodes = cpiCountries!.map((c) => c.code);
+    const yearMap = new Map<string, Record<string, number[]>>();
+
+    for (const code of allCodes) {
+      const records = cpiData.get(code) ?? [];
+      for (const r of records) {
+        if (r.value === null) continue;
+        const year = r.date.slice(0, 4);
+        if (!yearMap.has(year)) yearMap.set(year, {});
+        const acc = yearMap.get(year)!;
+        if (!acc[code]) acc[code] = [];
+        acc[code].push(r.value);
+      }
+    }
+
+    return [...yearMap.keys()].sort((a, b) => Number(b) - Number(a)).map((year) => {
+      const r: Record<string, number | string | null> = { date: year };
+      for (const code of allCodes) {
+        const values = yearMap.get(year)?.[code];
+        r[code] = values?.length ? +(values.reduce((a, b) => a + b, 0) / values.length).toFixed(2) : null;
+      }
+      return r;
+    });
+  }, [cpiData, cpiCountries, hasCpi]);
+
   const debtChartData = useMemo(() => [...chartRows].reverse(), [chartRows]);
   const gdpChartData = useMemo(() => [...gdpChartRows].reverse(), [gdpChartRows]);
   const rateChartData = useMemo(() => [...rateChartRows].reverse(), [rateChartRows]);
+  const cpiChartData = useMemo(() => [...cpiChartRows].reverse(), [cpiChartRows]);
+
+  const mergedChartRows = useMemo(() => {
+    const allYears = new Set<string>();
+    for (const r of rateChartData) allYears.add(r.date as string);
+    for (const r of cpiChartData) allYears.add(r.date as string);
+
+    const rateByYear = new Map<string, Record<string, unknown>>();
+    for (const r of rateChartData) rateByYear.set(r.date as string, r);
+    const cpiByYear = new Map<string, Record<string, unknown>>();
+    for (const r of cpiChartData) cpiByYear.set(r.date as string, r);
+
+    const allCodes = [...new Set([
+      ...(rateCountries ?? []).map((c) => c.code),
+      ...(cpiCountries ?? []).map((c) => c.code),
+    ])];
+
+    return [...allYears].sort().map((year) => {
+      const row: Record<string, string | number | null> = { date: year };
+      const rateRow = rateByYear.get(year);
+      const cpiRow = cpiByYear.get(year);
+      for (const code of allCodes) {
+        if (rateRow && code in rateRow) row[code + '_rate'] = (rateRow[code] as number | null) ?? null;
+        if (cpiRow && code in cpiRow) row[code + '_cpi'] = (cpiRow[code] as number | null) ?? null;
+      }
+      return row;
+    });
+  }, [rateChartData, cpiChartData, rateCountries, cpiCountries]);
+
+  const mergedLines = useMemo(() => {
+    const allCodes = [...new Set([
+      ...(rateCountries ?? []).map((c) => c.code),
+      ...(cpiCountries ?? []).map((c) => c.code),
+    ])];
+
+    const lines: LineConfig[] = [];
+    for (const [idx, code] of allCodes.entries()) {
+      const country = [...(rateCountries ?? []), ...(cpiCountries ?? [])].find((c) => c.code === code);
+      const name = country?.name ?? code;
+      const color = COUNTRY_COLORS[idx % COUNTRY_COLORS.length];
+
+      if (hasRates) {
+        lines.push({ dataKey: code + '_rate', name: name + ' Rate', color, yAxisId: 'left' });
+      }
+      if (hasCpi) {
+        lines.push({ dataKey: code + '_cpi', name: name + ' Inflation', color, yAxisId: 'left', strokeDasharray: '4 4' });
+      }
+    }
+
+    if (selectedCode === null) return lines;
+    return lines.filter((l) => l.dataKey.startsWith(selectedCode + '_'));
+  }, [rateCountries, cpiCountries, hasRates, hasCpi, selectedCode]);
 
   const filteredTableRows = useMemo(() => {
     return tableRows.filter((_, i) => i % step === 0);
@@ -205,45 +291,68 @@ export default function GdpTable({
     return cols;
   }, [activeCodes, gdpCountries, hasDebt]);
 
-  const availableViews: { id: View; label: string }[] = [
-    { id: 'table', label: 'Table' },
-    { id: 'debtChart', label: 'Debt/GDP' },
-    { id: 'gdpChart', label: 'GDP' },
-  ];
-  if (hasRates) {
-    availableViews.push({ id: 'rate', label: 'Rate' });
+  const chartPanels: { key: string; title: string; render: () => ReactNode }[] = [];
+
+  if (hasDebt) {
+    chartPanels.push({
+      key: 'debt',
+      title: 'Debt/GDP Trend',
+      render: () => (
+        <TimeSeriesChart
+          data={debtChartData}
+          valueFormatter={(v: number) => fmtPct(v)}
+          countries={debtCountries ?? []}
+          selectedCode={selectedCode}
+          referenceLines={[{ value: 100, label: '100%' }]}
+          hideLegend
+        />
+      ),
+    });
   }
+
+  chartPanels.push({
+    key: 'gdp',
+    title: 'GDP in USD',
+    render: () => (
+      <TimeSeriesChart
+        data={gdpChartData}
+        valueFormatter={(v: number) => fmtUsd(v)}
+        countries={gdpCountries}
+        selectedCode={selectedCode}
+        hideLegend
+      />
+    ),
+  });
+
+  if (hasRates || hasCpi) {
+    const mergedTitle = hasRates && hasCpi
+      ? 'Interest Rate & Inflation'
+      : hasRates ? 'Interest Rate' : 'Inflation (CPI YoY)';
+
+    chartPanels.push({
+      key: 'rate-cpi',
+      title: mergedTitle,
+      render: () => (
+        <TimeSeriesChart
+          data={mergedChartRows as Record<string, unknown>[]}
+          valueFormatter={(v: number) => v.toFixed(1) + '%'}
+          lines={mergedLines}
+          hideLegend
+          groupByCountry
+        />
+      ),
+    });
+  }
+
+  const gridCols = 'lg:grid-cols-2';
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-xs text-slate-400 uppercase tracking-wide font-semibold flex items-center gap-1">
-          {view === 'gdpChart' ? 'GDP in USD' : view === 'rate' ? 'Interest Rate' : 'Debt/GDP Trend'}
-          {view !== 'gdpChart' && view !== 'rate' && (
-            <span className="relative group flex items-center">
-              <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-56 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
-                {view === 'debtChart' ? 'Government debt as % of GDP. 100% threshold shown as red dashed line.' : ''}
-              </span>
-            </span>
-          )}
+        <h4 className="text-xs text-slate-400 uppercase tracking-wide font-semibold">
+          GDP &amp; Debt &amp; Monetary
         </h4>
         <div className="flex items-center gap-2">
-          <div className="flex gap-1">
-            {availableViews.map(({ id, label }) => (
-              <button
-                key={id}
-                onClick={() => setView(id)}
-                className={`px-2 py-1 text-[10px] font-semibold rounded-md border transition cursor-pointer uppercase tracking-wide
-                  ${view === id
-                    ? 'bg-slate-700 text-white border-slate-700'
-                    : 'bg-slate-50 text-slate-400 border-slate-200 hover:border-slate-400'
-                  }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
           <div className="flex gap-1">
             {filterButtons.map((btn) => (
               <button
@@ -259,54 +368,62 @@ export default function GdpTable({
               </button>
             ))}
           </div>
-          {view === 'table' && (
-            <select
-              value={step}
-              onChange={(e) => setStep(Number(e.target.value) as Step)}
-              className="border border-slate-200 rounded px-2 py-1 text-xs font-mono bg-white text-slate-700 cursor-pointer"
-            >
-              {STEPS.map((s) => (
-                <option key={s} value={s}>{s}Y</option>
-              ))}
-            </select>
-          )}
         </div>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center text-slate-400 text-sm py-12">Loading...</div>
-      ) : view === 'table' ? (
-        <DataTable
-          columns={columns}
-          data={filteredTableRows as unknown as Record<string, unknown>[]}
-        />
-      ) : view === 'debtChart' ? (
-        <TimeSeriesChart
-          key="debtChart"
-          data={debtChartData}
-          valueFormatter={(v: number) => fmtPct(v)}
-          countries={debtCountries ?? []}
-          selectedCode={selectedCode}
-          referenceLines={[{ value: 100, label: '100%' }]}
-        />
-      ) : view === 'gdpChart' ? (
-        <TimeSeriesChart
-          key="gdpChart"
-          data={gdpChartData}
-          valueFormatter={(v: number) => fmtUsd(v)}
-          countries={gdpCountries}
-          selectedCode={selectedCode}
-        />
-      ) : view === 'rate' && !rateData ? (
-        <div className="flex items-center justify-center text-slate-400 text-sm py-12">Loading rate history...</div>
       ) : (
-        <TimeSeriesChart
-          key="rateChart"
-          data={rateChartData as Record<string, unknown>[]}
-          valueFormatter={(v: number) => v.toFixed(2) + '%'}
-          countries={rateCountries ?? []}
-          selectedCode={selectedCode}
-        />
+        <>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 px-1 pb-3 text-[10px] text-slate-500 font-mono">
+            {COUNTRY_COLORS.slice(0, allFilterCountries.length).map((color, i) => (
+              <span key={i} className="flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: color }} />
+                {allFilterCountries[i]}
+              </span>
+            ))}
+          </div>
+          <div className={`grid grid-cols-1 md:grid-cols-2 ${gridCols} gap-4`}>
+            {chartPanels.map((panel) => (
+              <div key={panel.key} className="bg-white border border-slate-100 rounded-lg p-3">
+                <div className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-1">
+                  {panel.title}
+                </div>
+                {panel.render()}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 border-t border-slate-200 pt-4">
+            <button
+              onClick={() => setShowTable(!showTable)}
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide cursor-pointer hover:text-slate-700 transition"
+            >
+              <span className={`inline-block transition-transform ${showTable ? 'rotate-90' : ''}`}>▶</span>
+              Data Table
+            </button>
+
+            {showTable && (
+              <div className="mt-3">
+                <div className="mb-3">
+                  <select
+                    value={step}
+                    onChange={(e) => setStep(Number(e.target.value) as Step)}
+                    className="border border-slate-200 rounded px-2 py-1 text-xs font-mono bg-white text-slate-700 cursor-pointer"
+                  >
+                    {STEPS.map((s) => (
+                      <option key={s} value={s}>{s}Y</option>
+                    ))}
+                  </select>
+                </div>
+                <DataTable
+                  columns={columns}
+                  data={filteredTableRows as unknown as Record<string, unknown>[]}
+                />
+              </div>
+            )}
+          </div>
+        </>
       )}
     </div>
   );

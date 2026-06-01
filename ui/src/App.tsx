@@ -31,11 +31,44 @@ export default function App() {
   }, [gdpData]);
   const [debtData, setDebtData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
   const [rateHistoryData, setRateHistoryData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
+  const [cpiData, setCpiData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
   const [povertyData, setPovertyData] = useState<Record<string, number>>({});
+
+  const inflationData = useMemo(() => {
+    if (!cpiData) return null;
+    const result = new Map<string, TimeSeriesPoint[]>();
+    for (const [code, points] of cpiData) {
+      const sorted = [...points].sort((a, b) => a.date.localeCompare(b.date));
+      const inflation: TimeSeriesPoint[] = [];
+      for (let i = 12; i < sorted.length; i++) {
+        const cur = sorted[i];
+        const prev = sorted[i - 12];
+        const curM = cur.date.slice(0, 7);
+        if (prev.value && cur.value) {
+          const yoy = (cur.value - prev.value) / prev.value * 100;
+          inflation.push({ date: curM, value: Math.round(yoy * 100) / 100 });
+        }
+      }
+      result.set(code, inflation);
+    }
+    return result;
+  }, [cpiData]);
+
+  const latestInflation = useMemo(() => {
+    if (!inflationData) return {};
+    const map: Record<string, number> = {};
+    for (const [code, points] of inflationData) {
+      const sorted = [...points].sort((a, b) => b.date.localeCompare(a.date));
+      const latest = sorted.find((p) => p.value !== null);
+      if (latest && latest.value !== null) map[code] = latest.value;
+    }
+    return map;
+  }, [inflationData]);
 
   const gdpCountries = useMemo(() => countries.filter((c) => c.fredGdpSeries), [countries]);
   const debtCountries = useMemo(() => countries.filter((c) => c.fredDebtSeries), [countries]);
   const rateCountries = useMemo(() => countries.filter((c) => c.fredRateSeries), [countries]);
+  const cpiCountries = useMemo(() => countries.filter((c) => c.fredCpiSeries), [countries]);
 
   useEffect(() => {
     fetchCountries().then(setCountries);
@@ -105,6 +138,19 @@ export default function App() {
   }, [rateCountries]);
 
   useEffect(() => {
+    if (cpiCountries.length === 0) return;
+
+    const fetches = cpiCountries.map(async (country) => {
+      const history = await fetchFredHistory(country.fredCpiSeries!, '1990-01-01');
+      return { code: country.code, records: history.filter((p) => p.value !== null) as TimeSeriesPoint[] };
+    });
+
+    Promise.all(fetches).then((results) => {
+      setCpiData(new Map(results.map((r) => [r.code, r.records])));
+    });
+  }, [cpiCountries]);
+
+  useEffect(() => {
     fetchFredLatest('DTWEXBGS').then(setDxyLatest);
   }, []);
 
@@ -130,6 +176,7 @@ export default function App() {
       if (c.fredReservesSeries) seriesIds.add(c.fredReservesSeries);
       if (c.fredGdpSeries) seriesIds.add(c.fredGdpSeries);
       if (c.fredDebtSeries && c.debtSource !== 'worldbank') seriesIds.add(c.fredDebtSeries);
+      if (c.fredCpiSeries) seriesIds.add(c.fredCpiSeries);
     }
 
     fetchFredBatchLatest([...seriesIds]).then((results) => {
@@ -149,17 +196,18 @@ export default function App() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {countries.map((c) => (
-          <CountryCard
-            key={c.code}
-            country={c}
-            liveRate={liveRates.get(c.code) ?? null}
-            fredData={fredData}
-            fredLoading={fredLoading}
-            loading={fxLoading && c.code !== 'USD'}
-            dxyLatest={c.code === 'USD' ? dxyLatest : null}
-            latestGdpUsd={latestGdpUsd.get(c.code) ?? null}
-            povertyValue={povertyData[c.code] ?? null}
-          />
+            <CountryCard
+              key={c.code}
+              country={c}
+              liveRate={liveRates.get(c.code) ?? null}
+              fredData={fredData}
+              fredLoading={fredLoading}
+              loading={fxLoading && c.code !== 'USD'}
+              dxyLatest={c.code === 'USD' ? dxyLatest : null}
+              latestGdpUsd={latestGdpUsd.get(c.code) ?? null}
+              povertyValue={povertyData[c.code] ?? null}
+              latestInflation={latestInflation[c.code] ?? null}
+            />
         ))}
       </div>
 
@@ -177,6 +225,8 @@ export default function App() {
         debtCountries={debtCountries}
         rateData={rateHistoryData}
         rateCountries={rateCountries}
+        cpiData={inflationData}
+        cpiCountries={cpiCountries}
         loading={gdpLoading}
       />
 

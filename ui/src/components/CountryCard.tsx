@@ -10,9 +10,10 @@ interface Props {
   dxyLatest: number | null;
   latestGdpUsd: number | null;
   povertyValue: number | null;
+  latestInflation: number | null;
 }
 
-export default function CountryCard({ country, liveRate, fredData, fredLoading, loading, dxyLatest, latestGdpUsd, povertyValue }: Props) {
+export default function CountryCard({ country, liveRate, fredData, fredLoading, loading, dxyLatest, latestGdpUsd, povertyValue, latestInflation }: Props) {
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col gap-4">
       <div className="flex items-start gap-3">
@@ -100,7 +101,7 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
         )}
       </div>
 
-      {(country.fredGdpSeries || latestGdpUsd !== null || povertyValue !== null) && (
+      {(country.fredGdpSeries || latestGdpUsd !== null || povertyValue !== null || latestInflation !== null) && (
         <div className="grid grid-cols-2 gap-2">
           {(country.fredGdpSeries || latestGdpUsd !== null) && (
             <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
@@ -131,6 +132,22 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
               </span>
               <span className="text-sm font-semibold text-slate-900 font-mono">
                 {povertyValue}%
+              </span>
+            </div>
+          )}
+          {latestInflation !== null && (
+            <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
+              <span className="text-[10px] text-slate-400 uppercase tracking-wide flex items-center gap-1">
+                Inflation
+                <span className="relative group flex items-center">
+                  <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-48 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+                    Year-over-year change in Consumer Price Index. Measures how fast prices are rising.
+                  </span>
+                </span>
+              </span>
+              <span className="text-sm font-semibold text-slate-900 font-mono">
+                {latestInflation.toFixed(1)}%
               </span>
             </div>
           )}

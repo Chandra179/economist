@@ -31,6 +31,7 @@ type Country struct {
 	FredReservesSeries  *string  `json:"fredReservesSeries"`
 	FredGdpSeries       *string  `json:"fredGdpSeries"`
 	FredDebtSeries      *string  `json:"fredDebtSeries"`
+	FredCpiSeries       *string  `json:"fredCpiSeries"`
 	DebtSource          string   `json:"debtSource,omitempty"`
 	GdpSource           string   `json:"gdpSource,omitempty"`
 	GdpMultiplier       float64  `json:"gdpMultiplier,omitempty"`
@@ -48,6 +49,7 @@ var Countries = []Country{
 		FredRateSeries: strPtr("DFF"),
 		FredGdpSeries:  strPtr("GDP"),
 		FredDebtSeries: strPtr("GC.DOD.TOTL.GD.ZS"),
+		FredCpiSeries:  strPtr("CPIAUCSL"),
 		DebtSource:     "worldbank",
 		GdpMultiplier:  1_000_000_000,
 	},
@@ -60,6 +62,7 @@ var Countries = []Country{
 		FredReservesSeries: strPtr("TRESEGCNM052N"),
 		FredGdpSeries:      strPtr("NGDPXDCCNA"),
 		FredDebtSeries:     strPtr("GGGDTACNA188N"),
+		FredCpiSeries:      strPtr("CHNCPIALLMINMEI"),
 		GdpSource:          "worldbank",
 		GdpMultiplier:      1,
 		LocalCurrencySymbol: "\u00A5",
@@ -73,6 +76,7 @@ var Countries = []Country{
 		FredReservesSeries: strPtr("TRESEGIDM052N"),
 		FredGdpSeries:      strPtr("NGDPXDCIDA"),
 		FredDebtSeries:     strPtr("GGGDTAIDA188N"),
+		FredCpiSeries:      strPtr("IDNCPIALLMINMEI"),
 		GdpSource:          "worldbank",
 		GdpMultiplier:      1,
 		LocalCurrencySymbol: "Rp",

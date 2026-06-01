@@ -3,11 +3,12 @@ import {
 } from 'recharts';
 import { COUNTRY_COLORS } from '../config';
 
-interface LineConfig {
+export interface LineConfig {
   dataKey: string;
   name: string;
   color: string;
   yAxisId: 'left' | 'right';
+  strokeDasharray?: string;
 }
 
 interface TimeSeriesChartProps {
@@ -20,10 +21,12 @@ interface TimeSeriesChartProps {
   lines?: LineConfig[];
   referenceLines?: { value: number; label: string; yAxisId?: string }[];
   yAxisDomain?: [number, number];
+  hideLegend?: boolean;
+  groupByCountry?: boolean;
 }
 
 export default function TimeSeriesChart({
-  data, valueFormatter, leftFormatter, rightFormatter, countries, selectedCode, lines, referenceLines, yAxisDomain,
+  data, valueFormatter, leftFormatter, rightFormatter, countries, selectedCode, lines, referenceLines, yAxisDomain, hideLegend, groupByCountry,
 }: TimeSeriesChartProps) {
   const fmtLeft = leftFormatter ?? valueFormatter ?? ((v: number) => String(v));
   const fmtRight = rightFormatter ?? ((v: number) => String(v));
@@ -37,6 +40,7 @@ export default function TimeSeriesChart({
     name: c.name,
     color: COUNTRY_COLORS[i % COUNTRY_COLORS.length],
     yAxisId: 'left' as const,
+    strokeDasharray: undefined,
   }));
 
   return (
@@ -69,6 +73,40 @@ export default function TimeSeriesChart({
           <Tooltip
             content={({ active, payload, label }) => {
               if (!active || !payload?.length) return null;
+              if (groupByCountry) {
+                const groups = new Map<string, { name: string; rate?: number; cpi?: number; color: string }>();
+                for (const entry of payload) {
+                  const dataKey = String(entry.dataKey ?? '');
+                  const idx = dataKey.lastIndexOf('_');
+                  if (idx === -1) continue;
+                  const code = dataKey.slice(0, idx);
+                  const type = dataKey.slice(idx + 1) as 'rate' | 'cpi';
+                  if (!groups.has(code)) {
+                    const raw = String(entry.name ?? '');
+                    const countryName = raw.replace(/ (Rate|Inflation)$/, '');
+                    groups.set(code, { name: countryName, color: String(entry.color ?? '#94a3b8') });
+                  }
+                  const g = groups.get(code)!;
+                  if (type === 'rate' && entry.value !== null) g.rate = Number(entry.value);
+                  if (type === 'cpi' && entry.value !== null) g.cpi = Number(entry.value);
+                }
+                return (
+                  <div className="bg-white border border-slate-200 rounded-lg p-3 text-xs shadow-lg">
+                    <div className="font-semibold text-slate-700 mb-1.5">{String(label).slice(0, 4)}</div>
+                    {[...groups.values()].map((g) => (
+                      <div key={g.name} className="flex items-center gap-2 text-slate-600">
+                        <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: g.color }} />
+                        <span className="font-semibold text-slate-700">{g.name}:</span>
+                        <span className="font-mono">
+                          {g.rate !== undefined ? <span className="text-slate-800">Rate {fmtLeft(g.rate)}</span> : null}
+                          {g.rate !== undefined && g.cpi !== undefined ? <span className="text-slate-400 mx-1">|</span> : null}
+                          {g.cpi !== undefined ? <span className="text-slate-800">Infl {fmtLeft(g.cpi)}</span> : null}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              }
               return (
                 <div className="bg-white border border-slate-200 rounded-lg p-3 text-xs shadow-lg">
                   <div className="font-semibold text-slate-700 mb-1.5">{String(label).slice(0, 4)}</div>
@@ -90,13 +128,17 @@ export default function TimeSeriesChart({
               );
             }}
           />
-          <Legend
-            formatter={(value: string) => {
-              if (lines) return value;
-              const country = (countries ?? []).find((c) => c.code === value);
-              return country?.name ?? value;
-            }}
-          />
+          {!hideLegend && (
+            <Legend
+              iconSize={8}
+              wrapperStyle={{ fontSize: 10, lineHeight: '16px' }}
+              formatter={(value: string) => {
+                if (lines) return value;
+                const country = (countries ?? []).find((c) => c.code === value);
+                return country?.name ?? value;
+              }}
+            />
+          )}
           {referenceLines?.map((rl, i) => (
             <ReferenceLine
               key={i}
@@ -116,6 +158,7 @@ export default function TimeSeriesChart({
               yAxisId={lc.yAxisId}
               stroke={lc.color}
               strokeWidth={2}
+              strokeDasharray={lc.strokeDasharray}
               dot={false}
               activeDot={{ r: 4 }}
               name={lc.name ?? lc.dataKey}
