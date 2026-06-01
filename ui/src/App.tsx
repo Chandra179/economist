@@ -30,10 +30,12 @@ export default function App() {
     return map;
   }, [gdpData]);
   const [debtData, setDebtData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
+  const [rateHistoryData, setRateHistoryData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
   const [povertyData, setPovertyData] = useState<Record<string, number>>({});
 
   const gdpCountries = useMemo(() => countries.filter((c) => c.fredGdpSeries), [countries]);
   const debtCountries = useMemo(() => countries.filter((c) => c.fredDebtSeries), [countries]);
+  const rateCountries = useMemo(() => countries.filter((c) => c.fredRateSeries), [countries]);
 
   useEffect(() => {
     fetchCountries().then(setCountries);
@@ -88,6 +90,19 @@ export default function App() {
       setDebtData(new Map(results.map((r) => [r.code, r.records])));
     });
   }, [debtCountries]);
+
+  useEffect(() => {
+    if (rateCountries.length === 0) return;
+
+    const fetches = rateCountries.map(async (country) => {
+      const history = await fetchFredHistory(country.fredRateSeries!, '1990-01-01');
+      return { code: country.code, records: history.filter((p) => p.value !== null) };
+    });
+
+    Promise.all(fetches).then((results) => {
+      setRateHistoryData(new Map(results.map((r) => [r.code, r.records])));
+    });
+  }, [rateCountries]);
 
   useEffect(() => {
     fetchFredLatest('DTWEXBGS').then(setDxyLatest);
@@ -160,6 +175,8 @@ export default function App() {
         gdpCountries={gdpCountries}
         debtData={debtData}
         debtCountries={debtCountries}
+        rateData={rateHistoryData}
+        rateCountries={rateCountries}
         loading={gdpLoading}
       />
 
