@@ -45,3 +45,15 @@ func WorldBankPoverty(c *cache.Cache) gin.HandlerFunc {
 		fetchUpstream(c, "worldbank", "poverty:"+country, u, 24*time.Hour, ctx)
 	}
 }
+
+func WorldBankPpp(c *cache.Cache) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		country := ctx.Query("country")
+		if country == "" {
+			country = "US"
+		}
+		country = client.WorldBankCountry(country)
+		u := fmt.Sprintf("https://api.worldbank.org/v2/country/%s/indicator/PA.NUS.PPP?format=json", url.QueryEscape(country))
+		fetchUpstream(c, "worldbank", "ppp:"+country, u, 24*time.Hour, ctx)
+	}
+}

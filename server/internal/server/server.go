@@ -38,6 +38,7 @@ func New(c *cache.Cache) *gin.Engine {
 		api.GET("/worldbank/debt", handler.WorldBankDebt(c))
 		api.GET("/worldbank/gdp", handler.WorldBankGdp(c))
 		api.GET("/worldbank/poverty", handler.WorldBankPoverty(c))
+		api.GET("/worldbank/ppp", handler.WorldBankPpp(c))
 	}
 
 	return r

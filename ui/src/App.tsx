@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredBatchLatest, fetchFredHistory, fetchWorldBankDebt, fetchWorldBankPoverty, fetchGdpUsd } from './data/api';
+import { fetchCountries, fetchExchangeRates, fetchHistoricalRates, fetchFredLatest, fetchFredBatchLatest, fetchFredHistory, fetchWorldBankDebt, fetchWorldBankPoverty, fetchWorldBankPpp, fetchGdpUsd } from './data/api';
 import CountryCard from './components/CountryCard';
 import FxTable from './components/FxTable';
 import GdpTable from './components/GdpTable';
@@ -33,6 +33,7 @@ export default function App() {
   const [rateHistoryData, setRateHistoryData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
   const [cpiData, setCpiData] = useState<Map<string, TimeSeriesPoint[]> | null>(null);
   const [povertyData, setPovertyData] = useState<Record<string, number>>({});
+  const [pppData, setPppData] = useState<Record<string, number>>({});
 
   const inflationData = useMemo(() => {
     if (!cpiData) return null;
@@ -157,14 +158,20 @@ export default function App() {
   useEffect(() => {
     if (countries.length === 0) return;
     Promise.all(countries.map(async (c) => {
-      const value = await fetchWorldBankPoverty(c.code);
-      return { code: c.code, value };
+      const [poverty, ppp] = await Promise.all([
+        fetchWorldBankPoverty(c.code),
+        fetchWorldBankPpp(c.code),
+      ]);
+      return { code: c.code, poverty, ppp };
     })).then((results) => {
-      const map: Record<string, number> = {};
+      const povertyMap: Record<string, number> = {};
+      const pppMap: Record<string, number> = {};
       for (const r of results) {
-        if (r.value !== null) map[r.code] = r.value;
+        if (r.poverty !== null) povertyMap[r.code] = r.poverty;
+        if (r.ppp !== null) pppMap[r.code] = r.ppp;
       }
-      setPovertyData(map);
+      setPovertyData(povertyMap);
+      setPppData(pppMap);
     });
   }, [countries]);
 
@@ -206,6 +213,7 @@ export default function App() {
               dxyLatest={c.code === 'USD' ? dxyLatest : null}
               latestGdpUsd={latestGdpUsd.get(c.code) ?? null}
               povertyValue={povertyData[c.code] ?? null}
+              pppValue={pppData[c.code] ?? null}
               latestInflation={latestInflation[c.code] ?? null}
             />
         ))}

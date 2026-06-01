@@ -167,3 +167,18 @@ export async function fetchWorldBankPoverty(
     return null;
   }
 }
+
+export async function fetchWorldBankPpp(
+  countryCode: string,
+): Promise<number | null> {
+  try {
+    const response = await fetch(`${API_BASE}/worldbank/ppp?country=${countryCode}`);
+    if (!response.ok) return null;
+    const data = await response.json();
+    const records: Array<{ date: string; value: number | null }> = data[1] ?? [];
+    const latest = records.find((r) => r.value !== null && r.value !== undefined);
+    return latest ? latest.value : null;
+  } catch {
+    return null;
+  }
+}

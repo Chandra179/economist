@@ -10,10 +10,11 @@ interface Props {
   dxyLatest: number | null;
   latestGdpUsd: number | null;
   povertyValue: number | null;
+  pppValue: number | null;
   latestInflation: number | null;
 }
 
-export default function CountryCard({ country, liveRate, fredData, fredLoading, loading, dxyLatest, latestGdpUsd, povertyValue, latestInflation }: Props) {
+export default function CountryCard({ country, liveRate, fredData, fredLoading, loading, dxyLatest, latestGdpUsd, povertyValue, pppValue, latestInflation }: Props) {
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col gap-4">
       <div className="flex items-start gap-3">
@@ -101,7 +102,7 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
         )}
       </div>
 
-      {(country.fredGdpSeries || latestGdpUsd !== null || povertyValue !== null || latestInflation !== null) && (
+      {(country.fredGdpSeries || latestGdpUsd !== null || povertyValue !== null || pppValue !== null || latestInflation !== null) && (
         <div className="grid grid-cols-2 gap-2">
           {(country.fredGdpSeries || latestGdpUsd !== null) && (
             <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
@@ -126,12 +127,29 @@ export default function CountryCard({ country, liveRate, fredData, fredLoading, 
                 <span className="relative group flex items-center">
                   <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
                   <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-56 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
-                    Population living below $8.30/day (2021 PPP). Shows extreme to moderate poverty across countries.
+                    % of people whose total daily spending (food, rent, everything) is worth less than $8.30 in US buying power. The World Bank runs household surveys asking "how much do you consume?" then adjusts for local prices (PPP) to compare across countries. This is the upper-middle-income poverty line.
                   </span>
                 </span>
               </span>
               <span className="text-sm font-semibold text-slate-900 font-mono">
                 {povertyValue}%
+              </span>
+            </div>
+          )}
+          {pppValue !== null && (
+            <div className="bg-slate-50 rounded-md p-2.5 flex flex-col gap-0.5">
+              <span className="text-[10px] text-slate-400 uppercase tracking-wide flex items-center gap-1">
+                Price Level (PPP)
+                <span className="relative group flex items-center">
+                  <span className="text-slate-300 cursor-help text-[9px] leading-none w-3.5 h-3.5 rounded-full border border-slate-300 inline-flex items-center justify-center">i</span>
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-56 p-1.5 text-[10px] leading-tight text-white bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-10 text-center">
+                    Price level vs the US. Tells you how expensive the country is: a haircut, a meal, rent — all averaged. 1.0 = same as US. Higher means pricier, lower means cheaper. For China at ~3.5, ¥3.5 buys what $1 buys in the US (vs. ¥7.2 at the bank). This is NOT about wages or what people earn.
+                  </span>
+                </span>
+              </span>
+              <span className="text-sm font-semibold text-slate-900 font-mono">
+                {pppValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                <span className="text-[10px] text-slate-400 font-normal"> {country.localCurrencySymbol ?? country.code}/$</span>
               </span>
             </div>
           )}
